@@ -1,0 +1,51 @@
+src/app/api/interview/next/route.ts
+  s_cfa101782adbe4::t_b26b7f57f3c4fe 1-37
+src/app/api/interview/report/route.ts
+  s_cfa101782adbe4::t_d4b82538245474 1-27
+src/app/api/interview/start/route.ts
+  s_cfa101782adbe4::t_fb56f536d43d90 1-27
+src/app/interview/page.tsx
+  s_cfa101782adbe4::t_292d1fcce9f776 3-4,9-10,12-16
+src/components/interview/chat-runner.tsx
+  s_cfa101782adbe4::t_4d92fbbbfcc84c 1-161
+src/components/interview/interview-setup.tsx
+  s_cfa101782adbe4::t_3e7a0da1c1a4ec 1-105
+src/components/interview/interview-view.tsx
+  s_cfa101782adbe4::t_9a44824252508e 1-176
+src/components/interview/report-view.tsx
+  s_cfa101782adbe4::t_ad5695127da813 1-83
+src/lib/validators/interview.ts
+  s_cfa101782adbe4::t_577894662d7b92 1-29
+src/providers/interview/engine.test.ts
+  s_cfa101782adbe4::t_0848120cbc67a9 1-45
+src/providers/interview/engine.ts
+  s_cfa101782adbe4::t_0e14229e4cbba1 1-75
+src/providers/interview/index.ts
+  s_cfa101782adbe4::t_e40f598625a42e 1-18
+src/providers/interview/session-store.ts
+  s_cfa101782adbe4::t_06cc880d28e1ef 1-42
+src/services/interview.service.test.ts
+  s_cfa101782adbe4::t_74e15a00977bfb 1-59
+src/services/interview.service.ts
+  s_cfa101782adbe4::t_221bc9a0e49f3b 1-132
+src/store/interview-store.ts
+  s_cfa101782adbe4::t_1637cb47b8bb0f 1-105
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.5",
+  "base_commit_sha": "d23609e94034aadc525aa553a681d296b2a4ad37",
+  "prompts": {},
+  "sessions": {
+    "s_cfa101782adbe4": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f389f-7838-7de1-8147-c508459c6b27",
+        "model": "unknown"
+      },
+      "human_author": "Codex <codex@local>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
