@@ -1,0 +1,23 @@
+src/lib/validators/essay.ts
+  s_cfa101782adbe4::t_5447a25337afb8 1-24
+src/services/essay.service.ts
+  s_cfa101782adbe4::t_284714bbfc3879 1-59
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.5",
+  "base_commit_sha": "7ffcfc4f3f9f2ad4572cb73f8979a3ec6144042d",
+  "prompts": {},
+  "sessions": {
+    "s_cfa101782adbe4": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f389f-7838-7de1-8147-c508459c6b27",
+        "model": "unknown"
+      },
+      "human_author": "Codex <codex@local>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
