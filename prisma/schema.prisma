@@ -1,0 +1,21 @@
+// 上岸小助手 · Into the SEA — Prisma schema
+// M0 骨架：仅占位一个模型，确保 `prisma generate` 可运行。
+// M1 将补齐 ExamInfo / Question / EssayCase / EssayOriginal /
+// InterviewSession / InterviewMessage / WrongQuestion 等全量模型。
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// TODO(M1): 扩展为完整数据模型（所有含来源的实体保留 sourceUrl 字段）。
+model AppMeta {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  updatedAt DateTime @updatedAt
+}
