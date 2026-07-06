@@ -142,13 +142,13 @@ interface InterviewEngine {
 8. 代码质量要求
 TS 严格类型・组件职责清晰・service/provider/types/components 分层明确・mock 数据集中管理・.env.example 完整・ESLint/Prettier 配置・基础单元测试或关键逻辑测试・README 说明启动 / 配置 / 扩展 / 部署。
 9. 验收清单（Definition of Done — 每轮勾选）
-- [ ] 五个栏目均可访问且功能闭环（M0：均可访问，功能待 M3-M7 补齐）
+- [x] 五个栏目均可访问且功能闭环
 - [ ] 首页 Dashboard 正常展示（今日动态 / 推荐岗位 / 进度 / 错题数 / 申论推荐 / 面试摘要）
 - [x] 招录信息来源链接页面可见
 - [x] 行测刷题含错题本完整流程（答题→反馈→入错题本→重练→标记已掌握）
 - [x] 申论案例 / 原题来源链接页面可见
-- [ ] 模拟面试支持会话问答与总结反馈，且会话持久化
-- [ ] service/provider 抽象清晰，mock 与真实接入位置有标注
+- [x] 模拟面试支持会话问答与总结反馈，且会话持久化
+- [x] service/provider 抽象清晰，mock 与真实接入位置有标注
 - [ ] UI 视觉完成度高，非默认模板样式（M0：已建立自定义主题，持续打磨）
 - [x] README + .env.example + docs/skills-plan.md 完整
 - [x] pnpm build / lint / test 全绿
@@ -256,6 +256,18 @@ M8 打磨：首页 Dashboard 聚合真实数据・全站四态・动效・响应
   - 单测 job-prep.service(7)（含四类追问齐全 + sourceUrl 红线）；累计 38 全过。
 - 验证方式：`tsc`✅ `pnpm lint`✅ `pnpm test`(38)✅ `pnpm build`✅ + dev 冒烟(追问/题库检索/页面 200)。
 - 下一步：M7 模拟面试（InterviewEngine + 会话持久化 + 聊天式 UI + 追问 + 面试报告全维度）。
+
+### [M7] 模拟面试 — 2026-07-07
+- 完成内容：
+  - services/interview.service.ts：generateOpening / generateNext（followUpOf 追问语义）/ generateReport（多维度 JSON，安全解析兜底）/ askedCount，底层走 LLMProvider。
+  - providers/interview：SessionStore 抽象 + InMemorySessionStore（默认）+ PrismaSessionStore 骨架(TODO)；DefaultInterviewEngine 实现 InterviewEngine 抽象（startSession/generateNextQuestion/summarizeSession）+ getInterviewEngine 工厂（单例存储）。
+  - API：/api/interview/start、/next、/report（zod 校验 + 400/502）。
+  - store/interview-store.ts：Zustand+persist(localStorage) 会话持久化（创建/追加/报告/历史/删除），满足「会话持久化」。
+  - 组件：InterviewSetup（岗位/模式/题量，接收 job-prep 上下文）、ChatRunner（聊天气泡 + 追问标记 + 进度 + 结束生成报告）、ReportView（综合分+分维度+优势+建议）、InterviewView（setup/chat/report 切换 + 历史会话侧栏）。
+  - 消费 interview-context-store 实现岗位备考→面试上下文交接。
+  - 单测 interview.service(4) + engine 持久化(2)；累计 44 全过。
+- 验证方式：`tsc`✅ `pnpm lint`✅ `pnpm test`(44)✅ `pnpm build`✅ + dev 冒烟(start/next 追问/report 多维度)。
+- 下一步：M8 打磨（首页 Dashboard 聚合真实数据 + 全站四态 + 动效 + 响应式 + README/skills-plan 完善 + 部署说明 + 素材）。
 
 plaintext
 10. seeddream 生图素材（新增）
