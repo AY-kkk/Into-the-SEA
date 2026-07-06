@@ -13,7 +13,8 @@
     "test:watch": "vitest",
     "format": "prettier --write .",
     "db:seed": "tsx scripts/seed.ts",
-    "prisma:generate": "prisma generate"
+    "prisma:generate": "prisma generate",
+    "import:essays": "tsx scripts/import-essays.ts"
   },
   "dependencies": {
     "@prisma/client": "5.22.0",

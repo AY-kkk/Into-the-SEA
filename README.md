@@ -74,5 +74,10 @@ docs/           DESIGN.md · skills-plan.md
 - **申论案例 / 原题目标各 100 条**：当前提供结构化 mock 样本，扩充方式：
   1. 按现有 JSON 结构补充条目（保持 `sourceUrl` 不省略）。
   2. 运行 `pnpm db:seed` 写入数据库（需 `DATABASE_URL`）。
-  3. 或通过 M5 的导入脚本批量导入。
+  3. 或通过导入脚本批量导入（推荐）：
+     ```bash
+     pnpm import:essays --kind=case --file=./data/import/cases.json
+     pnpm import:essays --kind=original --file=./data/import/originals.json
+     ```
+     脚本使用 zod 校验，`sourceUrl` 缺失或结构非法的条目会被跳过并报告。
 - MVP 默认走 mock provider，直接读取 seed JSON，无需数据库即可演示。
