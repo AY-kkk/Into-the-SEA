@@ -1,0 +1,37 @@
+src/app/practice/page.tsx
+  s_cfa101782adbe4::t_b856ff65f6ad7c 3-4,9-10,12-16
+src/components/practice/practice-view.tsx
+  s_cfa101782adbe4::t_1a71f8f3f5d3a0 1-155
+src/components/practice/quiz-runner.tsx
+  s_cfa101782adbe4::t_101db737966cde 1-217
+src/components/practice/wrong-book.tsx
+  s_cfa101782adbe4::t_0233827f19412f 1-100
+src/lib/practice-stats.test.ts
+  s_cfa101782adbe4::t_76cf8e5ceacd38 1-28
+src/lib/practice-stats.ts
+  s_cfa101782adbe4::t_5fb4f109e969db 1-35
+src/services/question.service.test.ts
+  s_cfa101782adbe4::t_166c32f112f458 1-43
+src/services/question.service.ts
+  s_cfa101782adbe4::t_6693b8450a8274 1-83
+src/store/practice-store.ts
+  s_cfa101782adbe4::t_887a7873fcfe79 1-94
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.5",
+  "base_commit_sha": "e0db57884e28dfaa09de1a6f1061599b05d4baca",
+  "prompts": {},
+  "sessions": {
+    "s_cfa101782adbe4": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f389f-7838-7de1-8147-c508459c6b27",
+        "model": "unknown"
+      },
+      "human_author": "Codex <codex@local>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
