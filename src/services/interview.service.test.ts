@@ -1,10 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import {
-  askedCount,
-  generateNext,
-  generateOpening,
-  generateReport,
-} from './interview.service';
+import { askedCount, generateNext, generateOpening, generateReport } from './interview.service';
 import type { InterviewConfig, InterviewMessage } from '@/types/interview';
 
 const config: InterviewConfig = {

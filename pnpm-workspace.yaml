@@ -1,7 +1,7 @@
 verifyDepsBeforeRun: false
 onlyBuiltDependencies:
-  - "@prisma/client"
-  - "@prisma/engines"
+  - '@prisma/client'
+  - '@prisma/engines'
   - esbuild
   - prisma
   - unrs-resolver

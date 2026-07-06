@@ -2,8 +2,7 @@ import * as React from 'react';
 import { ChevronDown } from 'lucide-react';
 import { cn } from '@/lib/utils/cn';
 
-export interface SelectNativeProps
-  extends React.SelectHTMLAttributes<HTMLSelectElement> {
+export interface SelectNativeProps extends React.SelectHTMLAttributes<HTMLSelectElement> {
   options: Array<{ value: string; label: string }>;
   placeholder?: string;
 }

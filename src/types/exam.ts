@@ -1,9 +1,4 @@
-import type {
-  EducationLevel,
-  EnrollStatus,
-  ExamCategory,
-  SourceRef,
-} from './common';
+import type { EducationLevel, EnrollStatus, ExamCategory, SourceRef } from './common';
 
 /** 招录情报条目（模块一）。 */
 export interface ExamInfo extends SourceRef {

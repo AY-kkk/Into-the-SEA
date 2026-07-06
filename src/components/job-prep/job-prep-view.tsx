@@ -14,11 +14,7 @@ import { ProfilePanels } from './profile-panels';
 import { useInterviewContextStore } from '@/store/interview-context-store';
 import { assembleProfile } from '@/services/job-prep.service';
 import { FOLLOW_UP_TYPE_LABELS } from '@/types/job';
-import type {
-  JobPositionId,
-  QuestionSearchResult,
-  ResumeFollowUp,
-} from '@/types/job';
+import type { JobPositionId, QuestionSearchResult, ResumeFollowUp } from '@/types/job';
 
 interface JobPrepViewProps {
   positions: Array<{ id: JobPositionId; name: string }>;
@@ -43,7 +39,10 @@ export function JobPrepView({ positions }: JobPrepViewProps) {
   const [questions, setQuestions] = useState<QuestionSearchResult[]>([]);
   const [qLoading, setQLoading] = useState(false);
 
-  const positionName = selected === 'custom' ? customName.trim() || '自定义岗位' : positions.find((p) => p.id === selected)!.name;
+  const positionName =
+    selected === 'custom'
+      ? customName.trim() || '自定义岗位'
+      : positions.find((p) => p.id === selected)!.name;
 
   const profile = useMemo(
     () => assembleProfile(selected, { customName: positionName }),
@@ -89,7 +88,9 @@ export function JobPrepView({ positions }: JobPrepViewProps) {
       `能力模型：${profile.competencyModel.map((c) => c.name).join('、')}`,
     ];
     if (followUps.length) {
-      contextParts.push(`简历追问方向：${followUps.map((f) => FOLLOW_UP_TYPE_LABELS[f.type]).join('、')}`);
+      contextParts.push(
+        `简历追问方向：${followUps.map((f) => FOLLOW_UP_TYPE_LABELS[f.type]).join('、')}`,
+      );
     }
     setPending({
       positionId: selected,
@@ -149,16 +150,23 @@ export function JobPrepView({ positions }: JobPrepViewProps) {
         </CardHeader>
         <CardContent className="space-y-3">
           <p className="text-sm text-muted-foreground">
-            粘贴你的简历要点（每行一条），系统生成针对性追问，覆盖经历深挖 / 动机匹配 / 岗位胜任 / 压力测试。
+            粘贴你的简历要点（每行一条），系统生成针对性追问，覆盖经历深挖 / 动机匹配 / 岗位胜任 /
+            压力测试。
           </p>
           <Textarea
             value={resumeText}
             onChange={(e) => setResumeText(e.target.value)}
             rows={4}
-            placeholder={'例如：\n主导校园招聘系统开发，用户 3000+\n获校级三好学生\n担任学生会部长，组织大型活动'}
+            placeholder={
+              '例如：\n主导校园招聘系统开发，用户 3000+\n获校级三好学生\n担任学生会部长，组织大型活动'
+            }
           />
           <Button onClick={handleFollowUps} disabled={followLoading || !resumeText.trim()}>
-            {followLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Sparkles className="h-4 w-4" />}
+            {followLoading ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Sparkles className="h-4 w-4" />
+            )}
             生成追问
           </Button>
 
@@ -167,7 +175,9 @@ export function JobPrepView({ positions }: JobPrepViewProps) {
               {followUps.map((f, i) => (
                 <div key={i} className="rounded-lg border p-3">
                   <div className="mb-1 flex items-center gap-2">
-                    <Badge variant={FOLLOW_UP_VARIANT[f.type]}>{FOLLOW_UP_TYPE_LABELS[f.type]}</Badge>
+                    <Badge variant={FOLLOW_UP_VARIANT[f.type]}>
+                      {FOLLOW_UP_TYPE_LABELS[f.type]}
+                    </Badge>
                   </div>
                   <p className="text-sm font-medium">{f.question}</p>
                   <p className="mt-1 text-xs text-muted-foreground">考察点：{f.intent}</p>
@@ -186,7 +196,11 @@ export function JobPrepView({ positions }: JobPrepViewProps) {
             <CardTitle className="text-base">岗位题库检索</CardTitle>
           </div>
           <Button variant="outline" size="sm" onClick={handleSearch} disabled={qLoading}>
-            {qLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <FileSearch className="h-4 w-4" />}
+            {qLoading ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <FileSearch className="h-4 w-4" />
+            )}
             联网搜索
           </Button>
         </CardHeader>

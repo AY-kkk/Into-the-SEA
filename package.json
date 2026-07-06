@@ -14,7 +14,8 @@
     "format": "prettier --write .",
     "db:seed": "tsx scripts/seed.ts",
     "prisma:generate": "prisma generate",
-    "import:essays": "tsx scripts/import-essays.ts"
+    "import:essays": "tsx scripts/import-essays.ts",
+    "gen:assets": "tsx scripts/gen-assets.ts"
   },
   "dependencies": {
     "@prisma/client": "5.22.0",

@@ -21,17 +21,19 @@ pnpm dev                      # 启动 http://localhost:3000
 
 ## 常用脚本
 
-| 命令 | 说明 |
-|------|------|
-| `pnpm dev` | 本地开发 |
-| `pnpm build` | 生产构建 |
-| `pnpm start` | 启动生产服务 |
-| `pnpm lint` | ESLint |
-| `pnpm typecheck` | TypeScript 类型检查 |
-| `pnpm test` | Vitest 单元测试 |
-| `pnpm format` | Prettier 格式化 |
-| `pnpm prisma:generate` | 生成 Prisma Client |
-| `pnpm db:seed` | 写入 seed 数据 |
+| 命令                   | 说明                                               |
+| ---------------------- | -------------------------------------------------- |
+| `pnpm dev`             | 本地开发                                           |
+| `pnpm build`           | 生产构建                                           |
+| `pnpm start`           | 启动生产服务                                       |
+| `pnpm lint`            | ESLint                                             |
+| `pnpm typecheck`       | TypeScript 类型检查                                |
+| `pnpm test`            | Vitest 单元测试                                    |
+| `pnpm format`          | Prettier 格式化                                    |
+| `pnpm prisma:generate` | 生成 Prisma Client                                 |
+| `pnpm db:seed`         | 写入 seed 数据                                     |
+| `pnpm import:essays`   | 批量导入申论案例/原题                              |
+| `pnpm gen:assets`      | seeddream 生成品牌素材（需 ark-cli，缺失自动降级） |
 
 ## 目录结构
 
@@ -58,10 +60,26 @@ docs/           DESIGN.md · skills-plan.md
 
 ## 部署（Vercel）
 
-1. 导入仓库到 Vercel。
-2. 配置环境变量（参考 `.env.example`）。
-3. 构建命令 `pnpm build`，输出为 Next.js 默认。
-4. 需要数据库时接入 Supabase / Neon 的 `DATABASE_URL`。
+1. 将仓库 [AY-kkk/Into-the-SEA](https://github.com/AY-kkk/Into-the-SEA) 导入 Vercel。
+2. Framework 预设选择 **Next.js**；构建命令 `pnpm build`，安装命令 `pnpm install`。
+3. 在 Vercel 环境变量中按 `.env.example` 配置：
+   - MVP 演示可全部留默认（`*_PROVIDER=mock`），无需任何外部 Key 即可运行。
+   - 接入真实数据：设置 `DATABASE_URL`（Supabase / Neon），并将对应 `*_PROVIDER=real` + 填入 Key（缺 Key 会自动降级 mock）。
+4. 若使用数据库：部署后在本地或 CI 执行 `pnpm prisma:generate` 与 `pnpm db:seed` 初始化数据。
+5. 会话/进度等 MVP 采用浏览器 `localStorage` 持久化；多端同步可切换到服务端存储（`PrismaSessionStore` 骨架已就绪）。
+
+### 本地生产预览
+
+```bash
+pnpm build && pnpm start
+```
+
+## 架构与扩展点
+
+- **分层**：`app`（页面/路由）→ `services`（业务）→ `providers`（外部能力抽象）→ `lib/db`（数据）。业务逻辑不写进组件。
+- **Provider 抽象**：`SearchProvider` / `LLMProvider` / `ExamInfoProvider` / `QuestionSearchProvider` / `InterviewEngine`，每个都有 mock 实现与 real 骨架（`TODO(real)` 标注）。
+- **切换真实实现**：`.env` 设置 `*_PROVIDER=real` 并提供凭据；`src/lib/env.ts` 的 `shouldUseReal()` 在缺凭据时自动降级 mock。
+- **红线**：任何含外部来源的数据模型与页面都保留并展示 `source_url`。
 
 ## 迭代进度
 

@@ -1,10 +1,4 @@
-import {
-  BookText,
-  MessageCircleQuestion,
-  Route,
-  Lightbulb,
-  Gauge,
-} from 'lucide-react';
+import { BookText, MessageCircleQuestion, Route, Lightbulb, Gauge } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import type { JobPrepProfile } from '@/types/job';
@@ -40,10 +34,7 @@ export function ProfilePanels({ profile }: { profile: JobPrepProfile }) {
                 <span className="text-xs text-muted-foreground">{c.weight}%</span>
               </div>
               <div className="h-1.5 w-full overflow-hidden rounded-full bg-secondary">
-                <div
-                  className="h-full rounded-full bg-primary"
-                  style={{ width: `${c.weight}%` }}
-                />
+                <div className="h-full rounded-full bg-primary" style={{ width: `${c.weight}%` }} />
               </div>
               <p className="text-xs text-muted-foreground">{c.description}</p>
             </div>

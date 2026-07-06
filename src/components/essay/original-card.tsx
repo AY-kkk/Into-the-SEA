@@ -3,11 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { SourceLink } from '@/components/shared/source-link';
 import { EXAM_CATEGORY_LABELS } from '@/types/common';
-import {
-  ESSAY_QUESTION_TYPE_LABELS,
-  ESSAY_TOPIC_LABELS,
-  type EssayOriginal,
-} from '@/types/essay';
+import { ESSAY_QUESTION_TYPE_LABELS, ESSAY_TOPIC_LABELS, type EssayOriginal } from '@/types/essay';
 
 export function OriginalCard({ item }: { item: EssayOriginal }) {
   return (

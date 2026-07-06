@@ -1,9 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import {
-  getOriginalYears,
-  listEssayCases,
-  listEssayOriginals,
-} from './essay.service';
+import { getOriginalYears, listEssayCases, listEssayOriginals } from './essay.service';
 
 describe('essay.service', () => {
   it('lists cases and every case keeps sourceUrl (red line)', () => {

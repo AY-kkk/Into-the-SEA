@@ -1,14 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import {
-  BookOpenCheck,
-  ListOrdered,
-  Shuffle,
-  Target,
-  FileText,
-  NotebookPen,
-} from 'lucide-react';
+import { BookOpenCheck, ListOrdered, Shuffle, Target, FileText, NotebookPen } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -66,13 +59,7 @@ export function PracticeView({ typeCounts }: { typeCounts: Record<QuestionType, 
   };
 
   if (running) {
-    return (
-      <QuizRunner
-        questions={running}
-        title={runningTitle}
-        onExit={() => setRunning(null)}
-      />
-    );
+    return <QuizRunner questions={running} title={runningTitle} onExit={() => setRunning(null)} />;
   }
 
   return (
@@ -85,11 +72,7 @@ export function PracticeView({ typeCounts }: { typeCounts: Record<QuestionType, 
         >
           <BookOpenCheck className="h-4 w-4" /> 开始练习
         </button>
-        <button
-          type="button"
-          onClick={() => setTab('wrong')}
-          className={tabClass(tab === 'wrong')}
-        >
+        <button type="button" onClick={() => setTab('wrong')} className={tabClass(tab === 'wrong')}>
           <NotebookPen className="h-4 w-4" /> 错题本
           {wrongCount > 0 ? (
             <Badge variant="destructive" className="ml-1">

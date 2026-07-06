@@ -83,7 +83,8 @@ export function ChatRunner({ session, onFinished }: ChatRunnerProps) {
           <Badge variant="secondary">{INTERVIEW_MODE_LABELS[session.config.mode]}</Badge>
         </div>
         <span className="text-xs text-muted-foreground">
-          已提问 {Math.min(askedCount, session.config.questionCount)} / {session.config.questionCount}
+          已提问 {Math.min(askedCount, session.config.questionCount)} /{' '}
+          {session.config.questionCount}
         </span>
       </div>
 
@@ -117,7 +118,11 @@ export function ChatRunner({ session, onFinished }: ChatRunnerProps) {
         />
         <div className="flex items-center justify-between">
           <Button variant="outline" onClick={finish} disabled={summarizing || askedCount === 0}>
-            {summarizing ? <Loader2 className="h-4 w-4 animate-spin" /> : <FileCheck2 className="h-4 w-4" />}
+            {summarizing ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <FileCheck2 className="h-4 w-4" />
+            )}
             结束并生成报告
           </Button>
           <Button onClick={submit} disabled={loading || !answer.trim()}>

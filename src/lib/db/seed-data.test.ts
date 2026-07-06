@@ -1,10 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import {
-  essayCaseSeed,
-  essayOriginalSeed,
-  examInfoSeed,
-  questionSeed,
-} from '@/lib/db/seed-data';
+import { essayCaseSeed, essayOriginalSeed, examInfoSeed, questionSeed } from '@/lib/db/seed-data';
 
 describe('seed data integrity', () => {
   it('has non-empty seed sets', () => {

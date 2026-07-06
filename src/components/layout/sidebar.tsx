@@ -1,10 +1,11 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Anchor } from 'lucide-react';
 import { NAV_ITEMS } from '@/lib/nav';
 import { cn } from '@/lib/utils/cn';
+import brandMark from '@/assets/generated/brand-mark.svg';
 
 export function Sidebar() {
   const pathname = usePathname();
@@ -12,9 +13,8 @@ export function Sidebar() {
   return (
     <aside className="hidden w-64 shrink-0 border-r bg-card/60 lg:flex lg:flex-col">
       <div className="flex h-16 items-center gap-2 border-b px-6">
-        <span className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-          <Anchor className="h-5 w-5" />
-        </span>
+        {/* 生成素材占位（seeddream 降级）：品牌标记，见 docs/DESIGN.md */}
+        <Image src={brandMark} alt="Into the SEA" width={36} height={36} className="rounded-lg" />
         <div className="leading-tight">
           <p className="text-sm font-semibold">上岸小助手</p>
           <p className="text-xs text-muted-foreground">Into the SEA</p>

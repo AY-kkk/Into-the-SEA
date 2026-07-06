@@ -1,11 +1,7 @@
 import type { Metadata } from 'next';
 import { PageShell } from '@/components/shared/page-shell';
 import { EssayView } from '@/components/essay/essay-view';
-import {
-  getOriginalYears,
-  listEssayCases,
-  listEssayOriginals,
-} from '@/services/essay.service';
+import { getOriginalYears, listEssayCases, listEssayOriginals } from '@/services/essay.service';
 
 export const metadata: Metadata = { title: '申论案例' };
 

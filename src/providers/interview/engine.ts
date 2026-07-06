@@ -1,9 +1,5 @@
 import { createId } from '@/lib/utils';
-import {
-  generateNext,
-  generateOpening,
-  generateReport,
-} from '@/services/interview.service';
+import { generateNext, generateOpening, generateReport } from '@/services/interview.service';
 import type {
   InterviewConfig,
   InterviewMessage,
@@ -38,10 +34,7 @@ export class DefaultInterviewEngine implements InterviewEngine {
     return session;
   }
 
-  async generateNextQuestion(
-    sessionId: string,
-    userAnswer?: string,
-  ): Promise<InterviewMessage> {
+  async generateNextQuestion(sessionId: string, userAnswer?: string): Promise<InterviewMessage> {
     const session = await this.store.get(sessionId);
     if (!session) throw new Error(`[InterviewEngine] 会话不存在：${sessionId}`);
 

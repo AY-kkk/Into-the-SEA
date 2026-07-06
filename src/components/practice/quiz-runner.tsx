@@ -8,11 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { SourceLink } from '@/components/shared/source-link';
 import { cn } from '@/lib/utils/cn';
 import { usePracticeStore } from '@/store/practice-store';
-import {
-  DIFFICULTY_LABELS,
-  QUESTION_TYPE_LABELS,
-  type Question,
-} from '@/types/question';
+import { DIFFICULTY_LABELS, QUESTION_TYPE_LABELS, type Question } from '@/types/question';
 
 interface QuizRunnerProps {
   questions: Question[];
@@ -32,11 +28,10 @@ export function QuizRunner({ questions, onExit, title }: QuizRunnerProps) {
 
   const current = questions[index];
   const total = questions.length;
-  const progress = useMemo(() => Math.round(((index + (revealed ? 1 : 0)) / total) * 100), [
-    index,
-    revealed,
-    total,
-  ]);
+  const progress = useMemo(
+    () => Math.round(((index + (revealed ? 1 : 0)) / total) * 100),
+    [index, revealed, total],
+  );
 
   if (total === 0) {
     return (
@@ -160,9 +155,7 @@ export function QuizRunner({ questions, onExit, title }: QuizRunnerProps) {
                   {opt.key}
                 </span>
                 <span className="flex-1 pt-0.5">{opt.text}</span>
-                {revealed && isAnswer ? (
-                  <CheckCircle2 className="h-5 w-5 text-success" />
-                ) : null}
+                {revealed && isAnswer ? <CheckCircle2 className="h-5 w-5 text-success" /> : null}
                 {revealed && isPicked && !isAnswer ? (
                   <XCircle className="h-5 w-5 text-destructive" />
                 ) : null}
@@ -175,7 +168,9 @@ export function QuizRunner({ questions, onExit, title }: QuizRunnerProps) {
           <div
             className={cn(
               'animate-fade-in space-y-2 rounded-lg border p-4 text-sm',
-              isCorrect ? 'border-success/40 bg-success/5' : 'border-destructive/40 bg-destructive/5',
+              isCorrect
+                ? 'border-success/40 bg-success/5'
+                : 'border-destructive/40 bg-destructive/5',
             )}
           >
             <p className="flex items-center gap-2 font-medium">

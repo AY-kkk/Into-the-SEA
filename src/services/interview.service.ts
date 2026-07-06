@@ -84,7 +84,10 @@ export async function generateReport(
     .join('\n');
   const res = await llm.generate(
     [
-      { role: 'system', content: `请基于以下「${config.positionName}」面试记录，生成 JSON 格式的多维度评估报告。` },
+      {
+        role: 'system',
+        content: `请基于以下「${config.positionName}」面试记录，生成 JSON 格式的多维度评估报告。`,
+      },
       { role: 'user', content: transcript },
     ],
     { json: true },

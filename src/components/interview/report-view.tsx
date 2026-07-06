@@ -5,7 +5,7 @@ import type { InterviewReport } from '@/types/interview';
 
 export function ReportView({ report }: { report: InterviewReport }) {
   return (
-    <div className="space-y-4 animate-fade-in">
+    <div className="animate-fade-in space-y-4">
       <Card>
         <CardContent className="flex flex-col items-center gap-2 py-8 text-center">
           <div className="flex h-20 w-20 items-center justify-center rounded-full bg-primary/10">
@@ -30,7 +30,10 @@ export function ReportView({ report }: { report: InterviewReport }) {
                   <span className="text-xs text-muted-foreground">{s.score}</span>
                 </div>
                 <div className="h-1.5 w-full overflow-hidden rounded-full bg-secondary">
-                  <div className="h-full rounded-full bg-primary" style={{ width: `${s.score}%` }} />
+                  <div
+                    className="h-full rounded-full bg-primary"
+                    style={{ width: `${s.score}%` }}
+                  />
                 </div>
                 <p className="text-xs text-muted-foreground">{s.comment}</p>
               </div>

@@ -42,14 +42,14 @@
 
 左侧 Sidebar + 顶部状态区 + 主内容区（Dashboard 式布局），五大路由风格统一：
 
-| 路由 | 模块 |
-|------|------|
-| `/` | 首页 Dashboard |
-| `/exam-news` | 招录情报 |
-| `/job-prep` | 岗位备考 |
-| `/practice` | 行测刷题 |
-| `/essay` | 申论案例 |
-| `/interview` | 模拟面试 |
+| 路由         | 模块           |
+| ------------ | -------------- |
+| `/`          | 首页 Dashboard |
+| `/exam-news` | 招录情报       |
+| `/job-prep`  | 岗位备考       |
+| `/practice`  | 行测刷题       |
+| `/essay`     | 申论案例       |
+| `/interview` | 模拟面试       |
 
 **首页 Dashboard 展示**：今日招录动态 · 推荐岗位 · 练习进度 · 错题数 · 申论推荐 · 最近面试摘要。
 
@@ -58,12 +58,14 @@
 ## 4. 五大模块功能定义
 
 ### 模块一：招录情报 `/exam-news`
+
 - 列表字段：标题 · 类型（国考/省考/国企/事业单位/三支一扶）· 地区 · 报名/考试时间 · 招录人数 · 学历/专业要求 · **来源链接（必展示）**
 - 筛选：类型 · 地区 · 报名状态（未开始/进行中/已截止）· 学历 · 关键词
 - 后端：`ExamInfoProvider` 抽象接口，支持多数据源组合 + 去重 + 手动/定时刷新扩展位
 - MVP 可 mock，但必须预留真实接入位置
 
 ### 模块二：岗位备考 `/job-prep`
+
 - 岗位选择：国考综合管理岗 · 省考基层岗 · 国企管培生 · 国企产品/运营/市场 · 三支一扶各方向 · 支持自定义输入
 - 每岗输出：笔试高频题型 · 常见面试问题 · 岗位能力模型 · 简历追问问题 · 备考建议 · 练习路径
 - `QuestionSearchProvider` 抽象接口，联网搜索题库，结果保留 `source_url`
@@ -71,6 +73,7 @@
 - 一键跳转模拟面试，携带岗位上下文
 
 ### 模块三：行测刷题 `/practice`
+
 - 题型：言语理解 · 数量关系 · 判断推理 · 资料分析 · 常识判断
 - 模式：顺序 · 随机 · 专项 · 模拟套卷 · 错题重练
 - 每题：题干 · 选项 · 正确答案 · 解析 · 难度 · 题型 · 来源（可选）
@@ -79,6 +82,7 @@
 - 题库必须结构化，支持 JSON seed 或数据库 seed
 
 ### 模块四：申论优秀案例 `/essay`
+
 - 优秀案例库（目标 100 条）：标题 · 主题标签 · 适用话题 · 案例正文摘要 · 可迁移表达 · 使用场景 · **来源链接（必展示）**
 - 过往原题库（目标 100 条）：年份 · 考试类型 · 地区 · 题目类型 · 题干 · 材料摘要 · **来源链接（必展示）**
 - MVP 若无法补齐 200 条真实数据：必须完成数据结构 + 导入脚本 + mock seed，并在 README 说明扩充方式
@@ -86,6 +90,7 @@
 - 学习辅助：「这个案例怎么用」· 可迁移金句 · 收藏（可选）
 
 ### 模块五：模拟面试 `/interview`
+
 - 类型：结构化 · 半结构化 · 国企岗位面试 · 公务员岗位面试（无领导小组讨论预留占位）
 - 配置：目标岗位 · 面试类型 · 难度（基础/标准/压力）· 时长 · 是否基于简历追问
 - 流程：AI 开场 → 逐题提问 → 用户回答 → AI 追问 → 生成总结反馈
@@ -126,7 +131,8 @@ prisma/ schema.prisma
 plaintext
 
 **四大 Provider 接口（必须实现）**
-```ts
+
+````ts
 interface SearchProvider { search(query: string, options?: SearchOptions): Promise<SearchResult[]> }
 interface LLMProvider { generate(messages: LLMMessage[], options?: LLMOptions): Promise<LLMResponse> }
 interface ExamInfoProvider { fetchLatest(options?: FetchOptions): Promise<ExamInfo[]> }
@@ -143,13 +149,13 @@ interface InterviewEngine {
 TS 严格类型・组件职责清晰・service/provider/types/components 分层明确・mock 数据集中管理・.env.example 完整・ESLint/Prettier 配置・基础单元测试或关键逻辑测试・README 说明启动 / 配置 / 扩展 / 部署。
 9. 验收清单（Definition of Done — 每轮勾选）
 - [x] 五个栏目均可访问且功能闭环
-- [ ] 首页 Dashboard 正常展示（今日动态 / 推荐岗位 / 进度 / 错题数 / 申论推荐 / 面试摘要）
+- [x] 首页 Dashboard 正常展示（今日动态 / 推荐岗位 / 进度 / 错题数 / 申论推荐 / 面试摘要）
 - [x] 招录信息来源链接页面可见
 - [x] 行测刷题含错题本完整流程（答题→反馈→入错题本→重练→标记已掌握）
 - [x] 申论案例 / 原题来源链接页面可见
 - [x] 模拟面试支持会话问答与总结反馈，且会话持久化
 - [x] service/provider 抽象清晰，mock 与真实接入位置有标注
-- [ ] UI 视觉完成度高，非默认模板样式（M0：已建立自定义主题，持续打磨）
+- [x] UI 视觉完成度高，非默认模板样式（自定义暖纸白+青绿+琥珀主题，规避蓝紫渐变/模板感）
 - [x] README + .env.example + docs/skills-plan.md 完整
 - [x] pnpm build / lint / test 全绿
 10. 硬约束（红线）
@@ -269,6 +275,16 @@ M8 打磨：首页 Dashboard 聚合真实数据・全站四态・动效・响应
 - 验证方式：`tsc`✅ `pnpm lint`✅ `pnpm test`(44)✅ `pnpm build`✅ + dev 冒烟(start/next 追问/report 多维度)。
 - 下一步：M8 打磨（首页 Dashboard 聚合真实数据 + 全站四态 + 动效 + 响应式 + README/skills-plan 完善 + 部署说明 + 素材）。
 
+### [M8] 打磨与收尾 — 2026-07-07
+- 完成内容：
+  - 首页 Dashboard 聚合六要素：今日招录动态(SSR)、推荐岗位、练习进度/综合正确率/待攻克错题(客户端 store)、申论推荐、最近面试摘要；含来源链接。
+  - StatCards / InterviewSummary 客户端聚合持久化数据；全站沿用四态(Loading/Empty/Error) + animate-fade-in 动效 + 响应式栅格 + 移动端底部导航。
+  - docs/skills-plan.md 完整候选评估表 + 选型原因；docs/DESIGN.md 记录色板/动效/seeddream prompt 清单；scripts/gen-assets.ts（ark-cli 缺失自动降级）+ 占位 brand-mark.svg 引用进 Sidebar。
+  - README 补充部署(Vercel)详解、本地生产预览、架构与扩展点、脚本表(import:essays/gen:assets)。
+  - Prettier 全量格式化；SVG 静态导入类型声明。
+- 验证方式：`tsc`✅ `pnpm lint`✅ `pnpm test`(44)✅ `pnpm build`✅ + dev 全六路由 200 + Dashboard 六要素渲染。
+- 结论：M0–M8 全部完成，验收清单 10 项全部达成。
+
 plaintext
 10. seeddream 生图素材（新增）
 调用 ark-cli seeddream 生成一组风格统一、可复用的前端素材，落到 frontend/src/assets/generated/：
@@ -304,3 +320,4 @@ plaintext
 
 ## 技术栈
 Next.js 14 App Router · React 18 · TS 严格 · Tailwind · shadcn/ui · Framer Motion · Zustand · Prisma + PostgreS
+````

@@ -20,8 +20,13 @@ export function WrongBook({ onPractice }: { onPractice: (ids: string[]) => void 
   const rows = useMemo(() => {
     return wrongBook
       .map((w) => ({ w, q: getQuestionById(w.questionId) }))
-      .filter((r): r is { w: (typeof wrongBook)[number]; q: NonNullable<ReturnType<typeof getQuestionById>> } =>
-        Boolean(r.q),
+      .filter(
+        (
+          r,
+        ): r is {
+          w: (typeof wrongBook)[number];
+          q: NonNullable<ReturnType<typeof getQuestionById>>;
+        } => Boolean(r.q),
       )
       .filter((r) => (typeFilter ? r.q.type === typeFilter : true))
       .sort((a, b) => new Date(b.w.lastWrongAt).getTime() - new Date(a.w.lastWrongAt).getTime());
@@ -48,11 +53,7 @@ export function WrongBook({ onPractice }: { onPractice: (ids: string[]) => void 
           options={Object.entries(QUESTION_TYPE_LABELS).map(([value, label]) => ({ value, label }))}
           className="w-44"
         />
-        <Button
-          size="sm"
-          disabled={activeIds.length === 0}
-          onClick={() => onPractice(activeIds)}
-        >
+        <Button size="sm" disabled={activeIds.length === 0} onClick={() => onPractice(activeIds)}>
           <RotateCw className="h-4 w-4" /> 重练未掌握（{activeIds.length}）
         </Button>
       </div>
@@ -68,7 +69,8 @@ export function WrongBook({ onPractice }: { onPractice: (ids: string[]) => void 
               </div>
               <p className="text-sm font-medium leading-relaxed">{q.stem}</p>
               <p className="text-xs text-muted-foreground">
-                正确答案：<span className="font-semibold text-success">{q.answer}</span> · {q.explanation}
+                正确答案：<span className="font-semibold text-success">{q.answer}</span> ·{' '}
+                {q.explanation}
               </p>
               <div className="flex items-center gap-2 pt-1">
                 <Button

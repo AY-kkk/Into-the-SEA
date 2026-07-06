@@ -71,7 +71,11 @@ export function InterviewView({ positions }: InterviewViewProps) {
   }
 
   const initial = pending
-    ? { positionId: pending.positionId, positionName: pending.positionName, context: pending.context }
+    ? {
+        positionId: pending.positionId,
+        positionName: pending.positionName,
+        context: pending.context,
+      }
     : null;
 
   return (

@@ -29,7 +29,7 @@ export function InterviewSetup({ positions, initial, starting, onStart }: SetupP
   const positionName =
     positionId === 'custom'
       ? customName.trim() || '自定义岗位'
-      : positions.find((p) => p.id === positionId)?.name ?? '自定义岗位';
+      : (positions.find((p) => p.id === positionId)?.name ?? '自定义岗位');
 
   return (
     <Card className="mx-auto max-w-xl">
