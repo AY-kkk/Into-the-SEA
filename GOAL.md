@@ -246,6 +246,17 @@ M8 打磨：首页 Dashboard 聚合真实数据・全站四态・动效・响应
 - 验证方式：`tsc`✅ `pnpm lint`✅ `pnpm test`(31)✅ `pnpm build`✅ + dev 冒烟(案例6/国考原题3，sourceUrl 全含)。
 - 下一步：M6 岗位备考（岗位选择 + 六项输出 + 简历追问 + QuestionSearchProvider + 跳转面试带上下文）。
 
+### [M6] 岗位备考 — 2026-07-07
+- 完成内容：
+  - data/seed/job-profiles.json：5 个预置岗位（国考综合管理/省考基层/国企管培生/国企产品运营市场/三支一扶）+ 自定义兜底。
+  - services/job-prep.service.ts：listPositions / getProfile / buildCustomProfile / generateResumeFollowUps（四类追问：经历深挖/动机匹配/岗位胜任/压力测试）/ searchPositionQuestions（走 QuestionSearchProvider，保留 sourceUrl）/ assembleProfile。
+  - API：POST /api/job-prep/follow-ups、GET /api/job-prep/questions（zod 校验 + 400/502）。
+  - store/interview-context-store.ts：岗位上下文交接给模拟面试（一键跳转带 context）。
+  - 组件：ProfilePanels（六项输出的五项：题型/能力模型带权重条/面试问题/建议/练习路径）、JobPrepView（岗位选择+自定义输入、简历追问生成、题库联网检索、一键模拟面试）。
+  - 单测 job-prep.service(7)（含四类追问齐全 + sourceUrl 红线）；累计 38 全过。
+- 验证方式：`tsc`✅ `pnpm lint`✅ `pnpm test`(38)✅ `pnpm build`✅ + dev 冒烟(追问/题库检索/页面 200)。
+- 下一步：M7 模拟面试（InterviewEngine + 会话持久化 + 聊天式 UI + 追问 + 面试报告全维度）。
+
 plaintext
 10. seeddream 生图素材（新增）
 调用 ark-cli seeddream 生成一组风格统一、可复用的前端素材，落到 frontend/src/assets/generated/：

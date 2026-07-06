@@ -1,0 +1,122 @@
+[
+  {
+    "positionId": "national-admin",
+    "positionName": "国考综合管理岗",
+    "writtenTopics": ["行测·言语理解", "行测·判断推理", "行测·资料分析", "申论·概括归纳", "申论·综合分析", "申论·大作文"],
+    "interviewQuestions": [
+      "谈谈你对'为人民服务'宗旨的理解。",
+      "如果领导交办的任务与你的价值观冲突，你会怎么处理？",
+      "面对繁重且琐碎的日常工作，你如何保持工作热情？",
+      "请举例说明你如何协调多个部门完成一项任务。"
+    ],
+    "competencyModel": [
+      { "name": "综合分析能力", "description": "从多维度分析政策与社会问题", "weight": 25 },
+      { "name": "组织协调能力", "description": "统筹资源、协调各方推进工作", "weight": 20 },
+      { "name": "文字表达能力", "description": "公文写作与材料撰写", "weight": 20 },
+      { "name": "应变抗压能力", "description": "面对突发情况沉稳应对", "weight": 20 },
+      { "name": "政治素养", "description": "政策理论理解与政治站位", "weight": 15 }
+    ],
+    "studyAdvice": [
+      "行测按题型专项突破，先提正确率再提速度",
+      "申论坚持每周一篇大作文并对照范文批改",
+      "关注人民日报评论与政府工作报告积累素材"
+    ],
+    "practicePath": ["行测五题型专项", "行测模拟套卷", "申论概括与对策", "申论大作文", "结构化面试模拟"]
+  },
+  {
+    "positionId": "provincial-grassroots",
+    "positionName": "省考基层岗",
+    "writtenTopics": ["行测·常识判断", "行测·数量关系", "行测·言语理解", "申论·应用文写作", "申论·提出对策"],
+    "interviewQuestions": [
+      "你为什么愿意扎根基层？",
+      "如果群众对你的工作不理解甚至有抵触，你怎么办？",
+      "谈谈你对乡村振兴的理解。",
+      "基层工作千头万绪，你如何抓住重点？"
+    ],
+    "competencyModel": [
+      { "name": "群众工作能力", "description": "与基层群众沟通、化解矛盾", "weight": 30 },
+      { "name": "执行落实能力", "description": "把政策落实到最后一公里", "weight": 25 },
+      { "name": "沟通协调能力", "description": "上传下达、协调多方", "weight": 20 },
+      { "name": "吃苦耐劳精神", "description": "适应基层艰苦环境", "weight": 15 },
+      { "name": "应变能力", "description": "处理突发群众事件", "weight": 10 }
+    ],
+    "studyAdvice": [
+      "重点练习应用文与提出对策题型",
+      "积累基层治理、乡村振兴类案例",
+      "面试多练群众工作与应急处置类题目"
+    ],
+    "practicePath": ["行测常识与数量", "申论应用文", "申论对策题", "基层情景模拟面试"]
+  },
+  {
+    "positionId": "soe-management-trainee",
+    "positionName": "国企管培生",
+    "writtenTopics": ["行测·逻辑推理", "行测·资料分析", "企业文化认知", "无领导小组讨论", "英语能力测试"],
+    "interviewQuestions": [
+      "你如何理解管培生这个岗位？",
+      "请介绍一个你主导并取得成果的项目。",
+      "你未来3-5年的职业规划是什么？",
+      "如果轮岗到你不喜欢的部门，你会如何调整？"
+    ],
+    "competencyModel": [
+      { "name": "学习成长潜力", "description": "快速学习与适应能力", "weight": 25 },
+      { "name": "领导潜质", "description": "团队协作中的影响力", "weight": 20 },
+      { "name": "综合分析能力", "description": "商业问题分析与判断", "weight": 20 },
+      { "name": "沟通表达能力", "description": "清晰有力地表达观点", "weight": 20 },
+      { "name": "抗压与稳定性", "description": "长期发展的意愿与韧性", "weight": 15 }
+    ],
+    "studyAdvice": [
+      "研究目标企业的业务板块与战略方向",
+      "准备2-3个高质量的 STAR 项目案例",
+      "练习无领导小组讨论的角色定位"
+    ],
+    "practicePath": ["企业调研", "行测逻辑与资料", "无领导小组模拟", "半结构化面试模拟"]
+  },
+  {
+    "positionId": "soe-product-ops",
+    "positionName": "国企产品/运营/市场",
+    "writtenTopics": ["产品分析案例", "数据分析基础", "运营策划案", "市场营销知识", "行测·资料分析"],
+    "interviewQuestions": [
+      "请分析一款你常用的产品，指出其优缺点。",
+      "如果让你运营一个新用户增长活动，你会怎么做？",
+      "你如何理解 To B 与 To C 运营的差异？",
+      "举例说明你如何用数据驱动决策。"
+    ],
+    "competencyModel": [
+      { "name": "用户思维", "description": "洞察用户需求与痛点", "weight": 25 },
+      { "name": "数据分析能力", "description": "用数据支撑判断与复盘", "weight": 25 },
+      { "name": "策划执行能力", "description": "从方案到落地的闭环", "weight": 20 },
+      { "name": "沟通协作能力", "description": "跨部门推进项目", "weight": 15 },
+      { "name": "商业敏感度", "description": "对市场与竞品的理解", "weight": 15 }
+    ],
+    "studyAdvice": [
+      "准备产品分析与运营方案作品集",
+      "掌握基础数据指标（DAU/留存/转化）",
+      "关注行业动态与竞品分析"
+    ],
+    "practicePath": ["产品/运营案例分析", "数据指标学习", "方案撰写", "专业面试模拟"]
+  },
+  {
+    "positionId": "grassroots-support",
+    "positionName": "三支一扶",
+    "writtenTopics": ["公共基础知识", "申论·概括归纳", "时事政治", "行测·常识判断"],
+    "interviewQuestions": [
+      "你选择三支一扶的初心是什么？",
+      "支教/支农/支医中你倾向哪个方向，为什么？",
+      "服务期满后你有什么打算？",
+      "如何看待基层服务中'待遇低、条件苦'的现实？"
+    ],
+    "competencyModel": [
+      { "name": "奉献精神", "description": "服务基层的情怀与担当", "weight": 30 },
+      { "name": "专业能力", "description": "对应支教/支农/支医的专业素养", "weight": 25 },
+      { "name": "适应能力", "description": "适应艰苦环境与角色转变", "weight": 20 },
+      { "name": "沟通能力", "description": "与基层群众有效沟通", "weight": 15 },
+      { "name": "稳定性", "description": "长期服务的意愿", "weight": 10 }
+    ],
+    "studyAdvice": [
+      "夯实公共基础知识与时事政治",
+      "结合报考方向准备专业问题",
+      "面试突出真诚的服务动机"
+    ],
+    "practicePath": ["公基与时政", "申论概括", "动机类面试模拟"]
+  }
+]

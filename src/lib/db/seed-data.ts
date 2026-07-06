@@ -15,3 +15,10 @@ export const examInfoSeed = examInfosRaw as ExamInfo[];
 export const questionSeed = questionsRaw as Question[];
 export const essayCaseSeed = essayCasesRaw as EssayCase[];
 export const essayOriginalSeed = essayOriginalsRaw as EssayOriginal[];
+
+// M6: 岗位备考 profile 种子（不含 resumeFollowUps，追问由服务按简历动态生成）
+import jobProfilesRaw from '../../../data/seed/job-profiles.json';
+import type { JobPrepProfile } from '@/types/job';
+
+export type JobProfileSeed = Omit<JobPrepProfile, 'resumeFollowUps'>;
+export const jobProfileSeed = jobProfilesRaw as JobProfileSeed[];
