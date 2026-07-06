@@ -197,6 +197,20 @@ M8 打磨：首页 Dashboard 聚合真实数据・全站四态・动效・响应
 - 验证方式：`tsc --noEmit`✅ `pnpm lint`✅ `pnpm test`(7 passed)✅ `pnpm build`✅。
 - 下一步：M2 四大 Provider 抽象（Search/LLM/ExamInfo/QuestionSearch）+ mock 实现 + 真实骨架 TODO + env 校验。
 
+### [M2] Provider 抽象 — 2026-07-07
+- 完成内容：
+  - src/lib/env.ts：zod 环境变量校验 + shouldUseReal() 降级逻辑（缺凭据自动回退 mock）。
+  - providers/types.ts：四大接口 SearchProvider / LLMProvider / ExamInfoProvider / QuestionSearchProvider（另含 InterviewEngine 定义，M7 实现）。
+  - 每类 provider 提供 mock 实现 + real 骨架（TODO 标注 + 缺配置报错）+ 工厂函数：
+    - search：MockSearchProvider / RealSearchProvider（Tavily 等示例）。
+    - llm：MockLLMProvider（规则化面试/报告 JSON）/ RealLLMProvider（OpenAI-compatible / Ark）。
+    - exam-info：MockExamInfoProvider（读 seed + 筛选 + 去重 + 排序）/ RealExamInfoProvider。
+    - question：MockQuestionSearchProvider / RealQuestionSearchProvider（复用 SearchProvider）。
+  - providers/index.ts 统一导出工厂。
+  - 新增 provider 单测（招录筛选/sourceUrl 红线/LLM mock JSON），共 14 测试全过。
+- 验证方式：`tsc --noEmit`✅ `pnpm lint`✅ `pnpm test`(14 passed)✅ `pnpm build`✅。
+- 下一步：M3 招录情报页面（列表 + 多维筛选 + 来源链接展示 + API 路由 + 四态）。
+
 plaintext
 10. seeddream 生图素材（新增）
 调用 ark-cli seeddream 生成一组风格统一、可复用的前端素材，落到 frontend/src/assets/generated/：
