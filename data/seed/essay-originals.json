@@ -1,0 +1,80 @@
+[
+  {
+    "id": "orig_2024_national_shen",
+    "year": 2024,
+    "category": "national",
+    "region": "全国",
+    "questionType": "essay",
+    "prompt": "请结合给定资料，围绕「以人民为中心推进基层治理现代化」，自拟题目写一篇文章。要求：观点明确，论述深刻，不少于1000字。",
+    "materialSummary": "资料呈现多地基层治理创新案例，涉及网格化管理、数字赋能、群众议事协商等，强调治理重心下移与服务下沉。",
+    "topics": ["grassroots-governance", "digital-government"],
+    "sourceUrl": "http://www.scs.gov.cn/",
+    "sourceName": "国家公务员局",
+    "publishedAt": "2023-11-26"
+  },
+  {
+    "id": "orig_2023_national_summary",
+    "year": 2023,
+    "category": "national",
+    "region": "全国",
+    "questionType": "summary",
+    "prompt": "根据给定资料，概括当前乡村人才振兴面临的主要困难。要求：全面准确，条理清晰，不超过200字。",
+    "materialSummary": "资料反映乡村存在人才外流、引进难、留不住、结构不合理等问题，同时展示返乡创业带头人的示范作用。",
+    "topics": ["rural-revitalization"],
+    "sourceUrl": "http://www.scs.gov.cn/",
+    "sourceName": "国家公务员局",
+    "publishedAt": "2022-11-27"
+  },
+  {
+    "id": "orig_2024_zhejiang_analysis",
+    "year": 2024,
+    "category": "provincial",
+    "region": "浙江省",
+    "questionType": "analysis",
+    "prompt": "「给定资料」中提到「治理的精度决定城市的温度」，请谈谈你对这句话的理解。要求：分析透彻，逻辑清晰，不超过400字。",
+    "materialSummary": "资料围绕城市精细化治理展开，列举老旧小区改造、无障碍设施、适老化服务等民生细节。",
+    "topics": ["grassroots-governance", "public-services"],
+    "sourceUrl": "http://www.zjks.gov.cn/",
+    "sourceName": "浙江人事考试网",
+    "publishedAt": "2023-12-09"
+  },
+  {
+    "id": "orig_2023_provincial_solution",
+    "year": 2023,
+    "category": "provincial",
+    "region": "广东省",
+    "questionType": "solution",
+    "prompt": "针对给定资料反映的中小企业融资难问题，请提出解决对策。要求：针对性强，具体可行，不超过350字。",
+    "materialSummary": "资料展示中小企业融资渠道单一、抵押物不足、信息不对称等问题，以及政府性融资担保的探索。",
+    "topics": ["economy"],
+    "sourceUrl": "http://rsj.gd.gov.cn/",
+    "sourceName": "广东省人社厅",
+    "publishedAt": "2022-12-10"
+  },
+  {
+    "id": "orig_2024_national_application",
+    "year": 2024,
+    "category": "national",
+    "region": "全国",
+    "questionType": "application",
+    "prompt": "假设你是某街道工作人员，请就社区推行垃圾分类，撰写一份倡议书。要求：内容具体，语言得体，不超过500字。",
+    "materialSummary": "资料介绍社区垃圾分类推行中的居民习惯、宣传引导、设施配套等情况。",
+    "topics": ["ecological", "grassroots-governance"],
+    "sourceUrl": "http://www.scs.gov.cn/",
+    "sourceName": "国家公务员局",
+    "publishedAt": "2023-11-26"
+  },
+  {
+    "id": "orig_2023_institution_essay",
+    "year": 2023,
+    "category": "institution",
+    "region": "江苏省",
+    "questionType": "essay",
+    "prompt": "请以「文化传承与创新」为主题，联系实际写一篇议论文。要求：立意深刻，不少于800字。",
+    "materialSummary": "资料涵盖非遗保护、传统技艺现代表达、文化产业发展等内容。",
+    "topics": ["culture"],
+    "sourceUrl": "http://jshrss.jiangsu.gov.cn/",
+    "sourceName": "江苏省人社厅",
+    "publishedAt": "2022-10-15"
+  }
+]

@@ -1,7 +1,6 @@
-// 上岸小助手 · Into the SEA — Prisma schema
-// M0 骨架：仅占位一个模型，确保 `prisma generate` 可运行。
-// M1 将补齐 ExamInfo / Question / EssayCase / EssayOriginal /
-// InterviewSession / InterviewMessage / WrongQuestion 等全量模型。
+// 上岸小助手 · Into the SEA — Prisma schema (M1)
+// 所有含外部来源的模型均保留 sourceUrl 字段（GOAL.md 红线）。
+// 枚举以 String 存储以保持与前端 TS 联合类型一致、便于扩展。
 
 generator client {
   provider = "prisma-client-js"
@@ -12,7 +11,147 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-// TODO(M1): 扩展为完整数据模型（所有含来源的实体保留 sourceUrl 字段）。
+/// 招录情报（模块一）
+model ExamInfo {
+  id           String    @id @default(cuid())
+  title        String
+  category     String // national | provincial | soe | institution | grassroots
+  region       String
+  organization String
+  enrollStart  DateTime
+  enrollEnd    DateTime
+  examDate     DateTime?
+  status       String // upcoming | open | closed
+  headcount    Int
+  education    String // college | bachelor | master | doctor
+  majors       String[]
+  summary      String
+  tags         String[]
+  sourceUrl    String // 红线：不可省略
+  sourceName   String?
+  publishedAt  DateTime?
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  @@index([category, status])
+  @@index([region])
+}
+
+/// 行测题目（模块三）
+model Question {
+  id          String   @id @default(cuid())
+  type        String // verbal | quantitative | judgment | data-analysis | common-sense
+  difficulty  String // easy | medium | hard
+  stem        String
+  options     Json // QuestionOption[]
+  answer      String
+  explanation String
+  tags        String[]
+  sourceUrl   String? // 题目来源可选
+  sourceName  String?
+  createdAt   DateTime @default(now())
+
+  answerRecords  AnswerRecord[]
+  wrongQuestions WrongQuestion[]
+
+  @@index([type, difficulty])
+}
+
+/// 作答记录
+model AnswerRecord {
+  id         String   @id @default(cuid())
+  questionId String
+  question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  userId     String   @default("local")
+  selected   String
+  correct    Boolean
+  answeredAt DateTime @default(now())
+
+  @@index([userId, questionId])
+}
+
+/// 错题本
+model WrongQuestion {
+  id          String   @id @default(cuid())
+  questionId  String
+  question    Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  userId      String   @default("local")
+  wrongCount  Int      @default(1)
+  lastWrongAt DateTime @default(now())
+  mastered    Boolean  @default(false)
+
+  @@unique([userId, questionId])
+  @@index([userId, mastered])
+}
+
+/// 申论优秀案例（模块四）
+model EssayCase {
+  id                      String    @id @default(cuid())
+  title                   String
+  topics                  String[]
+  applicableTopics        String[]
+  summary                 String
+  transferableExpressions String[]
+  usageScenarios          String[]
+  sourceUrl               String // 红线：不可省略
+  sourceName              String?
+  publishedAt             DateTime?
+  createdAt               DateTime  @default(now())
+
+  @@index([title])
+}
+
+/// 申论历年原题（模块四）
+model EssayOriginal {
+  id              String    @id @default(cuid())
+  year            Int
+  category        String
+  region          String
+  questionType    String // summary | analysis | solution | application | essay
+  prompt          String
+  materialSummary String
+  topics          String[]
+  sourceUrl       String // 红线：不可省略
+  sourceName      String?
+  publishedAt     DateTime?
+  createdAt       DateTime  @default(now())
+
+  @@index([year, category])
+}
+
+/// 模拟面试会话（模块五 · 持久化）
+model InterviewSession {
+  id            String   @id @default(cuid())
+  userId        String   @default("local")
+  positionId    String
+  positionName  String
+  mode          String // structured | behavioral | pressure
+  questionCount Int
+  context       String?
+  status        String   @default("active") // active | completed
+  report        Json? // InterviewReport
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  messages InterviewMessage[]
+
+  @@index([userId, status])
+}
+
+/// 面试消息
+model InterviewMessage {
+  id         String           @id @default(cuid())
+  sessionId  String
+  session    InterviewSession @relation(fields: [sessionId], references: [id], onDelete: Cascade)
+  role       String // interviewer | candidate | system
+  content    String
+  followUpOf String?
+  createdAt  DateTime         @default(now())
+
+  @@index([sessionId])
+}
+
+/// 通用元数据
 model AppMeta {
   id        String   @id @default(cuid())
   key       String   @unique

@@ -1,0 +1,184 @@
+[
+  {
+    "id": "q_verbal_001",
+    "type": "verbal",
+    "difficulty": "medium",
+    "stem": "填入划横线部分最恰当的一项是：科技创新不是____的空想，而是建立在长期积累基础上的____突破。",
+    "options": [
+      { "key": "A", "text": "天马行空／厚积薄发" },
+      { "key": "B", "text": "异想天开／一蹴而就" },
+      { "key": "C", "text": "空中楼阁／循序渐进" },
+      { "key": "D", "text": "好高骛远／水到渠成" }
+    ],
+    "answer": "A",
+    "explanation": "第一空强调脱离实际，「天马行空」形容不切实际的想象；第二空「厚积薄发」与「长期积累」呼应，故选A。",
+    "tags": ["逻辑填空", "成语辨析"],
+    "sourceUrl": "http://www.scs.gov.cn/",
+    "sourceName": "国考真题改编"
+  },
+  {
+    "id": "q_verbal_002",
+    "type": "verbal",
+    "difficulty": "easy",
+    "stem": "下列句子没有语病的一项是：",
+    "options": [
+      { "key": "A", "text": "通过这次培训，使我提高了业务水平。" },
+      { "key": "B", "text": "能否做好防汛工作，是保障群众生命安全的关键。" },
+      { "key": "C", "text": "我们要防止类似事故不再发生。" },
+      { "key": "D", "text": "这次会议明确了今后一个时期的工作方向。" }
+    ],
+    "answer": "D",
+    "explanation": "A项「通过…使…」缺主语；B项两面对一面；C项「防止…不再」否定不当；D项正确。",
+    "tags": ["病句辨析"]
+  },
+  {
+    "id": "q_quant_001",
+    "type": "quantitative",
+    "difficulty": "medium",
+    "stem": "一项工程，甲单独做需要12天，乙单独做需要18天。两人合作，需要多少天完成？",
+    "options": [
+      { "key": "A", "text": "6.8天" },
+      { "key": "B", "text": "7.2天" },
+      { "key": "C", "text": "7.5天" },
+      { "key": "D", "text": "8天" }
+    ],
+    "answer": "B",
+    "explanation": "设总量为36，甲效率3、乙效率2，合作效率5，36÷5=7.2天。",
+    "tags": ["工程问题"]
+  },
+  {
+    "id": "q_quant_002",
+    "type": "quantitative",
+    "difficulty": "hard",
+    "stem": "某商品先提价20%，再打八折出售，最终售价与原价相比：",
+    "options": [
+      { "key": "A", "text": "提高了4%" },
+      { "key": "B", "text": "降低了4%" },
+      { "key": "C", "text": "不变" },
+      { "key": "D", "text": "降低了2%" }
+    ],
+    "answer": "B",
+    "explanation": "1×1.2×0.8=0.96，即为原价的96%，降低了4%。",
+    "tags": ["经济利润"]
+  },
+  {
+    "id": "q_judgment_001",
+    "type": "judgment",
+    "difficulty": "medium",
+    "stem": "图形推理：正方形、五边形、六边形…下一个最可能是几边形？",
+    "options": [
+      { "key": "A", "text": "六边形" },
+      { "key": "B", "text": "七边形" },
+      { "key": "C", "text": "八边形" },
+      { "key": "D", "text": "圆形" }
+    ],
+    "answer": "B",
+    "explanation": "边数依次为4、5、6，成等差数列，下一个为7边形。",
+    "tags": ["图形推理", "数量规律"]
+  },
+  {
+    "id": "q_judgment_002",
+    "type": "judgment",
+    "difficulty": "medium",
+    "stem": "所有的M都是N，有些P是M。由此可以推出：",
+    "options": [
+      { "key": "A", "text": "有些P是N" },
+      { "key": "B", "text": "所有P是N" },
+      { "key": "C", "text": "有些N不是P" },
+      { "key": "D", "text": "所有N是M" }
+    ],
+    "answer": "A",
+    "explanation": "有些P是M，而所有M是N，故这些P也是N，即「有些P是N」必然成立。",
+    "tags": ["逻辑判断", "三段论"]
+  },
+  {
+    "id": "q_data_001",
+    "type": "data-analysis",
+    "difficulty": "medium",
+    "stem": "某市2024年GDP为5000亿元，同比增长8%，则2023年GDP约为：",
+    "options": [
+      { "key": "A", "text": "4600亿元" },
+      { "key": "B", "text": "4630亿元" },
+      { "key": "C", "text": "4400亿元" },
+      { "key": "D", "text": "5400亿元" }
+    ],
+    "answer": "B",
+    "explanation": "2023年GDP=5000÷1.08≈4629.6亿元，最接近4630亿元。",
+    "tags": ["资料分析", "增长率"]
+  },
+  {
+    "id": "q_data_002",
+    "type": "data-analysis",
+    "difficulty": "hard",
+    "stem": "某企业A产品销量占总销量的25%，B产品占40%，若A销量为5万件，则总销量为：",
+    "options": [
+      { "key": "A", "text": "12万件" },
+      { "key": "B", "text": "18万件" },
+      { "key": "C", "text": "20万件" },
+      { "key": "D", "text": "25万件" }
+    ],
+    "answer": "C",
+    "explanation": "A占25%对应5万件，总销量=5÷25%=20万件。",
+    "tags": ["资料分析", "比重"]
+  },
+  {
+    "id": "q_common_001",
+    "type": "common-sense",
+    "difficulty": "easy",
+    "stem": "下列关于我国宪法的表述，错误的是：",
+    "options": [
+      { "key": "A", "text": "宪法是国家的根本法" },
+      { "key": "B", "text": "宪法具有最高的法律效力" },
+      { "key": "C", "text": "宪法的修改由全国人大常委会负责" },
+      { "key": "D", "text": "一切法律都不得同宪法相抵触" }
+    ],
+    "answer": "C",
+    "explanation": "宪法的修改由全国人民代表大会以全体代表三分之二以上多数通过，而非常委会，故C错误。",
+    "tags": ["法律常识", "宪法"]
+  },
+  {
+    "id": "q_common_002",
+    "type": "common-sense",
+    "difficulty": "medium",
+    "stem": "「二十四节气」中，标志着夏季正式开始的节气是：",
+    "options": [
+      { "key": "A", "text": "谷雨" },
+      { "key": "B", "text": "立夏" },
+      { "key": "C", "text": "小满" },
+      { "key": "D", "text": "夏至" }
+    ],
+    "answer": "B",
+    "explanation": "「立夏」为夏季第一个节气，标志夏季开始；夏至为白昼最长之日。",
+    "tags": ["人文常识", "节气"]
+  },
+  {
+    "id": "q_verbal_003",
+    "type": "verbal",
+    "difficulty": "medium",
+    "stem": "根据文段，作者主要强调的是：基层治理的关键在于把服务下沉到群众身边，让群众少跑腿、数据多跑路。",
+    "options": [
+      { "key": "A", "text": "基层治理要依靠数据技术" },
+      { "key": "B", "text": "基层治理应以群众需求为中心下沉服务" },
+      { "key": "C", "text": "群众应主动配合基层工作" },
+      { "key": "D", "text": "减少跑腿是治理的唯一目标" }
+    ],
+    "answer": "B",
+    "explanation": "文段落脚点在「服务下沉到群众身边」，核心是以群众为中心，故选B。",
+    "tags": ["片段阅读", "主旨概括"]
+  },
+  {
+    "id": "q_quant_003",
+    "type": "quantitative",
+    "difficulty": "easy",
+    "stem": "甲、乙两地相距240公里，汽车以60公里/小时的速度行驶，需要几小时到达？",
+    "options": [
+      { "key": "A", "text": "3小时" },
+      { "key": "B", "text": "4小时" },
+      { "key": "C", "text": "5小时" },
+      { "key": "D", "text": "6小时" }
+    ],
+    "answer": "B",
+    "explanation": "时间=路程÷速度=240÷60=4小时。",
+    "tags": ["行程问题"]
+  }
+]

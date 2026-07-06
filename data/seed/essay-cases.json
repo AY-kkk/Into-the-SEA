@@ -1,0 +1,98 @@
+[
+  {
+    "id": "case_grassroots_001",
+    "title": "浙江「最多跑一次」改革：以数字化重塑政务服务",
+    "topics": ["digital-government", "grassroots-governance"],
+    "applicableTopics": ["政务服务", "放管服改革", "数字政府", "营商环境"],
+    "summary": "浙江以群众和企业办事「最多跑一次」为目标，打通部门数据壁垒，推动线上线下融合，成为全国政务服务改革标杆。",
+    "transferableExpressions": [
+      "让数据多跑路，让群众少跑腿",
+      "刀刃向内的自我革命",
+      "从「碎片化」到「一体化」的服务重塑"
+    ],
+    "usageScenarios": ["数字政府类大作文", "优化营商环境对策题", "政务服务改革分析题"],
+    "sourceUrl": "http://www.zj.gov.cn/",
+    "sourceName": "浙江省人民政府",
+    "publishedAt": "2023-06-01"
+  },
+  {
+    "id": "case_rural_001",
+    "title": "浙江「千万工程」：二十年绘就和美乡村画卷",
+    "topics": ["rural-revitalization", "ecological"],
+    "applicableTopics": ["乡村振兴", "人居环境", "城乡融合", "生态文明"],
+    "summary": "「千村示范、万村整治」工程从农村人居环境整治入手，久久为功，造就万千美丽乡村，获联合国「地球卫士奖」。",
+    "transferableExpressions": [
+      "久久为功、利在长远",
+      "绿水青山就是金山银山",
+      "一张蓝图绘到底"
+    ],
+    "usageScenarios": ["乡村振兴大作文", "生态治理案例引用", "基层长效机制分析"],
+    "sourceUrl": "http://www.gov.cn/",
+    "sourceName": "中国政府网",
+    "publishedAt": "2023-08-15"
+  },
+  {
+    "id": "case_service_001",
+    "title": "「时间银行」互助养老：激活基层为老服务新动能",
+    "topics": ["public-services", "grassroots-governance"],
+    "applicableTopics": ["养老服务", "社区治理", "志愿服务", "民生保障"],
+    "summary": "多地探索「时间银行」模式，低龄老人为高龄老人服务并储蓄时间，未来兑换服务，构建可持续的互助养老生态。",
+    "transferableExpressions": [
+      "存储今天的服务，兑换明天的安心",
+      "把服务的种子种进社区",
+      "从「政府独唱」到「社会合唱」"
+    ],
+    "usageScenarios": ["养老民生类对策题", "社区治理创新分析", "志愿服务大作文"],
+    "sourceUrl": "http://www.mca.gov.cn/",
+    "sourceName": "民政部",
+    "publishedAt": "2022-11-20"
+  },
+  {
+    "id": "case_digital_001",
+    "title": "「城市大脑」赋能超大城市精细化治理",
+    "topics": ["digital-government", "grassroots-governance"],
+    "applicableTopics": ["智慧城市", "城市治理", "数据要素", "应急管理"],
+    "summary": "通过整合交通、医疗、城管等多源数据，「城市大脑」实现从事后处置到事前预警的治理转变，提升城市运行效率。",
+    "transferableExpressions": [
+      "用一块屏看清一座城",
+      "从被动应对到主动感知",
+      "治理精度决定城市温度"
+    ],
+    "usageScenarios": ["智慧城市大作文", "城市治理分析题", "数据要素应用"],
+    "sourceUrl": "http://www.gov.cn/",
+    "sourceName": "中国政府网",
+    "publishedAt": "2023-03-10"
+  },
+  {
+    "id": "case_culture_001",
+    "title": "博物馆「热」：让文物活起来的文化自信实践",
+    "topics": ["culture"],
+    "applicableTopics": ["文化传承", "文化自信", "文旅融合", "公共文化服务"],
+    "summary": "各地博物馆通过数字展陈、文创开发和沉浸式体验吸引年轻人，「为一座馆赴一座城」成为文化消费新风尚。",
+    "transferableExpressions": [
+      "让收藏在博物馆里的文物活起来",
+      "以文化人、以文润城",
+      "传统文化的「破圈」表达"
+    ],
+    "usageScenarios": ["文化自信大作文", "文旅融合对策题", "公共文化服务分析"],
+    "sourceUrl": "http://www.ncha.gov.cn/",
+    "sourceName": "国家文物局",
+    "publishedAt": "2023-05-18"
+  },
+  {
+    "id": "case_economy_001",
+    "title": "「专精特新」小巨人：中小企业强链补链的创新样本",
+    "topics": ["economy"],
+    "applicableTopics": ["高质量发展", "创新驱动", "制造强国", "中小企业"],
+    "summary": "一批专注细分领域、掌握关键技术的中小企业成长为「小巨人」，在产业链关键环节实现自主可控，支撑制造业升级。",
+    "transferableExpressions": [
+      "把冷板凳坐热，把独门技术做精",
+      "小企业蕴含大能量",
+      "以创新之钥打开发展之锁"
+    ],
+    "usageScenarios": ["高质量发展大作文", "创新驱动分析题", "实体经济对策"],
+    "sourceUrl": "http://www.miit.gov.cn/",
+    "sourceName": "工业和信息化部",
+    "publishedAt": "2023-09-01"
+  }
+]

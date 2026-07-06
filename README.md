@@ -66,3 +66,13 @@ docs/           DESIGN.md · skills-plan.md
 ## 迭代进度
 
 见 `GOAL.md` 第 12 节「进度日志」。当前：**M0 脚手架** 完成。
+
+## 数据扩充说明
+
+- 种子数据位于 `data/seed/*.json`：`exam-infos.json`、`questions.json`、`essay-cases.json`、`essay-originals.json`。
+- 所有含外部来源的条目均带 `sourceUrl`（红线字段）。
+- **申论案例 / 原题目标各 100 条**：当前提供结构化 mock 样本，扩充方式：
+  1. 按现有 JSON 结构补充条目（保持 `sourceUrl` 不省略）。
+  2. 运行 `pnpm db:seed` 写入数据库（需 `DATABASE_URL`）。
+  3. 或通过 M5 的导入脚本批量导入。
+- MVP 默认走 mock provider，直接读取 seed JSON，无需数据库即可演示。

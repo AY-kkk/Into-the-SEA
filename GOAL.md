@@ -185,6 +185,18 @@ M8 打磨：首页 Dashboard 聚合真实数据・全站四态・动效・响应
 - 验证方式：`pnpm build`✅ `pnpm lint`✅ `pnpm test`(3 passed)✅ `tsc --noEmit`✅；`next dev` 首页与各路由 HTTP 200。
 - 下一步：M1 类型与数据层（types/ 全量定义 + Prisma 全模型 + data/seed/*.json 含 source_url + seed 脚本）。
 
+### [M1] 类型与数据层 — 2026-07-07
+- 完成内容：
+  - types/ 全量定义：common（枚举/四态/SourceRef 含 sourceUrl 红线）、exam、question、essay、job、interview、user，统一从 types/index.ts 导出。
+  - Prisma 全模型：ExamInfo / Question / AnswerRecord / WrongQuestion / EssayCase / EssayOriginal / InterviewSession / InterviewMessage / AppMeta，含来源实体均保留 sourceUrl；prisma generate 通过。
+  - data/seed/*.json：招录情报 8 条、行测题 12 条（覆盖五题型）、申论案例 6 条、申论原题 6 条，全部带真实 sourceUrl。
+  - src/lib/db/prisma.ts（客户端单例）+ src/lib/db/seed-data.ts（类型化 seed 访问，供 mock provider）。
+  - scripts/seed.ts：从 JSON upsert 写入 Prisma。
+  - 单测新增 seed 数据完整性校验（sourceUrl 红线 + 答案键有效性）。
+  - README 增补「数据扩充说明」（申论 100 条扩充方式）。
+- 验证方式：`tsc --noEmit`✅ `pnpm lint`✅ `pnpm test`(7 passed)✅ `pnpm build`✅。
+- 下一步：M2 四大 Provider 抽象（Search/LLM/ExamInfo/QuestionSearch）+ mock 实现 + 真实骨架 TODO + env 校验。
+
 plaintext
 10. seeddream 生图素材（新增）
 调用 ark-cli seeddream 生成一组风格统一、可复用的前端素材，落到 frontend/src/assets/generated/：
