@@ -1,0 +1,41 @@
+GOAL.md
+  s_cfa101782adbe4::t_bdf78e96b5fda6 147,214-225
+src/app/api/exam-news/route.ts
+  s_cfa101782adbe4::t_f130ca607c6d19 1-28
+src/app/exam-news/page.tsx
+  s_cfa101782adbe4::t_b384faed067d1a 3-4,8-13,15-19
+src/components/exam-news/exam-card.tsx
+  s_cfa101782adbe4::t_085abb0986e6e4 1-67
+src/components/exam-news/exam-news-view.tsx
+  s_cfa101782adbe4::t_2e96f5d9cf7fa5 1-136
+src/components/shared/source-link.tsx
+  s_cfa101782adbe4::t_e69bd15bcec90c 1-30
+src/components/shared/states.tsx
+  s_cfa101782adbe4::t_fe9324ecf82dc5 1-78
+src/components/ui/select-native.tsx
+  s_cfa101782adbe4::t_f80eab3195895d 1-36
+src/lib/validators/exam.ts
+  s_cfa101782adbe4::t_fc96e76eb3a3d0 1-25
+src/services/exam-info.service.test.ts
+  s_cfa101782adbe4::t_013704be735c86 1-44
+src/services/exam-info.service.ts
+  s_cfa101782adbe4::t_d19b222d67fd2c 1-41
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.5",
+  "base_commit_sha": "612b1439f82d34ce38e7f49ac3b0419fefdeccd9",
+  "prompts": {},
+  "sessions": {
+    "s_cfa101782adbe4": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f389f-7838-7de1-8147-c508459c6b27",
+        "model": "unknown"
+      },
+      "human_author": "Codex <codex@local>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
