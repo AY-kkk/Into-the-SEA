@@ -1,0 +1,97 @@
+.eslintrc.json
+  s_cfa101782adbe4::t_98bb4948118da3 5
+AGENTS.md
+  s_cfa101782adbe4::t_91b343589e4bb2 6,15,21
+GOAL.md
+  s_cfa101782adbe4::t_2d769850f0ed3d 45-52,61,68,76,85,93,134-135,152,158,278-287,322-323
+README.md
+  s_cfa101782adbe4::t_173d1cc39eb409 24-36,63-82
+data/seed/essay-cases.json
+  s_cfa101782adbe4::t_a7b8461a04036c 24
+data/seed/job-profiles.json
+  s_cfa101782adbe4::t_5a77009f7b3abe 5-12,31-37,42-48,72-78,102-108
+docs/DESIGN.md
+  s_cfa101782adbe4::t_dbebb0de884918 4,7-57
+docs/skills-plan.md
+  s_cfa101782adbe4::t_9a43f4aac7a13c 4,6,8-26
+package.json
+  s_cfa101782adbe4::t_ec6080c33fb93a 17-18
+pnpm-workspace.yaml
+  s_cfa101782adbe4::t_a56d8a420e47d0 3-4
+scripts/gen-assets.ts
+  s_cfa101782adbe4::t_a421ff524e3ebc 1-60
+src/app/essay/page.tsx
+  s_cfa101782adbe4::t_1e773daf5f1fda 4
+src/app/globals.css
+  s_cfa101782adbe4::t_e7aab927e4e035 100,107-108
+src/app/page.tsx
+  s_cfa101782adbe4::t_b9f0bff9074fd4 2,7-15,17-26,40-41,44,46,50,55-154
+src/assets/generated/README.md
+  s_cfa101782adbe4::t_7882ed68211aa1 1-6
+src/assets/generated/brand-mark.svg
+  s_cfa101782adbe4::t_3fa2910c4731f3 1-5
+src/components/dashboard/interview-summary.tsx
+  s_cfa101782adbe4::t_229536765cb838 1-58
+src/components/dashboard/stat-cards.tsx
+  s_cfa101782adbe4::t_ab6783f01f578d 1-75
+src/components/essay/original-card.tsx
+  s_cfa101782adbe4::t_e67959f2229551 6
+src/components/interview/chat-runner.tsx
+  s_cfa101782adbe4::t_b72f1e713f5687 86-87,121-125
+src/components/interview/interview-setup.tsx
+  s_cfa101782adbe4::t_dd374e51e0a6b5 32
+src/components/interview/interview-view.tsx
+  s_cfa101782adbe4::t_8b015fc9a985c1 74-78
+src/components/interview/report-view.tsx
+  s_cfa101782adbe4::t_46a21207cd7905 8,33-36
+src/components/job-prep/job-prep-view.tsx
+  s_cfa101782adbe4::t_183e3229672c71 17,42-45,91-93,153-154,160-162,165-169,178-180,199-203
+src/components/job-prep/profile-panels.tsx
+  s_cfa101782adbe4::t_e35ad0514f51b1 1,37
+src/components/layout/sidebar.tsx
+  s_cfa101782adbe4::t_bcd14742380b85 3,8,16-17
+src/components/practice/practice-view.tsx
+  s_cfa101782adbe4::t_7b340a1c1d4f60 4,62,75
+src/components/practice/quiz-runner.tsx
+  s_cfa101782adbe4::t_32022e1a702a42 11,31-34,158,171-173
+src/components/practice/wrong-book.tsx
+  s_cfa101782adbe4::t_831ff9373f93ed 23-29,56,72-73
+src/components/shared/placeholder.tsx
+  s_cfa101782adbe4::t_bb305ee78f076d 9
+src/components/ui/button.tsx
+  s_cfa101782adbe4::t_7af493ec1ae839 13-14
+src/components/ui/select-native.tsx
+  s_cfa101782adbe4::t_bbfa9811c795d6 5
+src/lib/db/seed-data.test.ts
+  s_cfa101782adbe4::t_d5aa1c49c634ef 2
+src/providers/interview/engine.ts
+  s_cfa101782adbe4::t_9deb0c6bfb1cfc 2,37
+src/services/essay.service.test.ts
+  s_cfa101782adbe4::t_49f8c4bcce62a2 2
+src/services/interview.service.test.ts
+  s_cfa101782adbe4::t_681df02411bedc 2
+src/services/interview.service.ts
+  s_cfa101782adbe4::t_12373a8b1a0e83 87-90
+src/types/assets.d.ts
+  s_cfa101782adbe4::t_405dc875c3f407 1-5
+src/types/exam.ts
+  s_cfa101782adbe4::t_db8cbf97aaa214 1
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.5",
+  "base_commit_sha": "c149ee5e6f75dacfa0f1c85543a8fff2000eff67",
+  "prompts": {},
+  "sessions": {
+    "s_cfa101782adbe4": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f389f-7838-7de1-8147-c508459c6b27",
+        "model": "unknown"
+      },
+      "human_author": "Codex <codex@local>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
