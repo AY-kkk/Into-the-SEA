@@ -1,0 +1,43 @@
+GOAL.md
+  s_cfa101782adbe4::t_fc8c4e67489009 249-259
+data/seed/job-profiles.json
+  s_cfa101782adbe4::t_6e6f187d596265 1-122
+src/app/api/job-prep/follow-ups/route.ts
+  s_cfa101782adbe4::t_bbd217943b4317 1-22
+src/app/api/job-prep/questions/route.ts
+  s_cfa101782adbe4::t_677835a6bd0c12 1-24
+src/app/job-prep/page.tsx
+  s_cfa101782adbe4::t_db7452e5af8f65 3-4,9-10,12-16
+src/components/job-prep/job-prep-view.tsx
+  s_cfa101782adbe4::t_969d76753415be 1-216
+src/components/job-prep/profile-panels.tsx
+  s_cfa101782adbe4::t_a3f4f261e2b07e 1-111
+src/lib/db/seed-data.ts
+  s_cfa101782adbe4::t_5e0b6d9e21ea10 18-24
+src/lib/validators/job.ts
+  s_cfa101782adbe4::t_2cea5592c0cf30 1-19
+src/services/job-prep.service.test.ts
+  s_cfa101782adbe4::t_76c254760013a2 1-59
+src/services/job-prep.service.ts
+  s_cfa101782adbe4::t_74758a77c4073c 1-138
+src/store/interview-context-store.ts
+  s_cfa101782adbe4::t_dcd2d9af5ea16f 1-37
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.5",
+  "base_commit_sha": "adbd7bfb8dc1988e3fc0aedb67836e8e4782148f",
+  "prompts": {},
+  "sessions": {
+    "s_cfa101782adbe4": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f389f-7838-7de1-8147-c508459c6b27",
+        "model": "unknown"
+      },
+      "human_author": "Codex <codex@local>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
