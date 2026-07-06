@@ -1,0 +1,29 @@
+src/lib/env.ts
+  s_cfa101782adbe4::t_ce012b4c143d8a 1-66
+src/providers/search/index.ts
+  s_cfa101782adbe4::t_d6d16e8bf298a6 1-11
+src/providers/search/mock.ts
+  s_cfa101782adbe4::t_78571b78702be4 1-34
+src/providers/search/real.ts
+  s_cfa101782adbe4::t_8d08cc0398b882 1-27
+src/providers/types.ts
+  s_cfa101782adbe4::t_05f63708d7dbc5 1-76
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.5",
+  "base_commit_sha": "72531f0699781b6e29c3a4d2c58b4e567f28f381",
+  "prompts": {},
+  "sessions": {
+    "s_cfa101782adbe4": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f389f-7838-7de1-8147-c508459c6b27",
+        "model": "unknown"
+      },
+      "human_author": "Codex <codex@local>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
