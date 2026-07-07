@@ -1,0 +1,105 @@
+package.json
+  s_eaeb8e0d0f724e::t_a35ac0d093c070 22-23
+prisma/schema.prisma
+  s_eaeb8e0d0f724e::t_84accccda9f980 161-194
+src/app/(app)/layout.tsx
+  s_eaeb8e0d0f724e::t_e085abcf273e3b 4,10
+src/app/(auth)/forgot-password/page.tsx
+  s_eaeb8e0d0f724e::t_1e91b39c696607 4,12-13,23
+src/app/(auth)/login/page.tsx
+  s_eaeb8e0d0f724e::t_af903c1aec4a91 1,5,24-26
+src/app/(auth)/register/page.tsx
+  s_eaeb8e0d0f724e::t_016ef1c6a3c3be 4,23
+src/app/api/auth/login/route.ts
+  s_eaeb8e0d0f724e::t_8497449e1748ea 1-39
+src/app/api/auth/logout/route.ts
+  s_eaeb8e0d0f724e::t_db6a73cd20e105 1-10
+src/app/api/auth/register/route.ts
+  s_eaeb8e0d0f724e::t_2060129c667a96 1-38
+src/app/api/auth/reset-password/route.ts
+  s_eaeb8e0d0f724e::t_4e8c5c943b258c 1-32
+src/app/api/auth/session/route.ts
+  s_eaeb8e0d0f724e::t_739e21071d212c 1-8
+src/app/api/health/route.ts
+  s_eaeb8e0d0f724e::t_8f2c5a496ca0a8 1-27
+src/app/api/interview/next/route.ts
+  s_eaeb8e0d0f724e::t_cb9e5af0d87436 2,8-10
+src/app/api/interview/report/route.ts
+  s_eaeb8e0d0f724e::t_80e8c11ac868e0 2,8-10
+src/app/api/interview/start/route.ts
+  s_eaeb8e0d0f724e::t_b3aed9f0a4c126 2,8-10
+src/app/api/job-prep/follow-ups/route.ts
+  s_eaeb8e0d0f724e::t_64ce64561abddf 2,8-10
+src/app/api/job-prep/questions/route.ts
+  s_eaeb8e0d0f724e::t_8d5e1849a67d1d 2,8-10
+src/app/api/practice/state/route.ts
+  s_eaeb8e0d0f724e::t_547cf7c37584e4 1-48
+src/components/auth/forgot-form.tsx
+  s_eaeb8e0d0f724e::t_4afa8721954ead 1-87
+src/components/auth/login-form.tsx
+  s_eaeb8e0d0f724e::t_c0c3ced131d1bb 1-85
+src/components/auth/register-form.tsx
+  s_eaeb8e0d0f724e::t_22f9d73f00ae42 1-95
+src/components/auth/session-sync.tsx
+  s_eaeb8e0d0f724e::t_c6d823447ef172 1-26
+src/components/exam-news/exam-news-view.tsx
+  s_eaeb8e0d0f724e::t_7db67f6da5affb 10-11,34-40,82
+src/components/exam-news/freshness-banner.tsx
+  s_eaeb8e0d0f724e::t_b8e7b548113072 1-21
+src/components/layout/topbar.tsx
+  s_eaeb8e0d0f724e::t_ada8e318df302d 5,8,33
+src/lib/auth/cookie.test.ts
+  s_eaeb8e0d0f724e::t_f388401f3bb607 1-21
+src/lib/auth/cookie.ts
+  s_eaeb8e0d0f724e::t_60ebc69786b320 1-24
+src/lib/auth/password.test.ts
+  s_eaeb8e0d0f724e::t_8b6a370e092d21 1-31
+src/lib/auth/password.ts
+  s_eaeb8e0d0f724e::t_835f7b7fe852d0 1-35
+src/lib/auth/session.ts
+  s_eaeb8e0d0f724e::t_80769037a369ff 1-34
+src/lib/db/practice-state.ts
+  s_eaeb8e0d0f724e::t_aabfc448c2223b 1-82
+src/lib/env.ts
+  s_eaeb8e0d0f724e::t_ac0e3fb7de9dbf 34-53,97-114
+src/lib/observability/capture.ts
+  s_eaeb8e0d0f724e::t_746ff15047178b 1-30
+src/lib/observability/logger.ts
+  s_eaeb8e0d0f724e::t_613f55cc27df91 1-28
+src/lib/security/guard.ts
+  s_eaeb8e0d0f724e::t_e81216f5468c51 1-89
+src/lib/security/rate-limit.test.ts
+  s_eaeb8e0d0f724e::t_9d9a114fee3dc6 1-39
+src/lib/security/rate-limit.ts
+  s_eaeb8e0d0f724e::t_6d4177863299dc 1-70
+src/lib/validators/auth.ts
+  s_eaeb8e0d0f724e::t_5d0db2bfe256a4 1-13
+src/lib/validators/practice-state.ts
+  s_eaeb8e0d0f724e::t_527cec1df532fb 1-32
+src/middleware.ts
+  s_eaeb8e0d0f724e::t_8afca21c87bdf3 1-48
+src/providers/llm/real.ts
+  s_eaeb8e0d0f724e::t_c92aa4dfdfcf81 29
+src/store/auth-store.ts
+  s_eaeb8e0d0f724e::t_55e9180fe2048b 1-36
+src/types/user.ts
+  s_eaeb8e0d0f724e::t_508b515647e35a 3-19
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.5",
+  "base_commit_sha": "acc77df71b2be73bb7b6b2b34a184b47c0875349",
+  "prompts": {},
+  "sessions": {
+    "s_eaeb8e0d0f724e": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f3baa-a63e-71f2-a85a-49a652ab09ec",
+        "model": "unknown"
+      },
+      "human_author": "Codex <codex@local>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
