@@ -108,11 +108,19 @@ pnpm build && pnpm start
 - **数据红线**：`pnpm validate:sources` 自动校验所有外部来源条目的 `sourceUrl`（CI 阻断项，522 条 0 违规）；招录页展示「数据更新时间」+ 陈旧提示。
 - **合规文档**：`docs/PRIVACY.md`、`docs/TERMS.md`、`docs/AI-DISCLAIMER.md`、`docs/RUNBOOK.md`（占位模板，上线前法务确认）。
 
+- **内容可信**：`pnpm audit:questions` 独立从题干重算 5600 道可计算题（数量/资料/数列），实测正确率 **100%**；`pnpm validate:sources` 校验 522 条 `sourceUrl` 红线。
+- **招录时效（cron）**：`/api/cron/ingest`（`CRON_SECRET` 保护）+ `vercel.json` 每日 01:00 定时；写入 `AppMeta.lastIngestAt`，招录页展示「更新时间/最近同步/陈旧」标识。
+- **关键漏斗埋点**：`/api/analytics` + 客户端 `track()`，覆盖注册/登录/刷题作答/错题掌握/面试开场·回答·报告等漏斗（结构化日志落地，可切 PostHog/GA4）。
+- **E2E（Playwright）**：`pnpm test:e2e` 覆盖「注册→刷题→错题本→标记掌握」「面试开场→回答→报告」「健康检查/robots/sitemap/401」共 6 条，全绿。
+- **SEO/分享**：`metadataBase` + OpenGraph/Twitter 卡片 + `robots.txt` + `sitemap.xml`；招录/申论页含 canonical 与描述。
+
 ### 相关脚本
 
-| 命令                    | 说明                                                       |
-| ----------------------- | ---------------------------------------------------------- |
-| `pnpm validate:sources` | 校验 seed 数据 `sourceUrl` 红线（`-- --net` 附加联网抽检） |
+| 命令                    | 说明                                                         |
+| ----------------------- | ------------------------------------------------------------ |
+| `pnpm validate:sources` | 校验 seed 数据 `sourceUrl` 红线（`-- --net` 附加联网抽检）   |
+| `pnpm audit:questions`  | 独立重算题库答案，输出各题型正确率（Gate2：≥99%，实测 100%） |
+| `pnpm test:e2e`         | Playwright E2E（登录/刷题/错题本/面试/健康/SEO 六条用例）    |
 
 ## 迭代进度
 

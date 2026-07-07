@@ -37,7 +37,17 @@
 
 - 招录情报：`pnpm ingest -- --github` / `--web-essays`，人工复核后并入 `data/seed`，再 `pnpm db:seed`。
 - 来源校验：`pnpm validate:sources`（离线，CI 阻断项）；`pnpm validate:sources -- --net` 抽检可达性。
-- 页面展示「数据更新时间」+ 陈旧提示（见 `getExamInfoFreshness`）。
+- **定时刷新（Vercel Cron）**：`vercel.json` 配置每日 01:00 调用 `GET /api/cron/ingest`（带 `Authorization: Bearer $CRON_SECRET`），更新 `AppMeta.lastIngestAt`。
+  - 手动触发：`curl -H "Authorization: Bearer $CRON_SECRET" https://<domain>/api/cron/ingest`。
+  - TODO(real)：在该 endpoint 内接 `scripts/ingest` 抓取→清洗→`validate:sources`→落库。
+- 答案审计：`pnpm audit:questions`（独立重算，CI 可加 `-- --min 99`）。
+- 页面展示「数据更新时间 / 最近同步 / 陈旧」提示（见 `getExamInfoFreshness`）。
+
+## 5b. 测试与质量门
+
+- 单测：`pnpm test`（69）；类型 `pnpm typecheck`；`pnpm lint`。
+- E2E：`pnpm test:e2e:install`（首次装 Chromium）→ `pnpm test:e2e`（对生产构建启动服务，跑核心路径 6 条）。
+- 观测：`GET /api/health`；结构化日志 `logger`（`funnel` 事件即漏斗埋点，可导入数仓/PostHog）。
 
 ## 6. 成本与滥用应急
 

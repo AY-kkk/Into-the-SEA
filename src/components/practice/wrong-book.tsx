@@ -7,6 +7,8 @@ import { Badge } from '@/components/ui/badge';
 import { SelectNative } from '@/components/ui/select-native';
 import { EmptyState } from '@/components/shared/states';
 import { usePracticeStore } from '@/store/practice-store';
+import { track } from '@/lib/analytics/track';
+import { FUNNEL_EVENTS } from '@/lib/analytics/events';
 import { QUESTION_TYPE_LABELS, type QuestionType } from '@/types/question';
 import { useMemo, useState } from 'react';
 
@@ -75,7 +77,10 @@ export function WrongBook({ onPractice }: { onPractice: (ids: string[]) => void 
                 <Button
                   variant={w.mastered ? 'outline' : 'secondary'}
                   size="sm"
-                  onClick={() => markMastered(q.id, !w.mastered)}
+                  onClick={() => {
+                    markMastered(q.id, !w.mastered);
+                    if (!w.mastered) track(FUNNEL_EVENTS.WRONG_MASTERED);
+                  }}
                 >
                   <CheckCircle2 className="h-4 w-4" />
                   {w.mastered ? '取消已掌握' : '标记已掌握'}

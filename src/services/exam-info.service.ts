@@ -1,6 +1,7 @@
 import { getExamInfoProvider } from '@/providers/exam-info';
 import type { ExamInfo, ExamInfoFilter } from '@/types/exam';
 import type { FetchOptions } from '@/providers/types';
+import { getMeta, META_KEYS } from '@/lib/db/app-meta';
 
 /**
  * 招录情报业务服务。
@@ -47,6 +48,8 @@ export interface ExamInfoFreshness {
   ageDays: number | null;
   /** 是否被视为陈旧（默认 > 30 天）。 */
   stale: boolean;
+  /** 最近一次数据摄取时间（cron/ingest 写入 AppMeta），无则 null。 */
+  lastIngestAt: string | null;
   /** 计算时刻。 */
   checkedAt: string;
 }
@@ -56,7 +59,10 @@ export interface ExamInfoFreshness {
  * TODO(real): 接入 scripts/ingest.ts 的实际抓取时间戳（AppMeta 表记录 lastIngestAt）。
  */
 export async function getExamInfoFreshness(staleDays = 30): Promise<ExamInfoFreshness> {
-  const items = await listExamInfo();
+  const [items, lastIngestAt] = await Promise.all([
+    listExamInfo(),
+    getMeta(META_KEYS.LAST_INGEST_AT),
+  ]);
   const times = items
     .map((i) => i.publishedAt)
     .filter((d): d is string => Boolean(d))
@@ -68,6 +74,7 @@ export async function getExamInfoFreshness(staleDays = 30): Promise<ExamInfoFres
       latestPublishedAt: null,
       ageDays: null,
       stale: true,
+      lastIngestAt,
       checkedAt: new Date(now).toISOString(),
     };
   }
@@ -77,6 +84,7 @@ export async function getExamInfoFreshness(staleDays = 30): Promise<ExamInfoFres
     latestPublishedAt: new Date(latest).toISOString(),
     ageDays,
     stale: ageDays > staleDays,
+    lastIngestAt,
     checkedAt: new Date(now).toISOString(),
   };
 }

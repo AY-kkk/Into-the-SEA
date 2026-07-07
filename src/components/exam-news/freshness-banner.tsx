@@ -11,6 +11,7 @@ export function FreshnessBanner({ freshness }: { freshness: ExamInfoFreshness })
       <Clock className="h-3.5 w-3.5" />
       <span>数据更新时间：{updated}</span>
       {freshness.ageDays !== null ? <span>· {freshness.ageDays} 天前</span> : null}
+      {freshness.lastIngestAt ? <span>· 最近同步 {formatDate(freshness.lastIngestAt)}</span> : null}
       {freshness.stale ? (
         <Badge variant="warning">数据可能已过期，请以官方公告为准</Badge>
       ) : (

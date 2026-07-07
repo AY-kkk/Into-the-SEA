@@ -9,6 +9,8 @@ const providerMode = z.enum(['mock', 'real']).default('mock');
 const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
   NEXT_PUBLIC_APP_NAME: z.string().default('上岸小助手'),
+  /** 站点公开 URL（用于 SEO metadataBase / sitemap / OG）。 */
+  NEXT_PUBLIC_APP_URL: z.string().url().optional(),
 
   DATABASE_URL: z.string().optional(),
   /** 数据读取来源：seed（默认，读 JSON）| db（读 PostgreSQL/Prisma）。 */
@@ -51,6 +53,10 @@ const envSchema = z.object({
   LLM_MAX_TOKENS_CAP: z.coerce.number().int().positive().default(1024),
   /** 单用户每日 LLM 调用次数上限（成本护栏）。 */
   LLM_DAILY_CALL_CAP: z.coerce.number().int().positive().default(80),
+
+  // ── 定时任务 ──
+  /** Vercel Cron 调用鉴权密钥（生产建议设置）。 */
+  CRON_SECRET: z.string().optional(),
 });
 
 export type Env = z.infer<typeof envSchema>;

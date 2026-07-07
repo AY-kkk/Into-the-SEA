@@ -10,6 +10,8 @@ import { cn } from '@/lib/utils/cn';
 import { usePracticeStore } from '@/store/practice-store';
 import { DIFFICULTY_LABELS, QUESTION_TYPE_LABELS, type Question } from '@/types/question';
 import { Mascot } from '@/components/shared/mascot';
+import { track } from '@/lib/analytics/track';
+import { FUNNEL_EVENTS } from '@/lib/analytics/events';
 
 interface QuizRunnerProps {
   questions: Question[];
@@ -93,6 +95,8 @@ export function QuizRunner({ questions, onExit, title }: QuizRunnerProps) {
         explanation: current.explanation,
       },
     });
+    track(FUNNEL_EVENTS.PRACTICE_ANSWER, { type: current.type, correct });
+    if (!correct) track(FUNNEL_EVENTS.WRONG_ADDED, { type: current.type });
   };
 
   const handleNext = () => {

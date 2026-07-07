@@ -13,6 +13,8 @@ import { useInterviewStore } from '@/store/interview-store';
 import { useInterviewContextStore } from '@/store/interview-context-store';
 import type { InterviewConfig, InterviewMessage } from '@/types/interview';
 import { INTERVIEW_MODE_LABELS } from '@/types/interview';
+import { track } from '@/lib/analytics/track';
+import { FUNNEL_EVENTS } from '@/lib/analytics/events';
 import type { JobPositionId } from '@/types/job';
 
 type View = 'setup' | 'chat' | 'report';
@@ -58,6 +60,7 @@ export function InterviewView({ positions }: InterviewViewProps) {
       if (res.ok) {
         const data = (await res.json()) as { message: InterviewMessage };
         createSession(config, data.message);
+        track(FUNNEL_EVENTS.INTERVIEW_START, { mode: config.mode, position: config.positionName });
         clearPending();
         setView('chat');
       }

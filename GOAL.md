@@ -409,3 +409,21 @@ Next.js 14 App Router · React 18 · TS 严格 · Tailwind · shadcn/ui · Frame
 - **Gate 2（首周）**：真实 AI 接入骨架 + 降级已就位但**未用真钥端到端联调**；`sourceUrl` 自动校验✅、时效提示✅；E2E（Playwright）、Sentry 实接、性能实测**未做**。
 - **Gate 3（推广前）**：商业化/SEO/OG/备份回滚**未做**（RUNBOOK 已列步骤）。
 - **距 SaaS 最高优先级剩余项**：① 真机 Postgres 联调 + 备份 ② 真钥 LLM/Search 端到端联调 ③ ICP/算法备案 + 内容审核 ④ Sentry 实接 + 关键漏斗埋点 ⑤ Playwright E2E + 性能实测。
+
+### [M10] Gate2/3 加固：内容审计 / 埋点 / cron 时效 / E2E / SEO — 2026-07-07
+
+- 完成内容：
+  - **内容可信（Gate2）**：`scripts/audit-questions.ts`（`pnpm audit:questions`）独立从题干正则解析并重算 **5600 道可计算题**（数量关系 5 类 / 资料分析 3 类 / 判断数列），实测正确率 **100.000%**（阈值 99% 可 CI 阻断）。言语/常识为人工校对模板库，不参与自动重算。
+  - **关键漏斗埋点（Gate2 可观测性）**：`/api/analytics`（zod + 限流）+ 客户端 `lib/analytics/track.ts`（sendBeacon 批处理）+ 集中事件名 `FUNNEL_EVENTS`。已接入注册/登录、刷题作答/错题新增、错题掌握、面试开场/回答/报告等漏斗。
+  - **招录时效 cron（Gate2）**：`/api/cron/ingest`（`CRON_SECRET` 鉴权）+ `vercel.json` 每日 01:00 cron + `lib/db/app-meta.ts`（DB-optional 存 `AppMeta.lastIngestAt`）；`getExamInfoFreshness` 增 `lastIngestAt`，招录页展示「更新时间/最近同步/陈旧」。
+  - **核心路径 E2E（Gate2）**：接入 Playwright（Chromium）；`e2e/` 6 条用例：未登录跳转、注册→刷题→错题本→标记掌握、面试开场→回答→报告、`/api/health`、robots/sitemap、受保护 API 401。对生产构建 `pnpm start` 跑，全绿。
+  - **SEO/分享（Gate3）**：root layout `metadataBase` + OpenGraph/Twitter；`app/robots.ts` + `app/sitemap.ts`；招录/申论页 canonical + 描述。`NEXT_PUBLIC_APP_URL` 配置化。
+- 验证方式：`pnpm typecheck`✅ `pnpm lint`✅ `pnpm test`(69)✅ `pnpm build`✅ `pnpm test:e2e`(6)✅ `pnpm audit:questions`(100%)✅ `pnpm validate:sources`(522 条 0 违规)✅；`pnpm start` 冒烟：cron 401/带密钥 ok（写 lastIngestAt）、analytics 200、robots/sitemap 正常。
+
+### 上线 Readiness 判断（截至 M10）
+
+- **总体定位：可小范围灰度试运行产品（接近可上线 SaaS）**。较 M9 进一步补齐 Gate2 多数质量门。
+- **Gate 1（硬门槛）**：真实鉴权✅ · API 安全✅ · 构建质量✅ · 真实数据库 🟡（DB-optional 代码就位，本环境无 Postgres 未真机联调）· 合规文档✅但 ICP/算法备案属线下未办。
+- **Gate 2（首周）**：内容可信✅（审计 100% + sourceUrl 校验）· 招录时效✅（cron + 更新时间 + 陈旧标识）· 核心路径 E2E✅（Playwright 6 条）· 可观测性✅（日志 + 漏斗埋点 + /api/health；Sentry 转发仍为 TODO）· 真实 AI 🟡（骨架 + 降级就位，无真钥端到端）· 性能 🟡（题库已 SSR 下发不入 bundle，缺真机 LCP 实测）。
+- **Gate 3（推广前）**：SEO/OG✅ · 商业化设计（付费边界/用量分层/成本模型）🟡未落地 · 备份回滚 🟡（RUNBOOK 列步骤，未在真实云配置）。
+- **距「可正式推广 SaaS」剩余关键项（多依赖外部密钥/DB/线下备案，本环境不可达）**：① 真机 Postgres 联调 + 自动备份 ② 真钥 LLM/Search 端到端 ③ ICP/算法备案 + 内容审核 ④ Sentry 实接 ⑤ 商业化落地 ⑥ 真机性能实测。

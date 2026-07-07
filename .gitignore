@@ -46,3 +46,9 @@ prisma/*.db-journal
 
 # 运行时用户数据（无数据库时的文件持久化，含账号/会话/进度，不入库）
 /data/runtime/
+
+# playwright
+/test-results/
+/playwright-report/
+/.e2e-runtime/
+/e2e-results/

@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useAuthStore } from '@/store/auth-store';
 import type { User } from '@/types/user';
+import { track } from '@/lib/analytics/track';
+import { FUNNEL_EVENTS } from '@/lib/analytics/events';
 
 export function RegisterForm() {
   const router = useRouter();
@@ -20,6 +22,7 @@ export function RegisterForm() {
     e.preventDefault();
     setError(null);
     setLoading(true);
+    track(FUNNEL_EVENTS.REGISTER_SUBMIT);
     try {
       const res = await fetch('/api/auth/register', {
         method: 'POST',
@@ -32,6 +35,7 @@ export function RegisterForm() {
         return;
       }
       setUser(data.user);
+      track(FUNNEL_EVENTS.REGISTER_SUCCESS);
       router.push('/');
       router.refresh();
     } catch {

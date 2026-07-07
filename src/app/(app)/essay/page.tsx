@@ -7,7 +7,16 @@ import {
   listEssayOriginalsAsync,
 } from '@/services/essay.service';
 
-export const metadata: Metadata = { title: '申论案例' };
+export const metadata: Metadata = {
+  title: '申论案例',
+  description:
+    '申论优秀案例与历年原题库，覆盖生态、治理、民生等主题，含可迁移表达与来源出处，助力素材积累。',
+  alternates: { canonical: '/essay' },
+  openGraph: {
+    title: '申论案例 · 上岸小助手',
+    description: '申论案例 / 原题双库，按主题筛选，来源可溯源。',
+  },
+};
 
 export default async function EssayPage() {
   const [initialCasesPage, initialOriginalsPage] = await Promise.all([

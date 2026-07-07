@@ -9,6 +9,8 @@ import { cn } from '@/lib/utils/cn';
 import { useInterviewStore } from '@/store/interview-store';
 import { INTERVIEW_MODE_LABELS, type InterviewSession } from '@/types/interview';
 import type { InterviewMessage } from '@/types/interview';
+import { track } from '@/lib/analytics/track';
+import { FUNNEL_EVENTS } from '@/lib/analytics/events';
 
 interface ChatRunnerProps {
   session: InterviewSession;
@@ -51,6 +53,7 @@ export function ChatRunner({ session, onFinished }: ChatRunnerProps) {
       if (res.ok) {
         const data = (await res.json()) as { message: InterviewMessage };
         appendMessage(session.id, data.message);
+        track(FUNNEL_EVENTS.INTERVIEW_ANSWER);
       }
     } finally {
       setLoading(false);
@@ -68,6 +71,7 @@ export function ChatRunner({ session, onFinished }: ChatRunnerProps) {
       if (res.ok) {
         const data = (await res.json()) as { report: InterviewSession['report'] };
         if (data.report) setReport(session.id, data.report);
+        track(FUNNEL_EVENTS.INTERVIEW_REPORT);
         onFinished();
       }
     } finally {

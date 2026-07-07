@@ -20,7 +20,10 @@
     "gen:essays": "tsx scripts/generate-essays.ts",
     "fetch:questions": "tsx scripts/fetch-questions.ts",
     "ingest": "tsx scripts/ingest.ts",
-    "validate:sources": "tsx scripts/validate-sources.ts"
+    "validate:sources": "tsx scripts/validate-sources.ts",
+    "audit:questions": "tsx scripts/audit-questions.ts",
+    "test:e2e": "playwright test",
+    "test:e2e:install": "playwright install chromium"
   },
   "dependencies": {
     "@prisma/client": "5.22.0",
@@ -42,6 +45,7 @@
     "zustand": "5.0.0"
   },
   "devDependencies": {
+    "@playwright/test": "1.47.2",
     "@types/node": "20.16.11",
     "@types/react": "18.3.11",
     "@types/react-dom": "18.3.0",
