@@ -1,0 +1,39 @@
+GOAL.md
+  s_eaeb8e0d0f724e::t_e978a9816d253b 467-476
+README.md
+  s_eaeb8e0d0f724e::t_5407cdae7d834e 125-126
+e2e/export-gating.spec.ts
+  s_eaeb8e0d0f724e::t_afbe8abe6f7561 1-48
+src/components/exam-news/exam-news-view.tsx
+  s_eaeb8e0d0f724e::t_2483ad435bc042 4,42-43,45
+src/components/interview/interview-view.tsx
+  s_eaeb8e0d0f724e::t_421d7bc5b12a08 131-133
+src/components/layout/mobile-menu.tsx
+  s_eaeb8e0d0f724e::t_8e0b4e7bfd9828 1-93
+src/components/layout/topbar.tsx
+  s_eaeb8e0d0f724e::t_e5d6ac345db767 3,5-6,10,14-15,20-25,29,37-49
+src/components/practice/wrong-book.tsx
+  s_eaeb8e0d0f724e::t_08bc61442348cb 12-13,59-63
+src/components/shared/export-button.tsx
+  s_eaeb8e0d0f724e::t_3ecb7ecc07a993 1-49
+src/lib/export/index.ts
+  s_eaeb8e0d0f724e::t_6b3c11c21fe219 1-81
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.5",
+  "base_commit_sha": "32e859424ef4f33190f48a06b3aee31884ec4c47",
+  "prompts": {},
+  "sessions": {
+    "s_eaeb8e0d0f724e": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f3baa-a63e-71f2-a85a-49a652ab09ec",
+        "model": "unknown"
+      },
+      "human_author": "Codex <codex@local>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
