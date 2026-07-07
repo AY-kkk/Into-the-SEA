@@ -464,3 +464,13 @@ Next.js 14 App Router · React 18 · TS 严格 · Tailwind · shadcn/ui · Frame
   - **测试**：新增 search real 单测（5：无 key 抛错 / Tavily 解析并过滤无 url / Bing 解析 / 非 2xx 抛错 / generic 需 endpoint）。单测 82→87。
 - 验证方式：`pnpm typecheck`✅ `pnpm lint`✅ `pnpm test`(87)✅ `pnpm build`✅ `pnpm test:e2e`(7)✅。
 - 说明：至此 `src/providers/**/real.ts` 不再存在 `尚未实现` 抛错；LLM/Search/Question 三大 real provider 均有可运行实现 + mock 降级。真钥端到端联调仍需外部 API Key。
+
+### [M14] 交互补齐：导出功能 / 移动端菜单 / 顶栏搜索（兑现付费承诺 + 修复死交互）— 2026-07-07
+
+- 背景：审计发现交互缺口——专业版宣传「报告/错题本导出」但无实现；移动端汉堡按钮无 onClick（死按钮）；顶栏搜索为纯展示 span。
+- 完成内容：
+  - **导出功能**：`src/lib/export`（面试报告 / 错题本 → Markdown，纯前端下载，无新依赖）；`ExportButton` 受 `plan.canExport` 门控——免费用户显示「导出（专业版）」锁并引导 `/pricing`，专业版可下载。接入面试报告页与错题本页。
+  - **移动端抽屉菜单**：`MobileMenu` 组件，汉堡按钮打开覆盖层导航（含会员套餐），点击遮罩/链接/关闭均可收起，锁定滚动，替换原死按钮。
+  - **顶栏搜索**：改为可提交表单，回车跳转 `/exam-news?keyword=`；招录情报视图从 URL 初始化 keyword 过滤，形成可用搜索闭环。
+  - **测试**：export 单测(3) + export-gating E2E（免费锁→升级→可导出）。单测 87→90、E2E 7→8。
+- 验证方式：`pnpm typecheck`✅ `pnpm lint`✅ `pnpm test`(90)✅ `pnpm build`✅ `pnpm test:e2e`(8)✅。

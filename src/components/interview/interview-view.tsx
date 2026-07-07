@@ -128,7 +128,9 @@ export function InterviewView({ positions }: InterviewViewProps) {
         {view === 'chat' && active ? (
           <ChatRunner session={active} onFinished={() => setView('report')} />
         ) : null}
-        {view === 'report' && active?.report ? <ReportView report={active.report} /> : null}
+        {view === 'report' && active?.report ? (
+          <ReportView report={active.report} positionName={active.config.positionName} />
+        ) : null}
       </div>
 
       {/* 会话历史（持久化） */}

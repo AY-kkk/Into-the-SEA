@@ -122,6 +122,8 @@ pnpm build && pnpm start
 
 - **真实搜索接入（Gate2）**：`RealSearchProvider` 支持 Tavily / Bing / 通用 JSON（`SEARCH_PROVIDER_KIND`），保留 `sourceUrl`，含超时与错误降级；`providers/**/real.ts` 已无「尚未实现」占位。
 
+- **导出与交互补齐**：面试报告 / 错题本一键导出 Markdown（`src/lib/export`，受专业版 `canExport` 门控）；移动端抽屉菜单；顶栏搜索跳转招录情报关键词筛选。
+
 ### 相关脚本
 
 | 命令                    | 说明                                                         |

@@ -9,6 +9,8 @@ import { EmptyState } from '@/components/shared/states';
 import { usePracticeStore } from '@/store/practice-store';
 import { track } from '@/lib/analytics/track';
 import { FUNNEL_EVENTS } from '@/lib/analytics/events';
+import { ExportButton } from '@/components/shared/export-button';
+import { wrongBookToMarkdown } from '@/lib/export';
 import { QUESTION_TYPE_LABELS, type QuestionType } from '@/types/question';
 import { useMemo, useState } from 'react';
 
@@ -53,6 +55,11 @@ export function WrongBook({ onPractice }: { onPractice: (ids: string[]) => void 
           placeholder="全部题型"
           options={Object.entries(QUESTION_TYPE_LABELS).map(([value, label]) => ({ value, label }))}
           className="w-44"
+        />
+        <ExportButton
+          filename="错题本.md"
+          getContent={() => wrongBookToMarkdown(wrongBook)}
+          label="导出错题本"
         />
         <Button size="sm" disabled={activeIds.length === 0} onClick={() => onPractice(activeIds)}>
           <RotateCw className="h-4 w-4" /> 重练未掌握（{activeIds.length}）

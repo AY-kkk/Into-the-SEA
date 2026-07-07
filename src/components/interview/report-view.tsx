@@ -2,10 +2,25 @@ import { Award, TrendingUp, AlertCircle } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import type { InterviewReport } from '@/types/interview';
+import { ExportButton } from '@/components/shared/export-button';
+import { interviewReportToMarkdown } from '@/lib/export';
 
-export function ReportView({ report }: { report: InterviewReport }) {
+export function ReportView({
+  report,
+  positionName,
+}: {
+  report: InterviewReport;
+  positionName?: string;
+}) {
   return (
     <div className="animate-fade-in space-y-4">
+      <div className="flex justify-end">
+        <ExportButton
+          filename={`面试报告-${positionName ?? '模拟面试'}.md`}
+          getContent={() => interviewReportToMarkdown(report, positionName)}
+          label="导出报告"
+        />
+      </div>
       <Card>
         <CardContent className="flex flex-col items-center gap-2 py-8 text-center">
           <div className="flex h-20 w-20 items-center justify-center rounded-full bg-primary/10">

@@ -1,6 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useSearchParams } from 'next/navigation';
 import { Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
 import { SelectNative } from '@/components/ui/select-native';
@@ -38,8 +39,10 @@ export function ExamNewsView({
   initialItems: ExamInfo[];
   freshness: ExamInfoFreshness;
 }) {
+  const searchParams = useSearchParams();
+  const initialKeyword = searchParams.get('keyword') ?? '';
   const [items, setItems] = useState<ExamInfo[]>(initialItems);
-  const [filters, setFilters] = useState<Filters>(EMPTY);
+  const [filters, setFilters] = useState<Filters>({ ...EMPTY, keyword: initialKeyword });
   const [state, setState] = useState<AsyncState>(initialItems.length ? 'ready' : 'empty');
 
   const regionOptions = useMemo(
