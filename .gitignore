@@ -39,3 +39,7 @@ prisma/*.db-journal
 # fetched raw batches (keep small samples only)
 /data/generated/*.tmp.json
 /data/import/*.md
+
+
+# 界面截图（本地预览，不入库以免占体积；README 相对引用）
+/screenshots/

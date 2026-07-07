@@ -5,6 +5,20 @@
 
 > 目标与迭代路线见 [`GOAL.md`](./GOAL.md)，工程约定见 [`AGENTS.md`](./AGENTS.md)。
 
+## 界面预览
+
+> 截图为本地生成，不纳入仓库以避免占用体积；请在本地运行 `pnpm dev` 后自行截图存放于 `screenshots/`（该目录已在 `.gitignore` 中忽略）。下列引用为相对路径，本地存在对应文件即可显示。
+
+| 模块 | 预览 |
+| --- | --- |
+| 招录情报 | ![招录情报](./screenshots/exam-news.png) |
+| 岗位备考 | ![岗位备考](./screenshots/job-prep.png) |
+| 行测刷题 | ![行测刷题](./screenshots/practice.png) |
+| 申论案例 | ![申论案例](./screenshots/essay.png) |
+| 模拟面试 | ![模拟面试](./screenshots/interview.png) |
+| 工作台 | ![工作台](./screenshots/dashboard.png) |
+| 登录 | ![登录](./screenshots/login.png) |
+
 ## 技术栈
 
 - **前端**：Next.js 14 (App Router) · React 18 · TypeScript（严格模式）· Tailwind CSS · shadcn/ui 风格组件 · Framer Motion · Lucide · Zustand
