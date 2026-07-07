@@ -427,3 +427,20 @@ Next.js 14 App Router · React 18 · TS 严格 · Tailwind · shadcn/ui · Frame
 - **Gate 2（首周）**：内容可信✅（审计 100% + sourceUrl 校验）· 招录时效✅（cron + 更新时间 + 陈旧标识）· 核心路径 E2E✅（Playwright 6 条）· 可观测性✅（日志 + 漏斗埋点 + /api/health；Sentry 转发仍为 TODO）· 真实 AI 🟡（骨架 + 降级就位，无真钥端到端）· 性能 🟡（题库已 SSR 下发不入 bundle，缺真机 LCP 实测）。
 - **Gate 3（推广前）**：SEO/OG✅ · 商业化设计（付费边界/用量分层/成本模型）🟡未落地 · 备份回滚 🟡（RUNBOOK 列步骤，未在真实云配置）。
 - **距「可正式推广 SaaS」剩余关键项（多依赖外部密钥/DB/线下备案，本环境不可达）**：① 真机 Postgres 联调 + 自动备份 ② 真钥 LLM/Search 端到端 ③ ICP/算法备案 + 内容审核 ④ Sentry 实接 ⑤ 商业化落地 ⑥ 真机性能实测。
+
+### [M11] 商业化与 CI（Gate3）— 2026-07-07
+
+- 完成内容：
+  - **订阅套餐 / 用量分层（Gate3 商业化）**：`src/lib/billing/plans.ts` 定义免费（AI 10 次/日、刷题 50/日）与专业（¥29/月、AI 200 次/日、刷题不限、可导出）两档，作为前端定价页 / API 配额 / 成本模型的唯一真源。
+  - **配额分层接入护栏**：`guard` 按 `getPlan(user.plan).limits.dailyLlmCalls` 传入 `consumeLlmQuota`，超额 429 且附升级提示；User 模型新增 `plan` 字段（Prisma + 文件存储双实现，含旧数据 `?? 'free'` 兜底）。
+  - **单用户成本模型**：`src/lib/billing/cost-model.ts`（env 可覆盖假设）；实测免费版满额月成本 ≈¥1.23、专业版 ≈¥24.6，专业版典型使用率毛利为正。
+  - **API + 前端**：`/api/billing`（套餐+成本+当前套餐）、`/api/billing/subscribe`（演示计费，支付网关 TODO real）、`/pricing` 定价页（升级/降级即时生效）、导航新增「会员套餐」。
+  - **CI（质量门自动化）**：`.github/workflows/ci.yml` 两个 job：quality（lint/typecheck/test/validate:sources/audit:questions --min 99/build）+ e2e（Playwright chromium）。
+  - **测试**：新增 billing 单测（7）+ billing E2E（升级专业版闭环）；单测 69→76、E2E 6→7。
+- 验证方式：`pnpm typecheck`✅ `pnpm lint`✅ `pnpm test`(76)✅ `pnpm build`✅ `pnpm test:e2e`(7)✅；`pnpm start` 冒烟：`/api/billing` 返回套餐+成本、注册(free)→subscribe pro→session plan=pro 持久化。
+
+### 上线 Readiness 判断（截至 M11）
+
+- **总体定位：接近可上线 SaaS**（Gate1 基本满足、Gate2 大部分满足、Gate3 商业化/SEO/文档已具雏形）。
+- **Gate 3 商业化**：免费/付费边界✅、AI 用量分层✅、单用户成本模型✅；真实支付网关 🟡（演示计费，切换点已隔离）。
+- **仍需外部资源/线下的关键项（本环境不可达）**：① 真机 Postgres 联调 + 自动备份/回滚 ② 真钥 LLM/Search 端到端 ③ ICP/算法备案 + 内容审核 ④ Sentry 实接 ⑤ 支付网关接入 ⑥ 真机 LCP 性能实测。

@@ -165,6 +165,7 @@ model User {
   email        String   @unique
   name         String
   passwordHash String
+  plan         String   @default("free")
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 

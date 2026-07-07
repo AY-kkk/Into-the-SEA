@@ -5,6 +5,8 @@ export interface User {
   id: string;
   email: string;
   name: string;
+  /** 订阅套餐（商业化用量分层）。 */
+  plan: 'free' | 'pro';
   createdAt: string;
 }
 

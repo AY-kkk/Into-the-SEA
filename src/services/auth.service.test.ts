@@ -35,6 +35,7 @@ describe('auth.service (file store)', () => {
       password: 'password123',
     });
     expect(user.email).toBe('alice@example.com');
+    expect(user.plan).toBe('free');
     expect(session.id).toBeTruthy();
     expect(session.userId).toBe(user.id);
   });

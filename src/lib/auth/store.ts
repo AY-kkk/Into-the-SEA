@@ -10,6 +10,7 @@ export interface AuthStore {
   findByEmail(email: string): Promise<(User & { passwordHash: string }) | null>;
   findById(id: string): Promise<User | null>;
   updatePassword(userId: string, passwordHash: string): Promise<void>;
+  updatePlan(userId: string, plan: 'free' | 'pro'): Promise<User | null>;
   createSession(userId: string, ttlDays: number): Promise<Session>;
   getSession(id: string): Promise<Session | null>;
   deleteSession(id: string): Promise<void>;
@@ -45,21 +46,40 @@ class FileAuthStore implements AuthStore {
       id: createId('usr'),
       email: input.email.toLowerCase(),
       name: input.name,
+      plan: 'free',
       passwordHash: input.passwordHash,
       createdAt: new Date().toISOString(),
     };
     data.users.push(user);
     writeFile(data);
-    return { id: user.id, email: user.email, name: user.name, createdAt: user.createdAt };
+    return {
+      id: user.id,
+      email: user.email,
+      name: user.name,
+      plan: user.plan,
+      createdAt: user.createdAt,
+    };
   }
 
   async findByEmail(email: string): Promise<(User & { passwordHash: string }) | null> {
-    return readFile().users.find((u) => u.email === email.toLowerCase()) ?? null;
+    const u = readFile().users.find((x) => x.email === email.toLowerCase());
+    return u ? { ...u, plan: u.plan ?? 'free' } : null;
   }
 
   async findById(id: string): Promise<User | null> {
     const u = readFile().users.find((x) => x.id === id);
-    return u ? { id: u.id, email: u.email, name: u.name, createdAt: u.createdAt } : null;
+    return u
+      ? { id: u.id, email: u.email, name: u.name, plan: u.plan ?? 'free', createdAt: u.createdAt }
+      : null;
+  }
+
+  async updatePlan(userId: string, plan: 'free' | 'pro'): Promise<User | null> {
+    const data = readFile();
+    const u = data.users.find((x) => x.id === userId);
+    if (!u) return null;
+    u.plan = plan;
+    writeFile(data);
+    return { id: u.id, email: u.email, name: u.name, plan: u.plan, createdAt: u.createdAt };
   }
 
   async updatePassword(userId: string, passwordHash: string): Promise<void> {
@@ -117,7 +137,13 @@ class PrismaAuthStore implements AuthStore {
         passwordHash: input.passwordHash,
       },
     });
-    return { id: u.id, email: u.email, name: u.name, createdAt: u.createdAt.toISOString() };
+    return {
+      id: u.id,
+      email: u.email,
+      name: u.name,
+      plan: (u.plan as 'free' | 'pro') ?? 'free',
+      createdAt: u.createdAt.toISOString(),
+    };
   }
 
   async findByEmail(email: string): Promise<(User & { passwordHash: string }) | null> {
@@ -128,6 +154,7 @@ class PrismaAuthStore implements AuthStore {
           id: u.id,
           email: u.email,
           name: u.name,
+          plan: (u.plan as 'free' | 'pro') ?? 'free',
           passwordHash: u.passwordHash,
           createdAt: u.createdAt.toISOString(),
         }
@@ -138,13 +165,31 @@ class PrismaAuthStore implements AuthStore {
     const db = await this.db();
     const u = await db.user.findUnique({ where: { id } });
     return u
-      ? { id: u.id, email: u.email, name: u.name, createdAt: u.createdAt.toISOString() }
+      ? {
+          id: u.id,
+          email: u.email,
+          name: u.name,
+          plan: (u.plan as 'free' | 'pro') ?? 'free',
+          createdAt: u.createdAt.toISOString(),
+        }
       : null;
   }
 
   async updatePassword(userId: string, passwordHash: string): Promise<void> {
     const db = await this.db();
     await db.user.update({ where: { id: userId }, data: { passwordHash } });
+  }
+
+  async updatePlan(userId: string, plan: 'free' | 'pro'): Promise<User | null> {
+    const db = await this.db();
+    const u = await db.user.update({ where: { id: userId }, data: { plan } });
+    return {
+      id: u.id,
+      email: u.email,
+      name: u.name,
+      plan: (u.plan as 'free' | 'pro') ?? 'free',
+      createdAt: u.createdAt.toISOString(),
+    };
   }
 
   async createSession(userId: string, ttlDays: number): Promise<Session> {

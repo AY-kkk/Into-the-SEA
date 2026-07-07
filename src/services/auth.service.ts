@@ -46,6 +46,7 @@ export async function login(input: {
     id: found.id,
     email: found.email,
     name: found.name,
+    plan: found.plan,
     createdAt: found.createdAt,
   };
   return { user, session };

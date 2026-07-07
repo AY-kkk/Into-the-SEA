@@ -114,6 +114,9 @@ pnpm build && pnpm start
 - **E2E（Playwright）**：`pnpm test:e2e` 覆盖「注册→刷题→错题本→标记掌握」「面试开场→回答→报告」「健康检查/robots/sitemap/401」共 6 条，全绿。
 - **SEO/分享**：`metadataBase` + OpenGraph/Twitter 卡片 + `robots.txt` + `sitemap.xml`；招录/申论页含 canonical 与描述。
 
+- **商业化（Gate3）**：`src/lib/billing/plans.ts` 定义免费/专业套餐与用量分层；配额按套餐接入 `guard`（免费 10 次/日、专业 200 次/日 LLM）；`/pricing` 定价页 + `/api/billing`(列表/成本) + `/api/billing/subscribe`（演示计费，支付网关 TODO）；单用户成本模型见 `docs/PRICING.md`。
+- **CI**：`.github/workflows/ci.yml` 在 push/PR 跑 lint·typecheck·test·validate:sources·audit:questions·build，并独立 job 跑 Playwright E2E。
+
 ### 相关脚本
 
 | 命令                    | 说明                                                         |

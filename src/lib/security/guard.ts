@@ -4,6 +4,7 @@ import { getUserBySession } from '@/services/auth.service';
 import { logger } from '@/lib/observability/logger';
 import type { User } from '@/types/user';
 import { consumeLlmQuota, rateLimit, type RateLimitResult } from './rate-limit';
+import { getPlan } from '@/lib/billing/plans';
 
 /** 提取客户端标识（优先真实用户，退回 IP）。 */
 export function clientKey(request: NextRequest, userId?: string): string {
@@ -73,12 +74,19 @@ export async function guard(
 
   if (options.llm) {
     const quotaKey = user?.id ? `u:${user.id}` : key;
-    if (!consumeLlmQuota(quotaKey)) {
-      logger.warn('llm_quota_exceeded', { key: quotaKey });
+    // 按套餐分层的每日 LLM 配额（未登录用免费档）。
+    const cap = getPlan(user?.plan ?? 'free').limits.dailyLlmCalls;
+    if (!consumeLlmQuota(quotaKey, cap)) {
+      logger.warn('llm_quota_exceeded', { key: quotaKey, plan: user?.plan ?? 'free', cap });
       return {
         ok: false,
         response: NextResponse.json(
-          { error: '今日 AI 使用额度已用尽，请明日再来' },
+          {
+            error: '今日 AI 使用额度已用尽',
+            plan: user?.plan ?? 'free',
+            cap,
+            upgrade: (user?.plan ?? 'free') === 'free' ? '升级专业版可获得更高额度' : undefined,
+          },
           { status: 429 },
         ),
       };

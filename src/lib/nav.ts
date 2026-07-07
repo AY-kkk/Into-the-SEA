@@ -5,6 +5,7 @@ import {
   ListChecks,
   PenLine,
   MessagesSquare,
+  Crown,
   type LucideIcon,
 } from 'lucide-react';
 
@@ -52,5 +53,11 @@ export const NAV_ITEMS: NavItem[] = [
     label: '模拟面试',
     description: 'AI 面试官与结构化反馈',
     icon: MessagesSquare,
+  },
+  {
+    href: '/pricing',
+    label: '会员套餐',
+    description: '免费 / 专业版与 AI 额度',
+    icon: Crown,
   },
 ];

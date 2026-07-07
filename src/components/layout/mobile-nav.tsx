@@ -9,7 +9,7 @@ export function MobileNav() {
   const pathname = usePathname();
   return (
     <nav className="sticky bottom-0 z-20 flex items-stretch justify-around border-t bg-background/95 backdrop-blur lg:hidden">
-      {NAV_ITEMS.map((item) => {
+      {NAV_ITEMS.filter((i) => i.href !== '/pricing').map((item) => {
         const active = item.href === '/' ? pathname === '/' : pathname.startsWith(item.href);
         const Icon = item.icon;
         return (
