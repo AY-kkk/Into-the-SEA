@@ -42,8 +42,8 @@ describe('question.service', () => {
     expect(set.length).toBe(1);
   });
 
-  it('type counts sum to total', () => {
-    const counts = getTypeCounts();
+  it('type counts sum to total (seed source)', async () => {
+    const counts = await getTypeCounts();
     const sum = Object.values(counts).reduce((a, b) => a + b, 0);
     expect(sum).toBe(getAllQuestions().length);
   });

@@ -1,20 +1,25 @@
+import { dbListExamInfo } from '@/lib/db/repository';
+import { env, shouldUseDb } from '@/lib/env';
 import type { ExamInfo } from '@/types/exam';
 import type { ExamInfoProvider, FetchOptions } from '../types';
 
 /**
- * 真实招录情报 provider 骨架：可组合多数据源（官网/RSS/搜索）+ 去重 + 定时刷新。
- * 建议实现步骤：
- *  1) 各源 fetcher（如国家公务员局、地方人社厅、国企招聘平台）；
- *  2) 归一化到 ExamInfo（sourceUrl 不可省略）；
- *  3) 按标题+机构+时间去重；
- *  4) 定时任务（cron / route revalidate）刷新。
+ * 真实招录情报 provider：
+ *  - 当 DATA_SOURCE=db 且配置 DATABASE_URL 时，从 PostgreSQL 读取（筛选/排序/limit 下推数据库）。
+ *  - 未接入数据库时抛出可读错误，服务层/工厂据此降级 mock。
+ *
+ * 扩展点（TODO）：可在 DB 之上叠加官网/RSS/搜索抓取 + 定时刷新写库（见 scripts/ingest.ts）。
  */
 export class RealExamInfoProvider implements ExamInfoProvider {
   readonly name = 'real-exam-info';
 
   async fetchLatest(options?: FetchOptions): Promise<ExamInfo[]> {
-    // TODO(real): 接入真实数据源并归一化，保留 sourceUrl。
-    void options;
-    throw new Error('[RealExamInfoProvider] 尚未实现真实数据源接入（TODO）');
+    if (!shouldUseDb()) {
+      throw new Error(
+        '[RealExamInfoProvider] 需要 DATA_SOURCE=db 且配置 DATABASE_URL；' +
+          `当前 DATA_SOURCE=${env.DATA_SOURCE}。请先 pnpm db:seed 初始化数据库。`,
+      );
+    }
+    return dbListExamInfo(options?.filter ?? {}, options?.limit);
   }
 }

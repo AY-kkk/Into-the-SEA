@@ -1,4 +1,6 @@
 import { essayCaseSeed, essayOriginalSeed } from '@/lib/db/seed-data';
+import { shouldUseDb } from '@/lib/env';
+import { dbListEssayCases, dbListEssayOriginals } from '@/lib/db/repository';
 import type { EssayCase, EssayOriginal, EssayTopic } from '@/types/essay';
 import type { ExamCategory } from '@/types/common';
 
@@ -75,4 +77,20 @@ export function getOriginalYears(): number[] {
 /** Dashboard 推荐：随机/最新若干案例。 */
 export function getRecommendedCases(limit = 3): EssayCase[] {
   return essayCaseSeed.slice(0, limit);
+}
+
+/**
+ * 异步案例列表：DATA_SOURCE=db 时走数据库分页查询，否则回退 seed。
+ * 供 API route / SSR 页面使用。
+ */
+export async function listEssayCasesAsync(filter: CaseFilter = {}): Promise<Paged<EssayCase>> {
+  if (shouldUseDb()) return dbListEssayCases(filter);
+  return listEssayCases(filter);
+}
+
+export async function listEssayOriginalsAsync(
+  filter: OriginalFilter = {},
+): Promise<Paged<EssayOriginal>> {
+  if (shouldUseDb()) return dbListEssayOriginals(filter);
+  return listEssayOriginals(filter);
 }

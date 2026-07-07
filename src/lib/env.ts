@@ -11,6 +11,8 @@ const envSchema = z.object({
   NEXT_PUBLIC_APP_NAME: z.string().default('上岸小助手'),
 
   DATABASE_URL: z.string().optional(),
+  /** 数据读取来源：seed（默认，读 JSON）| db（读 PostgreSQL/Prisma）。 */
+  DATA_SOURCE: z.enum(['seed', 'db']).default('seed'),
 
   EXAM_INFO_PROVIDER: providerMode,
   LLM_PROVIDER: providerMode,
@@ -63,4 +65,12 @@ export function shouldUseReal(provider: 'exam' | 'llm' | 'search' | 'question'):
     default:
       return false;
   }
+}
+
+/**
+ * 是否从真实数据库读取（需 DATA_SOURCE=db 且配置了 DATABASE_URL）。
+ * 未配置时自动回退 seed（符合 GOAL.md：真实源不可用 → mock/seed 顶替）。
+ */
+export function shouldUseDb(): boolean {
+  return env.DATA_SOURCE === 'db' && Boolean(env.DATABASE_URL);
 }

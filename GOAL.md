@@ -347,6 +347,7 @@ Next.js 14 App Router · React 18 · TS 严格 · Tailwind · shadcn/ui · Frame
   `pnpm start` 冒烟：/ /login /practice /exam-news 均 200，`/_next/image` 与 static/media/auth-login.\*.jpg 返回 image/jpeg 200。
 
 ### [数据规模化] 行测 8000 题 / 申论 500 案例 + 全网搜索接入 — 2026-07-07
+
 - 完成内容：
   - **行测题库扩充至 8000 题**：`scripts/generate-questions.ts`（pnpm gen:questions）程序化生成，覆盖五题型。
     数量/资料/数字推理类**答案由程序精确计算**（工程/行程/利润/浓度/增长率/比重/等差等比/平方数列），言语/常识基于人工校对模板库；固定随机种子可复现。校验：8000 题答案键全部有效、id 唯一、四选项、sourceUrl 齐全。
@@ -358,3 +359,16 @@ Next.js 14 App Router · React 18 · TS 严格 · Tailwind · shadcn/ui · Frame
   - seed 脚本题库改为分批 `createMany + skipDuplicates`；测试更新（8000/500 规模断言、分页断言、practice cap 断言）；README 增规模化生成/web_search/数据流说明。
 - 验证方式：`pnpm typecheck`✅ `pnpm lint`✅ `pnpm test`(47)✅ `pnpm build`✅；
   dev 冒烟：/api/practice sequential=20、topic quant 过滤、wrong 按 id、非法 400；/api/essay 分页 items=10/total=500。
+
+### [真实数据库接入] Prisma 读取路径 + 全网真实摄取 — 2026-07-07
+- 完成内容：
+  - **真实数据摄取管线** `scripts/ingest.ts`（pnpm ingest）：
+    - `--github`：解析 GitHub 公开题库 lawson2019/quizsim（言语/资料纯文本，图形推理跳过），得 161 道真题并入 seed（逐条 sourceUrl 溯源），题库 8000→8161。
+    - `--web-essays`：arkcli `+chat --tools web_search` 联网检索小红书/考公平台公开素材，zod 校验后并入 8 个真实政务案例（gov.cn 等来源），案例 500→508。
+  - **Prisma 真实读取路径** `src/lib/db/repository.ts`：ExamInfo/Question/EssayCase/EssayOriginal 的筛选·分页·随机抽样下推 SQL（ORDER BY random / skip·take / groupBy 计数）；日期→ISO、枚举映射。
+  - **env 开关** `DATA_SOURCE=seed|db` + `shouldUseDb()`（缺 DATABASE_URL 自动回退 seed）；question/essay 服务与 RealExamInfoProvider 按开关分流；practice 页面与 essay 页面改 async SSR，API 走异步 DB-aware 服务。
+  - **db:seed** 全表分批 createMany + skipDuplicates + `--reset`；`docker-compose.yml` 一键本地 Postgres；`.env.example` 增 DATA_SOURCE 与 docker/Supabase/Neon 连接串示例。
+  - **仓储单测** `repository.test.ts`（mock Prisma，验证映射/筛选下推/分页/计数）；`docs/DATA-SOURCES.md` 记录三类来源、许可与合规提示。
+- 环境说明：本沙箱无本地 Postgres/Docker，无法实跑 live `db:seed` 写入；已用 mock-Prisma 单测覆盖 DB 代码路径，并提供 docker-compose/云库一键流程供真实验证。
+- 验证方式：`pnpm typecheck`✅ `pnpm lint`✅ `pnpm test`(50)✅ `pnpm build`✅；
+  seed-mode dev 冒烟：/api/practice 专项过滤、/api/essay 分页 total=508、GitHub 来源题 sourceUrl 正确回显。

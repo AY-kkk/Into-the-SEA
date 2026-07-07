@@ -74,23 +74,21 @@ async function seedQuestions(): Promise<number> {
 
 async function seedEssayCases(): Promise<number> {
   const items = load<EssayCase>('essay-cases.json');
-  for (const it of items) {
-    await prisma.essayCase.upsert({
-      where: { id: it.id },
-      update: {},
-      create: {
-        id: it.id,
-        title: it.title,
-        topics: it.topics,
-        applicableTopics: it.applicableTopics,
-        summary: it.summary,
-        transferableExpressions: it.transferableExpressions,
-        usageScenarios: it.usageScenarios,
-        sourceUrl: it.sourceUrl,
-        sourceName: it.sourceName ?? null,
-        publishedAt: it.publishedAt ? new Date(it.publishedAt) : null,
-      },
-    });
+  const CHUNK = 500;
+  for (let i = 0; i < items.length; i += CHUNK) {
+    const batch = items.slice(i, i + CHUNK).map((it) => ({
+      id: it.id,
+      title: it.title,
+      topics: it.topics,
+      applicableTopics: it.applicableTopics,
+      summary: it.summary,
+      transferableExpressions: it.transferableExpressions,
+      usageScenarios: it.usageScenarios,
+      sourceUrl: it.sourceUrl,
+      sourceName: it.sourceName ?? null,
+      publishedAt: it.publishedAt ? new Date(it.publishedAt) : null,
+    }));
+    await prisma.essayCase.createMany({ data: batch, skipDuplicates: true });
   }
   return items.length;
 }
@@ -120,6 +118,15 @@ async function seedEssayOriginals(): Promise<number> {
 }
 
 async function main(): Promise<void> {
+  // --reset：清空可重建的题库/案例表后重新写入（保留用户作答/错题/面试数据）。
+  if (process.argv.includes('--reset')) {
+    // eslint-disable-next-line no-console
+    console.log('[seed] --reset：清空 Question / EssayCase / EssayOriginal / ExamInfo …');
+    await prisma.question.deleteMany({});
+    await prisma.essayCase.deleteMany({});
+    await prisma.essayOriginal.deleteMany({});
+    await prisma.examInfo.deleteMany({});
+  }
   const exam = await seedExamInfos();
   const questions = await seedQuestions();
   const cases = await seedEssayCases();

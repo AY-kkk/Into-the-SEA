@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { practiceSetSchema } from '@/lib/validators/practice';
-import { buildPracticeSet } from '@/services/question.service';
+import { buildPracticeSetAsync } from '@/services/question.service';
 
 /**
  * POST /api/practice — 服务端构建练习题集。
@@ -24,7 +24,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   }
 
   try {
-    const questions = buildPracticeSet(parsed.data);
+    const questions = await buildPracticeSetAsync(parsed.data);
     return NextResponse.json({ questions, total: questions.length });
   } catch (error) {
     const message = error instanceof Error ? error.message : '未知错误';

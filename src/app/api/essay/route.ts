@@ -1,6 +1,6 @@
 import { NextResponse, type NextRequest } from 'next/server';
 import { caseFilterSchema, originalFilterSchema } from '@/lib/validators/essay';
-import { listEssayCases, listEssayOriginals } from '@/services/essay.service';
+import { listEssayCasesAsync, listEssayOriginalsAsync } from '@/services/essay.service';
 
 /**
  * GET /api/essay?kind=case|original — 申论案例 / 原题列表。
@@ -21,7 +21,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
           { status: 400 },
         );
       }
-      const page = listEssayOriginals(parsed.data);
+      const page = await listEssayOriginalsAsync(parsed.data);
       return NextResponse.json(page);
     }
 
@@ -32,7 +32,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         { status: 400 },
       );
     }
-    const page = listEssayCases(parsed.data);
+    const page = await listEssayCasesAsync(parsed.data);
     return NextResponse.json(page);
   } catch (error) {
     const message = error instanceof Error ? error.message : '未知错误';

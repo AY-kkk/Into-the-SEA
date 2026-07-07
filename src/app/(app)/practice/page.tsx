@@ -5,8 +5,8 @@ import { getTypeCounts } from '@/services/question.service';
 
 export const metadata: Metadata = { title: '行测刷题' };
 
-export default function PracticePage() {
-  const typeCounts = getTypeCounts();
+export default async function PracticePage() {
+  const typeCounts = await getTypeCounts();
 
   return (
     <PageShell

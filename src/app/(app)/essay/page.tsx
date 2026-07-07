@@ -1,13 +1,19 @@
 import type { Metadata } from 'next';
 import { PageShell } from '@/components/shared/page-shell';
 import { EssayView } from '@/components/essay/essay-view';
-import { getOriginalYears, listEssayCases, listEssayOriginals } from '@/services/essay.service';
+import {
+  getOriginalYears,
+  listEssayCasesAsync,
+  listEssayOriginalsAsync,
+} from '@/services/essay.service';
 
 export const metadata: Metadata = { title: '申论案例' };
 
-export default function EssayPage() {
-  const initialCasesPage = listEssayCases();
-  const initialOriginalsPage = listEssayOriginals();
+export default async function EssayPage() {
+  const [initialCasesPage, initialOriginalsPage] = await Promise.all([
+    listEssayCasesAsync(),
+    listEssayOriginalsAsync(),
+  ]);
   const years = getOriginalYears();
 
   return (

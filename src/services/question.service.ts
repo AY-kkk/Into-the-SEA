@@ -1,9 +1,16 @@
 import { questionSeed } from '@/lib/db/seed-data';
+import { shouldUseDb } from '@/lib/env';
+import {
+  dbFirstQuestions,
+  dbGetQuestionsByIds,
+  dbGetTypeCounts,
+  dbSampleQuestions,
+} from '@/lib/db/repository';
 import type { PracticeMode, Question, QuestionType } from '@/types/question';
 
 /**
  * 行测题库业务服务。
- * MVP：从 seed 读取（无数据库）；真实接入时可替换为 Prisma 查询。
+ * 数据来源：DATA_SOURCE=db 时走 Prisma（题库规模化后仅按需取题）；否则读 seed JSON。
  * 业务逻辑集中于此，不写进组件（GOAL.md 铁律）。
  */
 
@@ -12,6 +19,7 @@ export const DEFAULT_SET_SIZE = 20;
 export const MAX_SET_SIZE = 50;
 export const MOCK_SET_SIZE = 25;
 
+// ── seed 同步访问（mock / 测试用）──
 export function getAllQuestions(): Question[] {
   return [...questionSeed];
 }
@@ -45,18 +53,11 @@ export interface BuildSessionParams {
 }
 
 /**
- * 根据模式构建练习题序列。
- * - sequential：按 seed 顺序
- * - random：随机打乱
- * - topic：按题型过滤
- * - mock：随机抽取固定题量的套卷
- * - wrong：错题重练（依据传入的错题 id）
+ * 从 seed 构建练习序列（同步，供测试与 mock）。
  */
 export function buildPracticeSet(params: BuildSessionParams): Question[] {
   const { mode, type, count, wrongIds } = params;
   const all = getAllQuestions();
-
-  // 单次练习集上限，避免把整个题库（可达数千题）一次性下发到客户端。
   const limit = Math.min(count ?? DEFAULT_SET_SIZE, MAX_SET_SIZE);
 
   switch (mode) {
@@ -79,8 +80,35 @@ export function buildPracticeSet(params: BuildSessionParams): Question[] {
   }
 }
 
+/**
+ * 构建练习序列（异步，供 API route）。DATA_SOURCE=db 时按需从数据库取题，
+ * 避免整库进入内存 / 客户端；否则回退 seed。
+ */
+export async function buildPracticeSetAsync(params: BuildSessionParams): Promise<Question[]> {
+  if (!shouldUseDb()) return buildPracticeSet(params);
+
+  const { mode, type, count, wrongIds } = params;
+  const limit = Math.min(count ?? DEFAULT_SET_SIZE, MAX_SET_SIZE);
+
+  switch (mode) {
+    case 'sequential':
+      return dbFirstQuestions(undefined, limit);
+    case 'random':
+      return dbSampleQuestions(undefined, limit);
+    case 'topic':
+      return dbSampleQuestions(type, limit);
+    case 'mock':
+      return dbSampleQuestions(undefined, Math.min(count ?? MOCK_SET_SIZE, MAX_SET_SIZE));
+    case 'wrong':
+      return dbGetQuestionsByIds(wrongIds ?? []);
+    default:
+      return dbFirstQuestions(undefined, limit);
+  }
+}
+
 /** 各题型题量统计（供专项模式与 Dashboard）。 */
-export function getTypeCounts(): Record<QuestionType, number> {
+export async function getTypeCounts(): Promise<Record<QuestionType, number>> {
+  if (shouldUseDb()) return dbGetTypeCounts();
   const counts = {
     verbal: 0,
     quantitative: 0,

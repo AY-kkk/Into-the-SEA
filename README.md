@@ -106,6 +106,18 @@ pnpm build && pnpm start
 - 底层调用火山方舟 `arkcli +chat --tools web_search`（联网），产出经 zod 校验（答案键有效、`sourceUrl` 红线），非法条目跳过并报告；人工复核后并入 `data/seed`。
 - 缺少 arkcli 时提示并退出，不阻塞离线交付。样本见 `data/generated/sample-questions.json`。
 
+### 接入真实数据库（PostgreSQL）
+
+```bash
+docker compose up -d                 # 本地起库（或用 Supabase / Neon 连接串）
+# .env: DATA_SOURCE=db, DATABASE_URL=postgresql://into_the_sea:into_the_sea@localhost:5432/into_the_sea?schema=public
+pnpm prisma:generate && pnpm prisma db push
+pnpm db:seed                          # 分批写入 8000+ 题、500+ 案例（pnpm db:seed --reset 重建）
+```
+
+`DATA_SOURCE=db` 时，练习 / 申论 / 招录情报改从数据库读取（筛选·分页·随机抽样下推 SQL）；
+未配置时自动回退 seed JSON。真实数据来源与摄取（GitHub / 小红书 / 考公平台）见 [`docs/DATA-SOURCES.md`](./docs/DATA-SOURCES.md)。
+
 ### 规模化后的数据流（重要）
 
 - 题库达数千题，**题目不再进入客户端 bundle**：练习集由 `POST /api/practice` 在服务端筛选 / 抽样后下发（单次默认 20 题、上限 50、套卷 25）。
