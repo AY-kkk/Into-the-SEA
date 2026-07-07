@@ -1,0 +1,23 @@
+GOAL.md
+  s_31c894889f7331::t_c16412f6a01043 364,376-383
+data/import/gongkaowx-questions.json
+  s_31c894889f7331::t_b20782e5117834 1-10442
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.5",
+  "base_commit_sha": "b344a485c4924ef81ccd65fa8439555032c2c216",
+  "prompts": {},
+  "sessions": {
+    "s_31c894889f7331": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f3a7b-0864-7a80-a3ab-d4efe72c1433",
+        "model": "unknown"
+      },
+      "human_author": "Codex <codex@local>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
