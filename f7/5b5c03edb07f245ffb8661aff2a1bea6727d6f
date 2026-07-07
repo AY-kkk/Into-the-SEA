@@ -1,0 +1,37 @@
+GOAL.md
+  s_31c894889f7331::t_584ef722886e76 335-345
+docs/DESIGN.md
+  s_31c894889f7331::t_412fa0a1e1b83b 38,40-41,43-45,49,53-58,62-67,71-77,81-85,89-91
+scripts/gen-assets.ts
+  s_31c894889f7331::t_38692eb0a64a76 2,5-16,18-19,24-25,29,31,34-35,38-53,58,71-73,78,80,82-97,99-104
+src/assets/generated/README.md
+  s_31c894889f7331::t_f99d20ff543816 3-4,8-9,13-17
+src/assets/generated/index.ts
+  s_31c894889f7331::t_21bcb5557c99f5 3-6,11-28
+src/components/auth/auth-card.tsx
+  s_31c894889f7331::t_1345be893d49a0 29
+src/components/shared/mascot.tsx
+  s_31c894889f7331::t_3ab124348f1629 31
+src/components/shared/states.tsx
+  s_31c894889f7331::t_6d65e996ffaca7 19,58,84,116
+src/types/assets.d.ts
+  s_31c894889f7331::t_91ce7be0c8a846 6-17
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.5",
+  "base_commit_sha": "f75b5c03edb07f245ffb8661aff2a1bea6727d6f",
+  "prompts": {},
+  "sessions": {
+    "s_31c894889f7331": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f3a7b-0864-7a80-a3ab-d4efe72c1433",
+        "model": "unknown"
+      },
+      "human_author": "Codex <codex@local>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
