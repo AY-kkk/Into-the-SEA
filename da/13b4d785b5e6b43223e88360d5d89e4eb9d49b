@@ -1,0 +1,71 @@
+.env.example
+  s_eaeb8e0d0f724e::t_6fac88cb504e1a 62-69
+.gitignore
+  s_eaeb8e0d0f724e::t_a5322a3abd1b79 49-54
+e2e/auth-and-practice.spec.ts
+  s_eaeb8e0d0f724e::t_54323a620bf7b8 1-58
+e2e/health-seo.spec.ts
+  s_eaeb8e0d0f724e::t_c0ad847c401dfb 1-23
+package.json
+  s_eaeb8e0d0f724e::t_ad56360888c1cf 23-26,48
+playwright.config.ts
+  s_eaeb8e0d0f724e::t_9b121f1ec7d29a 1-33
+pnpm-lock.yaml
+  s_eaeb8e0d0f724e::t_d7525b40e47cad 43,63-65,636-640,1838-1842,2387-2396,3443-3446,4803-4805,5203,5224,5344-5351
+src/app/(app)/essay/page.tsx
+  s_eaeb8e0d0f724e::t_00beb5df758e2c 10-19
+src/app/(app)/exam-news/page.tsx
+  s_eaeb8e0d0f724e::t_2423bd7b701dba 6-15
+src/app/api/analytics/route.ts
+  s_eaeb8e0d0f724e::t_762b23bcae8257 1-37
+src/app/api/cron/ingest/route.ts
+  s_eaeb8e0d0f724e::t_c2e42a53bbd806 1-43
+src/app/layout.tsx
+  s_eaeb8e0d0f724e::t_da3ca33613c2b4 4-8,10,12-34
+src/app/robots.ts
+  s_eaeb8e0d0f724e::t_95ca6423cf1a2e 1-17
+src/app/sitemap.ts
+  s_eaeb8e0d0f724e::t_e1f0451c3d6c34 1-15
+src/components/auth/login-form.tsx
+  s_eaeb8e0d0f724e::t_b844e10c24f455 9-10,25,38
+src/components/auth/register-form.tsx
+  s_eaeb8e0d0f724e::t_f5bc6718ecdda3 9-10,25,38
+src/components/interview/chat-runner.tsx
+  s_eaeb8e0d0f724e::t_c4e929e8b76b9c 12-13,56,74
+src/components/interview/interview-view.tsx
+  s_eaeb8e0d0f724e::t_d957a7202c60a7 16-17,63
+src/components/practice/quiz-runner.tsx
+  s_eaeb8e0d0f724e::t_ffac2936eb5dec 13-14,98-99
+src/components/practice/wrong-book.tsx
+  s_eaeb8e0d0f724e::t_9ec9692cff4f9d 10-11,80-83
+src/lib/analytics/events.ts
+  s_eaeb8e0d0f724e::t_15ba70ccba3d9d 1-27
+src/lib/analytics/track.ts
+  s_eaeb8e0d0f724e::t_d0d1e80b3ed05f 1-59
+src/lib/db/app-meta.ts
+  s_eaeb8e0d0f724e::t_20c13c6fac59b1 1-51
+src/lib/env.ts
+  s_eaeb8e0d0f724e::t_ceef4a56015eb6 12-13,56-59
+src/lib/validators/analytics.ts
+  s_eaeb8e0d0f724e::t_df3b1a95486c81 1-16
+vercel.json
+  s_eaeb8e0d0f724e::t_7ed9fb1d6c3855 1-9
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.5",
+  "base_commit_sha": "da13b4d785b5e6b43223e88360d5d89e4eb9d49b",
+  "prompts": {},
+  "sessions": {
+    "s_eaeb8e0d0f724e": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f3baa-a63e-71f2-a85a-49a652ab09ec",
+        "model": "unknown"
+      },
+      "human_author": "Codex <codex@local>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
