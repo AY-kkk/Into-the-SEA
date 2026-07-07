@@ -454,3 +454,13 @@ Next.js 14 App Router · React 18 · TS 严格 · Tailwind · shadcn/ui · Frame
   - **测试**：新增 moderation 单测（6：放行/违规拦截/手机号·身份证·邮箱脱敏/拦截优先级）。单测 76→82。
 - 验证方式：`pnpm typecheck`✅ `pnpm lint`✅ `pnpm test`(82)✅ `pnpm build`✅ `pnpm test:e2e`(7)✅。
 - 说明：至此 Gate1「生成式 AI 内容审核机制或免责声明」由「仅免责声明」升级为「审核机制 + 免责声明」双具备（ICP/算法备案仍属线下事项）。
+
+### [M13] 真实搜索 Provider 落地（Gate2 真实 AI 接入补强）— 2026-07-07
+
+- 完成内容：
+  - **RealSearchProvider 真实实现**（此前 `throw '尚未实现'`）：支持 Tavily / Bing / 通用 JSON 三类厂商（`SEARCH_PROVIDER_KIND`），统一归一化为 `SearchResult` 并保留 `url`(source_url 红线)；含 8s 超时、非 2xx 抛错（供上层降级）、缺字段兜底。
+  - 岗位题库检索 `RealQuestionSearchProvider` 复用之，`shouldUseReal('search')` 缺凭据自动降级 mock（不崩溃）。
+  - `SEARCH_PROVIDER_KIND` env + `.env.example` 说明。
+  - **测试**：新增 search real 单测（5：无 key 抛错 / Tavily 解析并过滤无 url / Bing 解析 / 非 2xx 抛错 / generic 需 endpoint）。单测 82→87。
+- 验证方式：`pnpm typecheck`✅ `pnpm lint`✅ `pnpm test`(87)✅ `pnpm build`✅ `pnpm test:e2e`(7)✅。
+- 说明：至此 `src/providers/**/real.ts` 不再存在 `尚未实现` 抛错；LLM/Search/Question 三大 real provider 均有可运行实现 + mock 降级。真钥端到端联调仍需外部 API Key。

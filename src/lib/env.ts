@@ -31,6 +31,8 @@ const envSchema = z.object({
 
   SEARCH_API_KEY: z.string().optional(),
   SEARCH_ENDPOINT: z.string().optional(),
+  /** 搜索厂商类型：tavily | bing | generic（通用 JSON）。默认 tavily。 */
+  SEARCH_PROVIDER_KIND: z.enum(['tavily', 'bing', 'generic']).default('tavily'),
 
   REDIS_URL: z.string().optional(),
 

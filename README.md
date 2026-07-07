@@ -120,6 +120,8 @@ pnpm build && pnpm start
 - **内容审核（Gate1 合规）**：`src/lib/moderation` 本地规则引擎（违规拦截 + PII 脱敏，`allow/mask/block` 三级），接入面试输入/输出与简历文本；`/api/moderation` 预检接口；`MODERATION_PROVIDER=real` 远程内容安全骨架预留。
 - **可观测性增强**：`middleware.ts` 为全部请求注入 `x-request-id`，便于日志串联与错误定位。
 
+- **真实搜索接入（Gate2）**：`RealSearchProvider` 支持 Tavily / Bing / 通用 JSON（`SEARCH_PROVIDER_KIND`），保留 `sourceUrl`，含超时与错误降级；`providers/**/real.ts` 已无「尚未实现」占位。
+
 ### 相关脚本
 
 | 命令                    | 说明                                                         |
