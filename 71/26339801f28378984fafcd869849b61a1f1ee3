@@ -1,0 +1,25 @@
+.env.example
+  s_eaeb8e0d0f724e::t_7648773f7a2024 36-38,40
+README.md
+  s_eaeb8e0d0f724e::t_d5470a42c91273 123-124
+src/lib/env.ts
+  s_eaeb8e0d0f724e::t_a2d129d6361817 34-35
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.5",
+  "base_commit_sha": "7126339801f28378984fafcd869849b61a1f1ee3",
+  "prompts": {},
+  "sessions": {
+    "s_eaeb8e0d0f724e": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f3baa-a63e-71f2-a85a-49a652ab09ec",
+        "model": "unknown"
+      },
+      "human_author": "Codex <codex@local>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
