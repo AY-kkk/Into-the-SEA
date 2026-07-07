@@ -1,0 +1,41 @@
+prisma/schema.prisma
+  s_eaeb8e0d0f724e::t_cc3441bbe39250 168
+src/app/(app)/pricing/page.tsx
+  s_eaeb8e0d0f724e::t_ee827d52bd2570 1-21
+src/app/api/billing/route.ts
+  s_eaeb8e0d0f724e::t_0350788537bbb8 1-13
+src/app/api/billing/subscribe/route.ts
+  s_eaeb8e0d0f724e::t_6d2a92cd13bb50 1-36
+src/lib/auth/store.ts
+  s_eaeb8e0d0f724e::t_4399bc8b92e3a6 13,49,55-61,65-66,71-82,140-146,157,168-174,183-194
+src/lib/billing/cost-model.ts
+  s_eaeb8e0d0f724e::t_70a2c16efab7d2 1-56
+src/lib/billing/plans.ts
+  s_eaeb8e0d0f724e::t_15a70c245dc710 1-66
+src/lib/security/guard.ts
+  s_eaeb8e0d0f724e::t_df940701a5566c 7,77-80,84-89
+src/services/auth.service.ts
+  s_eaeb8e0d0f724e::t_b90b75d5dd7bb1 49
+src/services/billing.service.ts
+  s_eaeb8e0d0f724e::t_2ba1fd6c338c8a 1-27
+src/types/user.ts
+  s_eaeb8e0d0f724e::t_22382b03dd78c4 8-9
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.5",
+  "base_commit_sha": "e61c29c028d92b410a11c776a062e097995371f6",
+  "prompts": {},
+  "sessions": {
+    "s_eaeb8e0d0f724e": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f3baa-a63e-71f2-a85a-49a652ab09ec",
+        "model": "unknown"
+      },
+      "human_author": "Codex <codex@local>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
