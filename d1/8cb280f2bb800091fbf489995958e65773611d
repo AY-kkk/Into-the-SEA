@@ -1,0 +1,43 @@
+.env.example
+  s_eaeb8e0d0f724e::t_72a6308de1fb1b 74-79
+GOAL.md
+  s_eaeb8e0d0f724e::t_179bf9e236623e 447-456
+README.md
+  s_eaeb8e0d0f724e::t_d806e4bf7b1990 120-122
+docs/AI-DISCLAIMER.md
+  s_eaeb8e0d0f724e::t_6ac9713f4f0230 12
+src/app/api/interview/next/route.ts
+  s_eaeb8e0d0f724e::t_23157b29676cae 5,28-35,39
+src/app/api/job-prep/follow-ups/route.ts
+  s_eaeb8e0d0f724e::t_f74587245a1f8b 5,25-33
+src/app/api/moderation/route.ts
+  s_eaeb8e0d0f724e::t_c0f927415115f5 1-27
+src/lib/env.ts
+  s_eaeb8e0d0f724e::t_2b4d142a3f7e70 60-65
+src/lib/moderation/index.ts
+  s_eaeb8e0d0f724e::t_dc26b1ad0339ff 1-100
+src/lib/moderation/moderation.test.ts
+  s_eaeb8e0d0f724e::t_e1a1d6b7f65a33 1-44
+src/middleware.ts
+  s_eaeb8e0d0f724e::t_ac8d5d3766486a 4,7-9,11,16-21,33,39,41,45-46
+src/services/interview.service.ts
+  s_eaeb8e0d0f724e::t_aecbb867201a2f 2,43,47,63,68
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.5",
+  "base_commit_sha": "d18cb280f2bb800091fbf489995958e65773611d",
+  "prompts": {},
+  "sessions": {
+    "s_eaeb8e0d0f724e": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f3baa-a63e-71f2-a85a-49a652ab09ec",
+        "model": "unknown"
+      },
+      "human_author": "Codex <codex@local>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
