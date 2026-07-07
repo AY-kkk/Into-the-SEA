@@ -1,9 +1,13 @@
 import { NextResponse, type NextRequest } from 'next/server';
+import { guard } from '@/lib/security/guard';
 import { questionSearchSchema } from '@/lib/validators/job';
 import { searchPositionQuestions } from '@/services/job-prep.service';
 
 /** GET /api/job-prep/questions?positionName=... — 岗位题库联网检索（保留 source_url）。 */
 export async function GET(request: NextRequest): Promise<NextResponse> {
+  const g = await guard(request, { requireAuth: true, llm: true });
+  if (!g.ok) return g.response;
+
   const { searchParams } = new URL(request.url);
   const parsed = questionSearchSchema.safeParse({
     positionName: searchParams.get('positionName') ?? '',

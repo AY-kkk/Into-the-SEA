@@ -375,9 +375,37 @@ Next.js 14 App Router · React 18 · TS 严格 · Tailwind · shadcn/ui · Frame
   seed-mode dev 冒烟：/api/practice 专项过滤、/api/essay 分页 total=508、GitHub 来源题 sourceUrl 正确回显。
 
 ### [题库来源扩充] 接入 MIT 许可题库（2020 后） — 2026-07-07
+
 - 完成内容：
   - ingest.ts 新增 `--gongkaowx`：接入 **ACCS-0521/GongKaoWX（MIT 许可，2026）** 360 道题（6 分类各 60：言语/数量/判断/资料/常识/政治，政治并入常识），含解析·知识点·sourceRefs；答案键校验、题干去重、逐条 sourceUrl（优先题目自带来源，107 题带真实外链）。
   - 题库累计：程序化 8000 + quizsim 161 + GongKaoWX 360 = **8521 题**。
   - docs/DATA-SOURCES.md 增来源许可对照表（MIT 优先、许可边界说明）；README 脚本表更新。
   - 评估但未纳入：xingce-vault（Java/SQL 非结构化）、exam-prep（题目内嵌 213KB HTML）——保留在文档说明。
 - 验证方式：`pnpm typecheck`✅ `pnpm lint`✅ `pnpm test`(50)✅ `pnpm build`✅；ingest 冒烟 360/360 答案键有效。
+
+### [M9] 上线加固：鉴权 / 持久化 / 安全 / 观测 / 合规 — 2026-07-07
+
+- 背景：对照「十问 + 三层上线标准（Gate1/2/3）」推进，从「可演示 MVP」向「可上线 SaaS」补齐硬缺陷，而非表层 UI。
+- 完成内容：
+  - **真实鉴权（Gate1）**：`scrypt` 加盐哈希（`lib/auth/password.ts`）+ HMAC 签名 HttpOnly Cookie（`lib/auth/cookie.ts`）+ 服务端会话（`lib/auth/session.ts`）。`auth.service` 提供 register/login/logout/resetPassword/getUserBySession。API：`/api/auth/{register,login,logout,session,reset-password}`。auth 页面改为可用表单（login/register/forgot），顶栏 `UserMenu` 展示登录态与退出。`middleware.ts` 保护五大模块路由。
+  - **DB-optional 存储**：新增 Prisma 模型 `User`/`Session`/`PracticeState`；`lib/auth/store.ts` 与 `lib/db/practice-state.ts` 双实现（`DATA_SOURCE=db` 走 Prisma，否则 `data/runtime/` 文件持久化）。
+  - **真实数据持久化（Gate1/2）**：`/api/practice/state`（GET/PUT，鉴权）+ practice-store 双向同步与合并策略，登录后多端不丢数据。
+  - **API 安全（Gate1）**：`lib/security/rate-limit.ts`（滑动窗口限流 + 每日 LLM 配额）+ `lib/security/guard.ts`（鉴权/限流/配额统一守卫）。interview/job-prep 写接口强制登录 + LLM 配额；auth 接口独立严格限流。real LLM `max_tokens` 上限护栏。
+  - **观测性（Gate2）**：结构化 `logger` + `captureError`（Sentry DSN 预留）+ `GET /api/health`。
+  - **数据可信/时效（Gate2）**：`scripts/validate-sources.ts`（`pnpm validate:sources`，522 条 0 违规，`--net` 抽检）；`getExamInfoFreshness` + 招录页「更新时间/陈旧」提示。
+  - **合规/文档（Gate1/3）**：`docs/PRIVACY.md`、`docs/TERMS.md`、`docs/AI-DISCLAIMER.md`、`docs/RUNBOOK.md`；`.env.example` 增补 AUTH/观测/护栏配置；README 增「安全·鉴权·观测」章节。
+  - **测试**：新增 password/cookie/rate-limit/auth.service/practice-state 单测；总数 50 → 69 全过。
+- 验证方式：`pnpm typecheck`✅ `pnpm lint`✅ `pnpm test`(69)✅ `pnpm build`✅；`pnpm start` 冒烟：未登录 API=401 / 页面 307→/login、注册→会话→进度存取、错误密码 401、重复注册 409、登录限流 10 次后 429、登录后面试开场正常、`/api/health` ok。
+
+### 上线 Readiness 判断（截至 M9）
+
+- **总体定位：可小范围灰度试运行产品**（较 M8「可演示 MVP」前进一档），距「可正式推广 SaaS」仍有差距。
+- **Gate 1（硬门槛）**：
+  - ✅ 真实鉴权（注册/登录/找回 + 加密 + 服务端会话）
+  - ✅ API 安全（写接口鉴权 + 限流 + LLM 成本上限）
+  - ✅ 构建质量（build/lint/test 全绿）
+  - 🟡 真实数据库：代码已 DB-optional 就位并可 `prisma db push`，但**本环境无 Postgres 未做真机联调**（文件持久化已验证等价语义）。
+  - 🟡 合规基础：隐私/协议/AI 免责/Runbook 文档就位，但**ICP 备案、算法备案、正式法务文本、内容审核**属线下事项，未完成。
+- **Gate 2（首周）**：真实 AI 接入骨架 + 降级已就位但**未用真钥端到端联调**；`sourceUrl` 自动校验✅、时效提示✅；E2E（Playwright）、Sentry 实接、性能实测**未做**。
+- **Gate 3（推广前）**：商业化/SEO/OG/备份回滚**未做**（RUNBOOK 已列步骤）。
+- **距 SaaS 最高优先级剩余项**：① 真机 Postgres 联调 + 备份 ② 真钥 LLM/Search 端到端联调 ③ ICP/算法备案 + 内容审核 ④ Sentry 实接 + 关键漏斗埋点 ⑤ Playwright E2E + 性能实测。

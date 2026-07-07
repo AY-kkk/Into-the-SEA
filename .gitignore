@@ -43,3 +43,6 @@ prisma/*.db-journal
 
 # 界面截图（本地预览，不入库以免占体积；README 相对引用）
 /screenshots/
+
+# 运行时用户数据（无数据库时的文件持久化，含账号/会话/进度，不入库）
+/data/runtime/

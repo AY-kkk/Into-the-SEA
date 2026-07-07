@@ -6,8 +6,48 @@ import type { AnswerRecord, QuestionSnapshot, QuestionType, WrongQuestion } from
 
 /**
  * 行测练习状态：作答记录、错题本、按题型正确率。
- * MVP 单用户，持久化到 localStorage；后续可替换为服务端持久化（AnswerRecord/WrongQuestion 表已就绪）。
+ * 未登录：持久化到 localStorage；登录后自动与服务端（/api/practice/state）双向同步。
  */
+
+/** 合并作答记录（按 questionId+answeredAt 去重，服务端优先）。 */
+function mergeRecords(server: AnswerRecord[], local: AnswerRecord[]): AnswerRecord[] {
+  const seen = new Set(server.map((r) => `${r.questionId}@${r.answeredAt}`));
+  const extra = local.filter((r) => !seen.has(`${r.questionId}@${r.answeredAt}`));
+  return [...server, ...extra];
+}
+
+/** 合并错题本（按 questionId 去重，取更晚的 lastWrongAt / 更大的 wrongCount）。 */
+function mergeWrong(server: WrongQuestion[], local: WrongQuestion[]): WrongQuestion[] {
+  const map = new Map<string, WrongQuestion>();
+  for (const w of [...server, ...local]) {
+    const prev = map.get(w.questionId);
+    if (!prev) {
+      map.set(w.questionId, w);
+    } else {
+      map.set(w.questionId, {
+        ...prev,
+        wrongCount: Math.max(prev.wrongCount, w.wrongCount),
+        lastWrongAt: prev.lastWrongAt > w.lastWrongAt ? prev.lastWrongAt : w.lastWrongAt,
+        mastered: prev.mastered && w.mastered,
+        snapshot: prev.snapshot ?? w.snapshot,
+      });
+    }
+  }
+  return [...map.values()];
+}
+
+/** 登录后置为 true，开启服务端自动同步。 */
+let serverSyncEnabled = false;
+let pushTimer: ReturnType<typeof setTimeout> | null = null;
+
+function scheduleServerPush(push: () => Promise<void>): void {
+  if (!serverSyncEnabled) return;
+  if (pushTimer) clearTimeout(pushTimer);
+  pushTimer = setTimeout(() => {
+    void push();
+  }, 800);
+}
+
 interface PracticeState {
   records: AnswerRecord[];
   wrongBook: WrongQuestion[];
@@ -27,6 +67,10 @@ interface PracticeState {
   /** 未掌握错题 id。 */
   getActiveWrongIds: () => string[];
   reset: () => void;
+  /** 从服务端拉取并合并进度（登录后调用）。 */
+  pullFromServer: () => Promise<void>;
+  /** 将当前进度推送到服务端（登录态自动 debounce 调用）。 */
+  pushToServer: () => Promise<void>;
 }
 
 export const usePracticeStore = create<PracticeState>()(
@@ -93,7 +137,47 @@ export const usePracticeStore = create<PracticeState>()(
           .map((w) => w.questionId),
 
       reset: () => set({ records: [], wrongBook: [] }),
+
+      pullFromServer: async () => {
+        serverSyncEnabled = true;
+        try {
+          const res = await fetch('/api/practice/state', { cache: 'no-store' });
+          if (!res.ok) return;
+          const data = (await res.json()) as {
+            records: AnswerRecord[];
+            wrongBook: WrongQuestion[];
+          };
+          // 合并策略：以服务端为基准，叠加本地新增（按 id 去重），保证多端不丢数据。
+          set((state) => ({
+            records: mergeRecords(data.records ?? [], state.records),
+            wrongBook: mergeWrong(data.wrongBook ?? [], state.wrongBook),
+          }));
+          void get().pushToServer();
+        } catch {
+          /* 离线/未登录：静默降级为本地态 */
+        }
+      },
+
+      pushToServer: async () => {
+        try {
+          const { records, wrongBook } = get();
+          await fetch('/api/practice/state', {
+            method: 'PUT',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ records, wrongBook }),
+          });
+        } catch {
+          /* 未登录/离线：忽略，保留本地持久化 */
+        }
+      },
     }),
     { name: 'its-practice-store' },
   ),
 );
+
+// 登录态下，任一 records/wrongBook 变化后 debounce 推送到服务端。
+usePracticeStore.subscribe((state, prev) => {
+  if (state.records !== prev.records || state.wrongBook !== prev.wrongBook) {
+    scheduleServerPush(() => usePracticeStore.getState().pushToServer());
+  }
+});

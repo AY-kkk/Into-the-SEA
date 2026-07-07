@@ -158,3 +158,37 @@ model AppMeta {
   value     String
   updatedAt DateTime @updatedAt
 }
+
+/// 用户账号（真实鉴权体系）
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String
+  passwordHash String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  sessions Session[]
+
+  @@index([email])
+}
+
+/// 服务端会话（cookie 承载 sessionId，服务端校验）
+model Session {
+  id        String   @id @default(cuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([expiresAt])
+}
+
+/// 用户练习进度快照（服务端持久化，替代仅 localStorage）
+model PracticeState {
+  userId    String   @id
+  records   Json     @default("[]")
+  wrongBook Json     @default("[]")
+  updatedAt DateTime @updatedAt
+}

@@ -19,7 +19,8 @@
     "gen:questions": "tsx scripts/generate-questions.ts",
     "gen:essays": "tsx scripts/generate-essays.ts",
     "fetch:questions": "tsx scripts/fetch-questions.ts",
-    "ingest": "tsx scripts/ingest.ts"
+    "ingest": "tsx scripts/ingest.ts",
+    "validate:sources": "tsx scripts/validate-sources.ts"
   },
   "dependencies": {
     "@prisma/client": "5.22.0",

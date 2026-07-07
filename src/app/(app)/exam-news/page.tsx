@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { PageShell } from '@/components/shared/page-shell';
 import { ExamNewsView } from '@/components/exam-news/exam-news-view';
-import { listExamInfo } from '@/services/exam-info.service';
+import { getExamInfoFreshness, listExamInfo } from '@/services/exam-info.service';
 
 export const metadata: Metadata = { title: '招录情报' };
 
@@ -9,7 +9,7 @@ export const metadata: Metadata = { title: '招录情报' };
 export const dynamic = 'force-dynamic';
 
 export default async function ExamNewsPage() {
-  const initialItems = await listExamInfo();
+  const [initialItems, freshness] = await Promise.all([listExamInfo(), getExamInfoFreshness()]);
 
   return (
     <PageShell
@@ -17,7 +17,7 @@ export default async function ExamNewsPage() {
       title="招录情报"
       description="汇总国考、省考、国企、事业单位、三支一扶招录信息，来源链接可溯源。"
     >
-      <ExamNewsView initialItems={initialItems} />
+      <ExamNewsView initialItems={initialItems} freshness={freshness} />
     </PageShell>
   );
 }

@@ -9,15 +9,15 @@
 
 > 截图为本地生成，不纳入仓库以避免占用体积；请在本地运行 `pnpm dev` 后自行截图存放于 `screenshots/`（该目录已在 `.gitignore` 中忽略）。下列引用为相对路径，本地存在对应文件即可显示。
 
-| 模块 | 预览 |
-| --- | --- |
+| 模块     | 预览                                     |
+| -------- | ---------------------------------------- |
 | 招录情报 | ![招录情报](./screenshots/exam-news.png) |
-| 岗位备考 | ![岗位备考](./screenshots/job-prep.png) |
-| 行测刷题 | ![行测刷题](./screenshots/practice.png) |
-| 申论案例 | ![申论案例](./screenshots/essay.png) |
+| 岗位备考 | ![岗位备考](./screenshots/job-prep.png)  |
+| 行测刷题 | ![行测刷题](./screenshots/practice.png)  |
+| 申论案例 | ![申论案例](./screenshots/essay.png)     |
 | 模拟面试 | ![模拟面试](./screenshots/interview.png) |
-| 工作台 | ![工作台](./screenshots/dashboard.png) |
-| 登录 | ![登录](./screenshots/login.png) |
+| 工作台   | ![工作台](./screenshots/dashboard.png)   |
+| 登录     | ![登录](./screenshots/login.png)         |
 
 ## 技术栈
 
@@ -97,6 +97,22 @@ pnpm build && pnpm start
 - **Provider 抽象**：`SearchProvider` / `LLMProvider` / `ExamInfoProvider` / `QuestionSearchProvider` / `InterviewEngine`，每个都有 mock 实现与 real 骨架（`TODO(real)` 标注）。
 - **切换真实实现**：`.env` 设置 `*_PROVIDER=real` 并提供凭据；`src/lib/env.ts` 的 `shouldUseReal()` 在缺凭据时自动降级 mock。
 - **红线**：任何含外部来源的数据模型与页面都保留并展示 `source_url`。
+
+## 安全 · 鉴权 · 观测（M9 上线加固）
+
+- **真实鉴权**：注册/登录/找回密码可用，密码 `scrypt` 加盐哈希（`src/lib/auth/password.ts`），服务端会话 + HttpOnly 签名 Cookie；`middleware.ts` 保护五大模块路由，未登录跳转 `/login?next=`。
+  - 存储 DB-optional：`DATA_SOURCE=db` 走 Prisma（`User`/`Session`/`PracticeState` 表），否则文件持久化（`data/runtime/`，仅开发/演示）。
+- **真实数据持久化**：练习进度/错题本登录后经 `PUT/GET /api/practice/state` 与服务端双向同步（`store` 合并策略，多端不丢数据）。
+- **API 安全**：统一守卫 `src/lib/security/guard.ts`（鉴权 + 限流 + LLM 每日配额）；LLM 接口 `max_tokens` 上限 + 单用户日调用上限，防成本失控。写接口（interview/job-prep）强制登录。
+- **观测性**：结构化日志 `src/lib/observability/logger.ts`、错误捕获 `captureError`（`SENTRY_DSN` 预留）、健康检查 `GET /api/health`。
+- **数据红线**：`pnpm validate:sources` 自动校验所有外部来源条目的 `sourceUrl`（CI 阻断项，522 条 0 违规）；招录页展示「数据更新时间」+ 陈旧提示。
+- **合规文档**：`docs/PRIVACY.md`、`docs/TERMS.md`、`docs/AI-DISCLAIMER.md`、`docs/RUNBOOK.md`（占位模板，上线前法务确认）。
+
+### 相关脚本
+
+| 命令                    | 说明                                                       |
+| ----------------------- | ---------------------------------------------------------- |
+| `pnpm validate:sources` | 校验 seed 数据 `sourceUrl` 红线（`-- --net` 附加联网抽检） |
 
 ## 迭代进度
 

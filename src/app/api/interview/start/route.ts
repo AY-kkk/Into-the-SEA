@@ -1,9 +1,13 @@
 import { NextResponse, type NextRequest } from 'next/server';
+import { guard } from '@/lib/security/guard';
 import { interviewConfigSchema } from '@/lib/validators/interview';
 import { generateOpening } from '@/services/interview.service';
 
 /** POST /api/interview/start — 开始面试，返回开场问题。 */
 export async function POST(request: NextRequest): Promise<NextResponse> {
+  const g = await guard(request, { requireAuth: true, llm: true });
+  if (!g.ok) return g.response;
+
   let body: unknown;
   try {
     body = await request.json();

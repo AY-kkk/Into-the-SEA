@@ -1,9 +1,13 @@
 import { NextResponse, type NextRequest } from 'next/server';
+import { guard } from '@/lib/security/guard';
 import { followUpsSchema } from '@/lib/validators/job';
 import { generateResumeFollowUps } from '@/services/job-prep.service';
 
 /** POST /api/job-prep/follow-ups — 根据简历要点生成针对性追问。 */
 export async function POST(request: NextRequest): Promise<NextResponse> {
+  const g = await guard(request, { requireAuth: true });
+  if (!g.ok) return g.response;
+
   let body: unknown;
   try {
     body = await request.json();

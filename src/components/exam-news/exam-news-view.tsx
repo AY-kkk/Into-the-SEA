@@ -7,6 +7,8 @@ import { SelectNative } from '@/components/ui/select-native';
 import { Button } from '@/components/ui/button';
 import { EmptyState, ErrorState, LoadingState } from '@/components/shared/states';
 import { ExamCard } from './exam-card';
+import { FreshnessBanner } from './freshness-banner';
+import type { ExamInfoFreshness } from '@/services/exam-info.service';
 import {
   EDUCATION_LABELS,
   ENROLL_STATUS_LABELS,
@@ -29,7 +31,13 @@ function toOptions(record: Record<string, string>) {
   return Object.entries(record).map(([value, label]) => ({ value, label }));
 }
 
-export function ExamNewsView({ initialItems }: { initialItems: ExamInfo[] }) {
+export function ExamNewsView({
+  initialItems,
+  freshness,
+}: {
+  initialItems: ExamInfo[];
+  freshness: ExamInfoFreshness;
+}) {
   const [items, setItems] = useState<ExamInfo[]>(initialItems);
   const [filters, setFilters] = useState<Filters>(EMPTY);
   const [state, setState] = useState<AsyncState>(initialItems.length ? 'ready' : 'empty');
@@ -71,6 +79,7 @@ export function ExamNewsView({ initialItems }: { initialItems: ExamInfo[] }) {
 
   return (
     <div className="space-y-5">
+      <FreshnessBanner freshness={freshness} />
       <div className="rounded-lg border bg-card p-4">
         <div className="grid gap-3 md:grid-cols-2 lg:grid-cols-5">
           <div className="relative lg:col-span-1">

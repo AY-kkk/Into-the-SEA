@@ -31,6 +31,26 @@ const envSchema = z.object({
   SEARCH_ENDPOINT: z.string().optional(),
 
   REDIS_URL: z.string().optional(),
+
+  // ── 鉴权 / 会话 ──
+  /** 会话 cookie 的 HMAC 签名密钥；生产必须设置（>=32 位）。缺省用开发降级密钥并告警。 */
+  AUTH_SECRET: z.string().optional(),
+  /** 会话有效期（天）。 */
+  SESSION_TTL_DAYS: z.coerce.number().int().positive().default(30),
+
+  // ── 观测性 ──
+  SENTRY_DSN: z.string().optional(),
+  NEXT_PUBLIC_SENTRY_DSN: z.string().optional(),
+  LOG_LEVEL: z.enum(['debug', 'info', 'warn', 'error']).default('info'),
+
+  // ── API 安全 / 成本护栏 ──
+  /** 单窗口每 IP/用户请求上限（默认 60/分钟）。 */
+  RATE_LIMIT_MAX: z.coerce.number().int().positive().default(60),
+  RATE_LIMIT_WINDOW_MS: z.coerce.number().int().positive().default(60_000),
+  /** LLM 单次请求 max_tokens 上限护栏。 */
+  LLM_MAX_TOKENS_CAP: z.coerce.number().int().positive().default(1024),
+  /** 单用户每日 LLM 调用次数上限（成本护栏）。 */
+  LLM_DAILY_CALL_CAP: z.coerce.number().int().positive().default(80),
 });
 
 export type Env = z.infer<typeof envSchema>;
@@ -73,4 +93,22 @@ export function shouldUseReal(provider: 'exam' | 'llm' | 'search' | 'question'):
  */
 export function shouldUseDb(): boolean {
   return env.DATA_SOURCE === 'db' && Boolean(env.DATABASE_URL);
+}
+
+/**
+ * 解析会话签名密钥。生产环境缺失时抛错（安全红线），开发/测试降级为固定密钥并告警。
+ */
+export function getAuthSecret(): string {
+  if (env.AUTH_SECRET && env.AUTH_SECRET.length >= 16) return env.AUTH_SECRET;
+  if (env.NODE_ENV === 'production') {
+    throw new Error('[env] 生产环境必须设置 AUTH_SECRET（>=16 位）用于会话签名');
+  }
+  // eslint-disable-next-line no-console
+  console.warn('[env] 未设置 AUTH_SECRET，使用开发降级密钥（切勿用于生产）');
+  return 'dev-insecure-secret-change-me-please';
+}
+
+/** 是否将用户数据（账号/会话/进度）持久化到数据库。 */
+export function shouldUseDbForAuth(): boolean {
+  return shouldUseDb();
 }

@@ -16,7 +16,6 @@ export class RealLLMProvider implements LLMProvider {
       throw new Error('[RealLLMProvider] 缺少 LLM_BASE_URL / LLM_API_KEY / LLM_MODEL 配置');
     }
 
-    // TODO(real): 接入 chat completions（OpenAI-compatible）。
     const res = await fetch(`${baseUrl.replace(/\/$/, '')}/chat/completions`, {
       method: 'POST',
       headers: {
@@ -27,7 +26,7 @@ export class RealLLMProvider implements LLMProvider {
         model,
         messages,
         temperature: options?.temperature ?? 0.7,
-        max_tokens: options?.maxTokens,
+        max_tokens: Math.min(options?.maxTokens ?? env.LLM_MAX_TOKENS_CAP, env.LLM_MAX_TOKENS_CAP),
         ...(options?.json ? { response_format: { type: 'json_object' } } : {}),
       }),
     });

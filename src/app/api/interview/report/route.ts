@@ -1,9 +1,13 @@
 import { NextResponse, type NextRequest } from 'next/server';
+import { guard } from '@/lib/security/guard';
 import { reportSchema } from '@/lib/validators/interview';
 import { generateReport } from '@/services/interview.service';
 
 /** POST /api/interview/report — 生成多维度面试报告。 */
 export async function POST(request: NextRequest): Promise<NextResponse> {
+  const g = await guard(request, { requireAuth: true, llm: true });
+  if (!g.ok) return g.response;
+
   let body: unknown;
   try {
     body = await request.json();

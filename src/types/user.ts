@@ -1,16 +1,27 @@
 import type { QuestionType } from './question';
 
-/** 用户学习进度（MVP：单用户本地态，后续可接入账号体系）。 */
+/** 用户账号（真实鉴权体系）。 */
+export interface User {
+  id: string;
+  email: string;
+  name: string;
+  createdAt: string;
+}
+
+/** 会话（服务端存储，cookie 仅承载签名后的 sessionId）。 */
+export interface Session {
+  id: string;
+  userId: string;
+  expiresAt: string;
+  createdAt: string;
+}
+
+/** 用户学习进度（MVP 兼容态；服务端持久化后由 PracticeState 承载）。 */
 export interface UserProgress {
-  /** 累计答题数。 */
   answered: number;
-  /** 累计正确数。 */
   correct: number;
-  /** 错题数量。 */
   wrongCount: number;
-  /** 按题型正确率。 */
   accuracyByType: Partial<Record<QuestionType, number>>;
-  /** 连续打卡天数。 */
   streakDays: number;
   updatedAt: string;
 }
