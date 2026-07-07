@@ -1,0 +1,27 @@
+docs/RUNBOOK.md
+  s_eaeb8e0d0f724e::t_cd20c24190f4d6 50
+src/lib/observability/capture.ts
+  s_eaeb8e0d0f724e::t_f945c4339a0f9e 3,6-7,13-17
+src/lib/observability/sentry.test.ts
+  s_eaeb8e0d0f724e::t_2da96017cff6d0 1-85
+src/lib/observability/sentry.ts
+  s_eaeb8e0d0f724e::t_8fa0241f52f337 1-110
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.5",
+  "base_commit_sha": "d3e77625753b6d0d5c05b6f8dd3cf737411f1c3d",
+  "prompts": {},
+  "sessions": {
+    "s_eaeb8e0d0f724e": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f3baa-a63e-71f2-a85a-49a652ab09ec",
+        "model": "unknown"
+      },
+      "human_author": "Codex <codex@local>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
