@@ -57,6 +57,12 @@ const envSchema = z.object({
   // ── 定时任务 ──
   /** Vercel Cron 调用鉴权密钥（生产建议设置）。 */
   CRON_SECRET: z.string().optional(),
+
+  // ── 内容审核（生成式 AI 合规）──
+  /** mock | real（远程内容安全服务）。缺凭据自动降级本地规则引擎。 */
+  MODERATION_PROVIDER: z.enum(['local', 'real']).default('local'),
+  MODERATION_ENDPOINT: z.string().optional(),
+  MODERATION_API_KEY: z.string().optional(),
 });
 
 export type Env = z.infer<typeof envSchema>;

@@ -1,4 +1,5 @@
 import { getLLMProvider } from '@/providers/llm';
+import { moderate } from '@/lib/moderation';
 import { createId } from '@/lib/utils';
 import type { LLMMessage } from '@/providers/types';
 import type {
@@ -39,10 +40,11 @@ export async function generateOpening(config: InterviewConfig): Promise<Intervie
     { role: 'system', content: systemPrompt(config) },
     { role: 'user', content: '' },
   ]);
+  const safe = await moderate(res.content);
   return {
     id: createId('msg'),
     role: 'interviewer',
-    content: res.content,
+    content: safe.action === 'block' ? '（本题已被内容审核拦截，请重新开始面试）' : safe.text,
     createdAt: new Date().toISOString(),
   };
 }
@@ -58,11 +60,12 @@ export async function generateNext(
   const llm = getLLMProvider();
   const history = toLLMHistory(config, messages);
   const res = await llm.generate(history);
+  const safe = await moderate(res.content);
   const lastInterviewer = [...messages].reverse().find((m) => m.role === 'interviewer');
   return {
     id: createId('msg'),
     role: 'interviewer',
-    content: res.content,
+    content: safe.action === 'block' ? '（追问内容已被审核拦截，请继续下一题）' : safe.text,
     createdAt: new Date().toISOString(),
     followUpOf: lastInterviewer?.id,
   };

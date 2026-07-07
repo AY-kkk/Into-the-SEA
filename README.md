@@ -117,6 +117,9 @@ pnpm build && pnpm start
 - **商业化（Gate3）**：`src/lib/billing/plans.ts` 定义免费/专业套餐与用量分层；配额按套餐接入 `guard`（免费 10 次/日、专业 200 次/日 LLM）；`/pricing` 定价页 + `/api/billing`(列表/成本) + `/api/billing/subscribe`（演示计费，支付网关 TODO）；单用户成本模型见 `docs/PRICING.md`。
 - **CI**：`.github/workflows/ci.yml` 在 push/PR 跑 lint·typecheck·test·validate:sources·audit:questions·build，并独立 job 跑 Playwright E2E。
 
+- **内容审核（Gate1 合规）**：`src/lib/moderation` 本地规则引擎（违规拦截 + PII 脱敏，`allow/mask/block` 三级），接入面试输入/输出与简历文本；`/api/moderation` 预检接口；`MODERATION_PROVIDER=real` 远程内容安全骨架预留。
+- **可观测性增强**：`middleware.ts` 为全部请求注入 `x-request-id`，便于日志串联与错误定位。
+
 ### 相关脚本
 
 | 命令                    | 说明                                                         |

@@ -444,3 +444,13 @@ Next.js 14 App Router · React 18 · TS 严格 · Tailwind · shadcn/ui · Frame
 - **总体定位：接近可上线 SaaS**（Gate1 基本满足、Gate2 大部分满足、Gate3 商业化/SEO/文档已具雏形）。
 - **Gate 3 商业化**：免费/付费边界✅、AI 用量分层✅、单用户成本模型✅；真实支付网关 🟡（演示计费，切换点已隔离）。
 - **仍需外部资源/线下的关键项（本环境不可达）**：① 真机 Postgres 联调 + 自动备份/回滚 ② 真钥 LLM/Search 端到端 ③ ICP/算法备案 + 内容审核 ④ Sentry 实接 ⑤ 支付网关接入 ⑥ 真机 LCP 性能实测。
+
+### [M12] 生成式内容审核 + 可观测性增强（Gate1 合规补强）— 2026-07-07
+
+- 完成内容：
+  - **内容审核机制（Gate1 合规硬项）**：`src/lib/moderation` 本地规则引擎，三级动作 `allow|mask|block`——违规词（代考/买编制/暴恐等）拦截优先、个人敏感信息（手机号/身份证/银行卡/邮箱）自动脱敏。远程内容安全 provider（`MODERATION_PROVIDER=real`）骨架预留，缺凭据降级本地。
+  - **接入点**：`/api/interview/next`、`/api/job-prep/follow-ups`（用户输入，违规 422 拦截 + PII 脱敏后入模型上下文）；`interview.service`（模型输出 opening/next 审核）；`/api/moderation` 预检接口。
+  - **可观测性**：`middleware.ts` 扩展至全站 matcher，为每请求注入 `x-request-id`（上游未带则生成），便于日志串联与错误追踪。
+  - **测试**：新增 moderation 单测（6：放行/违规拦截/手机号·身份证·邮箱脱敏/拦截优先级）。单测 76→82。
+- 验证方式：`pnpm typecheck`✅ `pnpm lint`✅ `pnpm test`(82)✅ `pnpm build`✅ `pnpm test:e2e`(7)✅。
+- 说明：至此 Gate1「生成式 AI 内容审核机制或免责声明」由「仅免责声明」升级为「审核机制 + 免责声明」双具备（ICP/算法备案仍属线下事项）。

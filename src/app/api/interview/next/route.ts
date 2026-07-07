@@ -2,6 +2,7 @@ import { NextResponse, type NextRequest } from 'next/server';
 import { guard } from '@/lib/security/guard';
 import { nextQuestionSchema } from '@/lib/validators/interview';
 import { generateNext } from '@/services/interview.service';
+import { moderate } from '@/lib/moderation';
 
 /** POST /api/interview/next — 提交回答，返回下一个（追问）问题。 */
 export async function POST(request: NextRequest): Promise<NextResponse> {
@@ -24,10 +25,18 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
   const { config, messages, userAnswer } = parsed.data;
   const history = [...messages];
   if (userAnswer && userAnswer.trim()) {
+    // 输入审核：违规拦截，PII 自动脱敏后再入模型上下文。
+    const safe = await moderate(userAnswer);
+    if (safe.action === 'block') {
+      return NextResponse.json(
+        { error: '你的回答包含不适当内容，请修改后重试', categories: safe.categories },
+        { status: 422 },
+      );
+    }
     history.push({
       id: `msg_${Date.now()}`,
       role: 'candidate',
-      content: userAnswer,
+      content: safe.text,
       createdAt: new Date().toISOString(),
     });
   }
