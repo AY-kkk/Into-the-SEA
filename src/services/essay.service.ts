@@ -10,6 +10,8 @@ import type { ExamCategory } from '@/types/common';
 export interface CaseFilter {
   topic?: EssayTopic;
   keyword?: string;
+  limit?: number;
+  offset?: number;
 }
 
 export interface OriginalFilter {
@@ -17,9 +19,19 @@ export interface OriginalFilter {
   category?: ExamCategory;
   year?: number;
   keyword?: string;
+  limit?: number;
+  offset?: number;
 }
 
-export function listEssayCases(filter: CaseFilter = {}): EssayCase[] {
+export const DEFAULT_ESSAY_PAGE = 24;
+
+/** 分页结果（含总数，供「加载更多」）。 */
+export interface Paged<T> {
+  items: T[];
+  total: number;
+}
+
+export function listEssayCases(filter: CaseFilter = {}): Paged<EssayCase> {
   let items = [...essayCaseSeed];
   if (filter.topic) items = items.filter((c) => c.topics.includes(filter.topic!));
   if (filter.keyword) {
@@ -31,10 +43,13 @@ export function listEssayCases(filter: CaseFilter = {}): EssayCase[] {
         c.applicableTopics.some((t) => t.toLowerCase().includes(kw)),
     );
   }
-  return items;
+  const total = items.length;
+  const offset = filter.offset ?? 0;
+  const limit = filter.limit ?? DEFAULT_ESSAY_PAGE;
+  return { items: items.slice(offset, offset + limit), total };
 }
 
-export function listEssayOriginals(filter: OriginalFilter = {}): EssayOriginal[] {
+export function listEssayOriginals(filter: OriginalFilter = {}): Paged<EssayOriginal> {
   let items = [...essayOriginalSeed];
   if (filter.topic) items = items.filter((o) => o.topics.includes(filter.topic!));
   if (filter.category) items = items.filter((o) => o.category === filter.category);
@@ -45,7 +60,11 @@ export function listEssayOriginals(filter: OriginalFilter = {}): EssayOriginal[]
       (o) => o.prompt.toLowerCase().includes(kw) || o.materialSummary.toLowerCase().includes(kw),
     );
   }
-  return items.sort((a, b) => b.year - a.year);
+  items.sort((a, b) => b.year - a.year);
+  const total = items.length;
+  const offset = filter.offset ?? 0;
+  const limit = filter.limit ?? DEFAULT_ESSAY_PAGE;
+  return { items: items.slice(offset, offset + limit), total };
 }
 
 /** 原题库可选年份（供筛选）。 */

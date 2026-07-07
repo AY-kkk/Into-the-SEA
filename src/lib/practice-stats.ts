@@ -1,6 +1,4 @@
-import type { AnswerRecord, WrongQuestion } from '@/types/question';
-import { getQuestionById } from '@/services/question.service';
-import type { QuestionType } from '@/types/question';
+import type { AnswerRecord, QuestionType, WrongQuestion } from '@/types/question';
 
 export interface PracticeStats {
   answered: number;
@@ -17,12 +15,11 @@ export function computeStats(records: AnswerRecord[], wrongBook: WrongQuestion[]
   const accuracyByType: PracticeStats['accuracyByType'] = {};
 
   for (const r of records) {
-    const q = getQuestionById(r.questionId);
-    if (!q) continue;
-    const bucket = accuracyByType[q.type] ?? { total: 0, correct: 0 };
+    if (!r.type) continue;
+    const bucket = accuracyByType[r.type] ?? { total: 0, correct: 0 };
     bucket.total += 1;
     if (r.correct) bucket.correct += 1;
-    accuracyByType[q.type] = bucket;
+    accuracyByType[r.type] = bucket;
   }
 
   return {

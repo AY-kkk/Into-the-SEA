@@ -14,6 +14,8 @@ export const essayTopicSchema = z.enum([
 export const caseFilterSchema = z.object({
   topic: essayTopicSchema.optional(),
   keyword: z.string().trim().min(1).max(50).optional(),
+  limit: z.coerce.number().int().positive().max(100).optional(),
+  offset: z.coerce.number().int().min(0).optional(),
 });
 
 export const originalFilterSchema = z.object({
@@ -21,4 +23,6 @@ export const originalFilterSchema = z.object({
   category: examCategorySchema.optional(),
   year: z.coerce.number().int().optional(),
   keyword: z.string().trim().min(1).max(50).optional(),
+  limit: z.coerce.number().int().positive().max(100).optional(),
+  offset: z.coerce.number().int().min(0).optional(),
 });

@@ -323,6 +323,7 @@ Next.js 14 App Router · React 18 · TS 严格 · Tailwind · shadcn/ui · Frame
 ````
 
 ### [M8+] seeddream 素材整套接入 — 2026-07-07
+
 - 完成内容：
   - 环境检测：`ark-cli` 不可用（command not found），按 §10 降级为**一套主题自适应手绘 SVG（16 张）**，全部实际引用进组件，无空占位。
   - 素材（均含 `@media(prefers-color-scheme:dark)` 亮/暗双主题，配色对齐 tailwind token，圆角 12–16px、柔和轻投影）：
@@ -334,6 +335,7 @@ Next.js 14 App Router · React 18 · TS 严格 · Tailwind · shadcn/ui · Frame
 - 验证方式：`pnpm typecheck`✅ `pnpm lint`✅ `pnpm test`(44)✅ `pnpm build`✅（新增 /login /register /forgot-password 路由构建通过）+ 16 SVG XML 合法。
 
 ### [M8++] seeddream 素材真机生成替换 — 2026-07-07
+
 - 完成内容：
   - 安装/确认 `arkcli`（@volcengine/ark-cli，二进制 `arkcli`，已 SSO 登录、API key active）。
   - 用 `arkcli +gen --model doubao-seedream-4-0` 真实生成全部 16 张素材（吉祥物4/状态4/头图5/鉴权3），
@@ -342,4 +344,17 @@ Next.js 14 App Router · React 18 · TS 严格 · Tailwind · shadcn/ui · Frame
   - `scripts/gen-assets.ts` 重写为可用生成器（execFileSync 调 arkcli，含全部 prompt + STYLE_SUFFIX + 后处理 NOTE）。
   - `docs/DESIGN.md` 素材登记表更新为真实 seedream 说明（工具/模型/命令/后处理/文件名 .jpg）；素材 README 同步。
 - 验证方式：`pnpm typecheck`✅ `pnpm lint`✅ `pnpm test`(44)✅ `pnpm build`✅；
-  `pnpm start` 冒烟：/ /login /practice /exam-news 均 200，`/_next/image` 与 static/media/auth-login.*.jpg 返回 image/jpeg 200。
+  `pnpm start` 冒烟：/ /login /practice /exam-news 均 200，`/_next/image` 与 static/media/auth-login.\*.jpg 返回 image/jpeg 200。
+
+### [数据规模化] 行测 8000 题 / 申论 500 案例 + 全网搜索接入 — 2026-07-07
+- 完成内容：
+  - **行测题库扩充至 8000 题**：`scripts/generate-questions.ts`（pnpm gen:questions）程序化生成，覆盖五题型。
+    数量/资料/数字推理类**答案由程序精确计算**（工程/行程/利润/浓度/增长率/比重/等差等比/平方数列），言语/常识基于人工校对模板库；固定随机种子可复现。校验：8000 题答案键全部有效、id 唯一、四选项、sourceUrl 齐全。
+  - **申论案例扩充至 500 个**：`scripts/generate-essays.ts`（pnpm gen:essays），省市×主题×政策实践模板组合，sourceUrl 取自真实省级政府门户/人民网/新华网等官网。
+  - **全网搜索真实接入**：`scripts/fetch-questions.ts`（pnpm fetch:questions）调用火山方舟 `arkcli +chat --tools web_search`，JSON schema 输出 + zod 校验 + 字段归一化（question→stem、中文难度、options 对象→数组）；实跑样本 4/4 通过，见 data/generated/sample-questions.json。
+  - **数据流改造（避免 8000 题进 client bundle）**：新增 `POST /api/practice`（zod 校验，服务端筛选/抽样，单次默认 20/上限 50/套卷 25）；practice-view 改为异步 fetch + 四态；/practice First Load JS 稳定在 112 kB。
+  - **申论分页**：essay.service 返回 `Paged<T>`（items+total），API 支持 limit/offset，EssayView 增「加载更多」。
+  - **错题集闭环保持**：AnswerRecord 增 type、WrongQuestion 增题目快照（离线渲染）；错题重练按 id 从 /api/practice 取回完整题目；wrong-book 用快照渲染，去除对完整题库的客户端依赖。
+  - seed 脚本题库改为分批 `createMany + skipDuplicates`；测试更新（8000/500 规模断言、分页断言、practice cap 断言）；README 增规模化生成/web_search/数据流说明。
+- 验证方式：`pnpm typecheck`✅ `pnpm lint`✅ `pnpm test`(47)✅ `pnpm build`✅；
+  dev 冒烟：/api/practice sequential=20、topic quant 过滤、wrong 按 id、非法 400；/api/essay 分页 items=10/total=500。

@@ -7,7 +7,6 @@ import { Badge } from '@/components/ui/badge';
 import { SelectNative } from '@/components/ui/select-native';
 import { EmptyState } from '@/components/shared/states';
 import { usePracticeStore } from '@/store/practice-store';
-import { getQuestionById } from '@/services/question.service';
 import { QUESTION_TYPE_LABELS, type QuestionType } from '@/types/question';
 import { useMemo, useState } from 'react';
 
@@ -19,13 +18,13 @@ export function WrongBook({ onPractice }: { onPractice: (ids: string[]) => void 
 
   const rows = useMemo(() => {
     return wrongBook
-      .map((w) => ({ w, q: getQuestionById(w.questionId) }))
+      .map((w) => ({ w, q: w.snapshot }))
       .filter(
         (
           r,
         ): r is {
           w: (typeof wrongBook)[number];
-          q: NonNullable<ReturnType<typeof getQuestionById>>;
+          q: NonNullable<(typeof wrongBook)[number]['snapshot']>;
         } => Boolean(r.q),
       )
       .filter((r) => (typeFilter ? r.q.type === typeFilter : true))

@@ -85,6 +85,13 @@ export function QuizRunner({ questions, onExit, title }: QuizRunnerProps) {
       selected: key,
       correct,
       type: current.type,
+      snapshot: {
+        id: current.id,
+        type: current.type,
+        stem: current.stem,
+        answer: current.answer,
+        explanation: current.explanation,
+      },
     });
   };
 

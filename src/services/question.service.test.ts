@@ -1,15 +1,22 @@
 import { describe, expect, it } from 'vitest';
 import {
   buildPracticeSet,
+  DEFAULT_SET_SIZE,
   getAllQuestions,
   getQuestionsByIds,
   getTypeCounts,
+  MAX_SET_SIZE,
 } from './question.service';
 
 describe('question.service', () => {
-  it('sequential returns all questions', () => {
+  it('sequential caps at default set size (avoids shipping full bank)', () => {
     const set = buildPracticeSet({ mode: 'sequential' });
-    expect(set.length).toBe(getAllQuestions().length);
+    expect(set.length).toBe(Math.min(DEFAULT_SET_SIZE, getAllQuestions().length));
+  });
+
+  it('respects requested count up to MAX_SET_SIZE', () => {
+    expect(buildPracticeSet({ mode: 'random', count: 5 }).length).toBe(5);
+    expect(buildPracticeSet({ mode: 'random', count: 999 }).length).toBe(MAX_SET_SIZE);
   });
 
   it('topic filters by type', () => {

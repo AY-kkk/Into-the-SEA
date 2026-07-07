@@ -7,6 +7,11 @@ import type { PracticeMode, Question, QuestionType } from '@/types/question';
  * 业务逻辑集中于此，不写进组件（GOAL.md 铁律）。
  */
 
+/** 单次练习集默认题量 / 上限（题库规模化后避免整库下发）。 */
+export const DEFAULT_SET_SIZE = 20;
+export const MAX_SET_SIZE = 50;
+export const MOCK_SET_SIZE = 25;
+
 export function getAllQuestions(): Question[] {
   return [...questionSeed];
 }
@@ -51,21 +56,26 @@ export function buildPracticeSet(params: BuildSessionParams): Question[] {
   const { mode, type, count, wrongIds } = params;
   const all = getAllQuestions();
 
+  // 单次练习集上限，避免把整个题库（可达数千题）一次性下发到客户端。
+  const limit = Math.min(count ?? DEFAULT_SET_SIZE, MAX_SET_SIZE);
+
   switch (mode) {
     case 'sequential':
-      return all;
+      return all.slice(0, limit);
     case 'random':
-      return shuffle(all);
-    case 'topic':
-      return type ? all.filter((q) => q.type === type) : all;
+      return shuffle(all).slice(0, limit);
+    case 'topic': {
+      const pool = type ? all.filter((q) => q.type === type) : all;
+      return shuffle(pool).slice(0, limit);
+    }
     case 'mock': {
-      const size = count ?? Math.min(10, all.length);
+      const size = Math.min(count ?? MOCK_SET_SIZE, all.length);
       return shuffle(all).slice(0, size);
     }
     case 'wrong':
       return getQuestionsByIds(wrongIds ?? []);
     default:
-      return all;
+      return all.slice(0, limit);
   }
 }
 

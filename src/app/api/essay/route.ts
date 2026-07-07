@@ -21,8 +21,8 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
           { status: 400 },
         );
       }
-      const items = listEssayOriginals(parsed.data);
-      return NextResponse.json({ items, total: items.length });
+      const page = listEssayOriginals(parsed.data);
+      return NextResponse.json(page);
     }
 
     const parsed = caseFilterSchema.safeParse(raw);
@@ -32,8 +32,8 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         { status: 400 },
       );
     }
-    const items = listEssayCases(parsed.data);
-    return NextResponse.json({ items, total: items.length });
+    const page = listEssayCases(parsed.data);
+    return NextResponse.json(page);
   } catch (error) {
     const message = error instanceof Error ? error.message : '未知错误';
     return NextResponse.json({ error: '数据源暂时不可用', message }, { status: 502 });

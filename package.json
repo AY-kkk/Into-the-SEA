@@ -15,7 +15,10 @@
     "db:seed": "tsx scripts/seed.ts",
     "prisma:generate": "prisma generate",
     "import:essays": "tsx scripts/import-essays.ts",
-    "gen:assets": "tsx scripts/gen-assets.ts"
+    "gen:assets": "tsx scripts/gen-assets.ts",
+    "gen:questions": "tsx scripts/generate-questions.ts",
+    "gen:essays": "tsx scripts/generate-essays.ts",
+    "fetch:questions": "tsx scripts/fetch-questions.ts"
   },
   "dependencies": {
     "@prisma/client": "5.22.0",

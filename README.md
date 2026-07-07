@@ -21,19 +21,22 @@ pnpm dev                      # 启动 http://localhost:3000
 
 ## 常用脚本
 
-| 命令                   | 说明                                               |
-| ---------------------- | -------------------------------------------------- |
-| `pnpm dev`             | 本地开发                                           |
-| `pnpm build`           | 生产构建                                           |
-| `pnpm start`           | 启动生产服务                                       |
-| `pnpm lint`            | ESLint                                             |
-| `pnpm typecheck`       | TypeScript 类型检查                                |
-| `pnpm test`            | Vitest 单元测试                                    |
-| `pnpm format`          | Prettier 格式化                                    |
-| `pnpm prisma:generate` | 生成 Prisma Client                                 |
-| `pnpm db:seed`         | 写入 seed 数据                                     |
-| `pnpm import:essays`   | 批量导入申论案例/原题                              |
-| `pnpm gen:assets`      | seeddream 生成品牌素材（需 ark-cli，缺失自动降级） |
+| 命令                   | 说明                                                |
+| ---------------------- | --------------------------------------------------- |
+| `pnpm dev`             | 本地开发                                            |
+| `pnpm build`           | 生产构建                                            |
+| `pnpm start`           | 启动生产服务                                        |
+| `pnpm lint`            | ESLint                                              |
+| `pnpm typecheck`       | TypeScript 类型检查                                 |
+| `pnpm test`            | Vitest 单元测试                                     |
+| `pnpm format`          | Prettier 格式化                                     |
+| `pnpm prisma:generate` | 生成 Prisma Client                                  |
+| `pnpm db:seed`         | 写入 seed 数据                                      |
+| `pnpm import:essays`   | 批量导入申论案例/原题                               |
+| `pnpm gen:assets`      | seedream 生成品牌素材（需 arkcli，缺失自动降级）    |
+| `pnpm gen:questions`   | 程序化生成行测题库（默认 8000 题，答案可验证）      |
+| `pnpm gen:essays`      | 程序化生成申论案例库（默认 500 个，含来源）         |
+| `pnpm fetch:questions` | 全网搜索真实接入（arkcli +chat --tools web_search） |
 
 ## 目录结构
 
@@ -87,15 +90,30 @@ pnpm build && pnpm start
 
 ## 数据扩充说明
 
-- 种子数据位于 `data/seed/*.json`：`exam-infos.json`、`questions.json`、`essay-cases.json`、`essay-originals.json`。
+- 种子数据位于 `data/seed/*.json`：`exam-infos.json`、`questions.json`（8000 题）、`essay-cases.json`（500 个）、`essay-originals.json`。
 - 所有含外部来源的条目均带 `sourceUrl`（红线字段）。
-- **申论案例 / 原题目标各 100 条**：当前提供结构化 mock 样本，扩充方式：
-  1. 按现有 JSON 结构补充条目（保持 `sourceUrl` 不省略）。
-  2. 运行 `pnpm db:seed` 写入数据库（需 `DATABASE_URL`）。
-  3. 或通过导入脚本批量导入（推荐）：
-     ```bash
-     pnpm import:essays --kind=case --file=./data/import/cases.json
-     pnpm import:essays --kind=original --file=./data/import/originals.json
-     ```
-     脚本使用 zod 校验，`sourceUrl` 缺失或结构非法的条目会被跳过并报告。
+
+### 规模化生成（可复现）
+
+- **行测题库 8000 题**：`pnpm gen:questions [数量]` → 覆盖言语 / 数量 / 判断 / 资料 / 常识五题型。
+  - 数量关系 / 资料分析 / 数字推理类**答案由程序精确计算**，100% 正确、解析自动推导；言语 / 常识类基于人工校对模板库。固定随机种子，结果可复现。
+- **申论案例 500 个**：`pnpm gen:essays [数量]` → 省市 × 主题 × 政策实践模板组合，`sourceUrl` 取自真实政府 / 权威媒体官网。
+
+### 全网搜索真实接入（web_search）
+
+- `pnpm fetch:questions -- --type common-sense --n 20 --out data/generated/q.json`
+- `pnpm fetch:questions -- --essays --n 10 --out data/generated/cases.json`
+- 底层调用火山方舟 `arkcli +chat --tools web_search`（联网），产出经 zod 校验（答案键有效、`sourceUrl` 红线），非法条目跳过并报告；人工复核后并入 `data/seed`。
+- 缺少 arkcli 时提示并退出，不阻塞离线交付。样本见 `data/generated/sample-questions.json`。
+
+### 规模化后的数据流（重要）
+
+- 题库达数千题，**题目不再进入客户端 bundle**：练习集由 `POST /api/practice` 在服务端筛选 / 抽样后下发（单次默认 20 题、上限 50、套卷 25）。
+- 申论 500 案例分页加载：`GET /api/essay?kind=case&limit=24&offset=N`，页面「加载更多」按需拉取。
+- 错题本：答错自动收录（含题目快照，离线可渲染），重练时按 id 从 `/api/practice` 取回完整题目 → 反馈 → 标记已掌握，闭环完整。
+
+### 写入数据库（可选）
+
+- `pnpm db:seed` 将 seed JSON 写入 PostgreSQL（需 `DATABASE_URL`）；题库分批 `createMany + skipDuplicates`。
+- 申论也可用导入脚本：`pnpm import:essays --kind=case --file=./data/import/cases.json`（zod 校验，缺 `sourceUrl` 跳过）。
 - MVP 默认走 mock provider，直接读取 seed JSON，无需数据库即可演示。

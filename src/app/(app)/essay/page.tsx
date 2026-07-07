@@ -6,8 +6,8 @@ import { getOriginalYears, listEssayCases, listEssayOriginals } from '@/services
 export const metadata: Metadata = { title: '申论案例' };
 
 export default function EssayPage() {
-  const initialCases = listEssayCases();
-  const initialOriginals = listEssayOriginals();
+  const initialCasesPage = listEssayCases();
+  const initialOriginalsPage = listEssayOriginals();
   const years = getOriginalYears();
 
   return (
@@ -16,7 +16,13 @@ export default function EssayPage() {
       title="申论案例"
       description="优秀案例库与历年原题库，含主题标签、可迁移表达、适用场景与来源链接，助力素材积累。"
     >
-      <EssayView initialCases={initialCases} initialOriginals={initialOriginals} years={years} />
+      <EssayView
+        initialCases={initialCasesPage.items}
+        initialCasesTotal={initialCasesPage.total}
+        initialOriginals={initialOriginalsPage.items}
+        initialOriginalsTotal={initialOriginalsPage.total}
+        years={years}
+      />
     </PageShell>
   );
 }

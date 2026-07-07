@@ -2,7 +2,7 @@
 
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import type { AnswerRecord, QuestionType, WrongQuestion } from '@/types/question';
+import type { AnswerRecord, QuestionSnapshot, QuestionType, WrongQuestion } from '@/types/question';
 
 /**
  * 行测练习状态：作答记录、错题本、按题型正确率。
@@ -17,6 +17,8 @@ interface PracticeState {
     selected: string;
     correct: boolean;
     type: QuestionType;
+    /** 题目快照，用于错题本 / 统计离线渲染。 */
+    snapshot?: QuestionSnapshot;
   }) => void;
   /** 标记错题为已掌握。 */
   markMastered: (questionId: string, mastered: boolean) => void;
@@ -33,13 +35,14 @@ export const usePracticeStore = create<PracticeState>()(
       records: [],
       wrongBook: [],
 
-      submitAnswer: ({ questionId, selected, correct }) =>
+      submitAnswer: ({ questionId, selected, correct, type, snapshot }) =>
         set((state) => {
           const record: AnswerRecord = {
             questionId,
             selected,
             correct,
             answeredAt: new Date().toISOString(),
+            type,
           };
           let wrongBook = state.wrongBook;
           if (!correct) {
@@ -52,6 +55,7 @@ export const usePracticeStore = create<PracticeState>()(
                       wrongCount: w.wrongCount + 1,
                       lastWrongAt: record.answeredAt,
                       mastered: false,
+                      snapshot: snapshot ?? w.snapshot,
                     }
                   : w,
               );
@@ -63,6 +67,7 @@ export const usePracticeStore = create<PracticeState>()(
                   wrongCount: 1,
                   lastWrongAt: record.answeredAt,
                   mastered: false,
+                  snapshot,
                 },
               ];
             }

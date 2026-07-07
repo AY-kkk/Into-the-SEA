@@ -61,6 +61,17 @@ export interface AnswerRecord {
   selected: string;
   correct: boolean;
   answeredAt: string;
+  /** 题型，便于统计而无需加载完整题库。 */
+  type?: QuestionType;
+}
+
+/** 题目快照（错题本 / 统计在客户端渲染，避免加载完整题库）。 */
+export interface QuestionSnapshot {
+  id: string;
+  type: QuestionType;
+  stem: string;
+  answer: string;
+  explanation: string;
 }
 
 /** 错题本条目。 */
@@ -69,4 +80,6 @@ export interface WrongQuestion {
   wrongCount: number;
   lastWrongAt: string;
   mastered: boolean;
+  /** 题目快照，供错题本离线渲染（无需加载完整题库）。 */
+  snapshot?: QuestionSnapshot;
 }

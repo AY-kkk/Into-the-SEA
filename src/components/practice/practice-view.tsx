@@ -8,8 +8,8 @@ import { Badge } from '@/components/ui/badge';
 import { SelectNative } from '@/components/ui/select-native';
 import { QuizRunner } from './quiz-runner';
 import { WrongBook } from './wrong-book';
+import { InlineSpinner } from '@/components/shared/states';
 import { usePracticeStore } from '@/store/practice-store';
-import { buildPracticeSet } from '@/services/question.service';
 import {
   PRACTICE_MODE_LABELS,
   QUESTION_TYPE_LABELS,
@@ -33,29 +33,63 @@ export function PracticeView({ typeCounts }: { typeCounts: Record<QuestionType, 
   const [running, setRunning] = useState<Question[] | null>(null);
   const [runningTitle, setRunningTitle] = useState<string>('');
   const [topicType, setTopicType] = useState<QuestionType>('verbal');
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const getActiveWrongIds = usePracticeStore((s) => s.getActiveWrongIds);
   const wrongCount = usePracticeStore((s) => s.wrongBook.filter((w) => !w.mastered).length);
 
-  const start = (mode: PracticeMode) => {
-    const set = buildPracticeSet({
-      mode,
-      type: topicType,
-      count: 10,
-      wrongIds: getActiveWrongIds(),
+  async function fetchSet(input: {
+    mode: PracticeMode;
+    type?: QuestionType;
+    count?: number;
+    wrongIds?: string[];
+  }): Promise<Question[]> {
+    const res = await fetch('/api/practice', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(input),
     });
-    if (set.length === 0) return;
-    setRunningTitle(
-      mode === 'topic' ? `专项 · ${QUESTION_TYPE_LABELS[topicType]}` : PRACTICE_MODE_LABELS[mode],
-    );
-    setRunning(set);
+    if (!res.ok) throw new Error('题库加载失败');
+    const data = (await res.json()) as { questions: Question[] };
+    return data.questions;
+  }
+
+  const start = async (mode: PracticeMode) => {
+    setError(null);
+    setLoading(true);
+    try {
+      const set = await fetchSet(
+        mode === 'wrong' ? { mode, wrongIds: getActiveWrongIds() } : { mode, type: topicType },
+      );
+      if (set.length === 0) {
+        setLoading(false);
+        return;
+      }
+      setRunningTitle(
+        mode === 'topic' ? `专项 · ${QUESTION_TYPE_LABELS[topicType]}` : PRACTICE_MODE_LABELS[mode],
+      );
+      setRunning(set);
+    } catch (e) {
+      setError(e instanceof Error ? e.message : '加载失败');
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const startWrong = (ids: string[]) => {
-    const set = buildPracticeSet({ mode: 'wrong', wrongIds: ids });
-    if (set.length === 0) return;
-    setRunningTitle('错题重练');
-    setRunning(set);
-    setTab('practice');
+  const startWrong = async (ids: string[]) => {
+    setError(null);
+    setLoading(true);
+    try {
+      const set = await fetchSet({ mode: 'wrong', wrongIds: ids });
+      if (set.length === 0) return;
+      setRunningTitle('错题重练');
+      setRunning(set);
+      setTab('practice');
+    } catch (e) {
+      setError(e instanceof Error ? e.message : '加载失败');
+    } finally {
+      setLoading(false);
+    }
   };
 
   if (running) {
@@ -81,6 +115,13 @@ export function PracticeView({ typeCounts }: { typeCounts: Record<QuestionType, 
           ) : null}
         </button>
       </div>
+
+      {error ? (
+        <p className="rounded-md border border-destructive/30 bg-destructive/5 px-3 py-2 text-sm text-destructive">
+          {error}
+        </p>
+      ) : null}
+      {loading ? <InlineSpinner label="正在生成题目…" /> : null}
 
       {tab === 'practice' ? (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -111,7 +152,7 @@ export function PracticeView({ typeCounts }: { typeCounts: Record<QuestionType, 
                   <Button
                     className="mt-auto"
                     variant={mode === 'wrong' ? 'accent' : 'default'}
-                    disabled={disabled}
+                    disabled={disabled || loading}
                     onClick={() => start(mode)}
                   >
                     {disabled ? '暂无错题' : '开始'}

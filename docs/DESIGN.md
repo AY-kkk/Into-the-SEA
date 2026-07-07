@@ -50,42 +50,42 @@
 
 #### 1. 品牌吉祥物（学士帽小海獭，4 姿态）
 
-| 文件 | prompt（核心） | 用途 | 引用组件 / 路径 |
-| ---- | -------------- | ---- | ---------------- |
-| `mascot-wave.jpg` | 海獭微笑挥手打招呼 | 欢迎 | 首页 Hero `src/app/(app)/page.tsx`；`src/components/shared/mascot.tsx` |
-| `mascot-cheer.jpg` | 海獭双手握拳高举加油 | 加油 | 侧栏页脚 `src/components/layout/sidebar.tsx`；答题结算（合格）`src/components/practice/quiz-runner.tsx` |
-| `mascot-success.jpg` | 海獭捧金色星星庆祝 | 成功 | 成功态 `SuccessState`（`src/components/shared/states.tsx`，预留复用） |
-| `mascot-think.jpg` | 海獭托腮思考，头顶问号 | 思考 | 答题结算（未达标）`src/components/practice/quiz-runner.tsx` |
+| 文件                 | prompt（核心）         | 用途 | 引用组件 / 路径                                                                                         |
+| -------------------- | ---------------------- | ---- | ------------------------------------------------------------------------------------------------------- |
+| `mascot-wave.jpg`    | 海獭微笑挥手打招呼     | 欢迎 | 首页 Hero `src/app/(app)/page.tsx`；`src/components/shared/mascot.tsx`                                  |
+| `mascot-cheer.jpg`   | 海獭双手握拳高举加油   | 加油 | 侧栏页脚 `src/components/layout/sidebar.tsx`；答题结算（合格）`src/components/practice/quiz-runner.tsx` |
+| `mascot-success.jpg` | 海獭捧金色星星庆祝     | 成功 | 成功态 `SuccessState`（`src/components/shared/states.tsx`，预留复用）                                   |
+| `mascot-think.jpg`   | 海獭托腮思考，头顶问号 | 思考 | 答题结算（未达标）`src/components/practice/quiz-runner.tsx`                                             |
 
 #### 2. 状态插画
 
-| 文件 | prompt（核心） | 用途 | 引用组件 / 路径 |
-| ---- | -------------- | ---- | ---------------- |
-| `empty-state.jpg` | 空文件夹与放大镜 | Empty 态 | `EmptyState`（`src/components/shared/states.tsx`） |
-| `loading-state.jpg` | 加载进度环与渐隐圆点 | Loading 态 | `LoadingState`（同上，含 `animate-pulse`） |
-| `success-state.jpg` | 金色奖章与上升折线 | Success 态 | `SuccessState`（同上） |
-| `error-state.jpg` | 断开插头与感叹号 | Error 态 | `ErrorState`（同上） |
+| 文件                | prompt（核心）       | 用途       | 引用组件 / 路径                                    |
+| ------------------- | -------------------- | ---------- | -------------------------------------------------- |
+| `empty-state.jpg`   | 空文件夹与放大镜     | Empty 态   | `EmptyState`（`src/components/shared/states.tsx`） |
+| `loading-state.jpg` | 加载进度环与渐隐圆点 | Loading 态 | `LoadingState`（同上，含 `animate-pulse`）         |
+| `success-state.jpg` | 金色奖章与上升折线   | Success 态 | `SuccessState`（同上）                             |
+| `error-state.jpg`   | 断开插头与感叹号     | Error 态   | `ErrorState`（同上）                               |
 
 #### 3. 栏目头图（宽幅 Banner，右侧留白）
 
-| 文件 | prompt（核心） | 用途 | 引用组件 / 路径 |
-| ---- | -------------- | ---- | ---------------- |
-| `hero-exam-news.jpg` | 公告栏与信息卡片 | 招录情报 Hero | `ModuleHero`（`src/components/shared/module-hero.tsx`）→ `PageShell heroKey`（`src/app/(app)/exam-news/page.tsx`） |
-| `hero-job-prep.jpg` | 靶心与同心圆能力模型 | 岗位备考 Hero | 同上 → `src/app/(app)/job-prep/page.tsx` |
-| `hero-practice.jpg` | 答题卡与勾选 | 行测刷题 Hero | 同上 → `src/app/(app)/practice/page.tsx` |
-| `hero-essay.jpg` | 文稿纸与钢笔 | 申论案例 Hero | 同上 → `src/app/(app)/essay/page.tsx` |
-| `hero-interview.jpg` | 对话气泡与麦克风 | 模拟面试 Hero | 同上 → `src/app/(app)/interview/page.tsx` |
+| 文件                 | prompt（核心）       | 用途          | 引用组件 / 路径                                                                                                    |
+| -------------------- | -------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `hero-exam-news.jpg` | 公告栏与信息卡片     | 招录情报 Hero | `ModuleHero`（`src/components/shared/module-hero.tsx`）→ `PageShell heroKey`（`src/app/(app)/exam-news/page.tsx`） |
+| `hero-job-prep.jpg`  | 靶心与同心圆能力模型 | 岗位备考 Hero | 同上 → `src/app/(app)/job-prep/page.tsx`                                                                           |
+| `hero-practice.jpg`  | 答题卡与勾选         | 行测刷题 Hero | 同上 → `src/app/(app)/practice/page.tsx`                                                                           |
+| `hero-essay.jpg`     | 文稿纸与钢笔         | 申论案例 Hero | 同上 → `src/app/(app)/essay/page.tsx`                                                                              |
+| `hero-interview.jpg` | 对话气泡与麦克风     | 模拟面试 Hero | 同上 → `src/app/(app)/interview/page.tsx`                                                                          |
 
 #### 4. 鉴权品牌插画
 
-| 文件 | prompt（核心） | 用途 | 引用组件 / 路径 |
-| ---- | -------------- | ---- | ---------------- |
-| `auth-login.jpg` | 海獭在门与钥匙旁 | 登录 | `AuthCard`（`src/components/auth/auth-card.tsx`）→ `src/app/(auth)/login/page.tsx` |
-| `auth-register.jpg` | 海獭挥手 + 加号徽章 | 注册 | 同上 → `src/app/(auth)/register/page.tsx` |
-| `auth-forgot.jpg` | 海獭思考 + 钥匙与锁 | 找回密码 | 同上 → `src/app/(auth)/forgot-password/page.tsx` |
+| 文件                | prompt（核心）      | 用途     | 引用组件 / 路径                                                                    |
+| ------------------- | ------------------- | -------- | ---------------------------------------------------------------------------------- |
+| `auth-login.jpg`    | 海獭在门与钥匙旁    | 登录     | `AuthCard`（`src/components/auth/auth-card.tsx`）→ `src/app/(auth)/login/page.tsx` |
+| `auth-register.jpg` | 海獭挥手 + 加号徽章 | 注册     | 同上 → `src/app/(auth)/register/page.tsx`                                          |
+| `auth-forgot.jpg`   | 海獭思考 + 钥匙与锁 | 找回密码 | 同上 → `src/app/(auth)/forgot-password/page.tsx`                                   |
 
 #### 品牌标记
 
-| 文件 | 用途 | 引用组件 / 路径 |
-| ---- | ---- | ---------------- |
+| 文件             | 用途         | 引用组件 / 路径                                                                |
+| ---------------- | ------------ | ------------------------------------------------------------------------------ |
 | `brand-mark.svg` | Logo（矢量） | 侧栏 `src/components/layout/sidebar.tsx`；鉴权外壳 `src/app/(auth)/layout.tsx` |

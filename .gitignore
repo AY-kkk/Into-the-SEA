@@ -35,3 +35,6 @@ prisma/*.db-journal
 
 # typescript
 *.tsbuildinfo
+
+# fetched raw batches (keep small samples only)
+/data/generated/*.tmp.json

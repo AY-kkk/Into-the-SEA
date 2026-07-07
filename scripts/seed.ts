@@ -52,23 +52,22 @@ async function seedExamInfos(): Promise<number> {
 
 async function seedQuestions(): Promise<number> {
   const items = load<Question>('questions.json');
-  for (const it of items) {
-    await prisma.question.upsert({
-      where: { id: it.id },
-      update: {},
-      create: {
-        id: it.id,
-        type: it.type,
-        difficulty: it.difficulty,
-        stem: it.stem,
-        options: it.options as unknown as object,
-        answer: it.answer,
-        explanation: it.explanation,
-        tags: it.tags,
-        sourceUrl: it.sourceUrl ?? null,
-        sourceName: it.sourceName ?? null,
-      },
-    });
+  // 题库规模化（数千题）：分批 createMany + skipDuplicates，避免逐条 upsert 过慢。
+  const CHUNK = 500;
+  for (let i = 0; i < items.length; i += CHUNK) {
+    const batch = items.slice(i, i + CHUNK).map((it) => ({
+      id: it.id,
+      type: it.type,
+      difficulty: it.difficulty,
+      stem: it.stem,
+      options: it.options as unknown as object,
+      answer: it.answer,
+      explanation: it.explanation,
+      tags: it.tags,
+      sourceUrl: it.sourceUrl ?? null,
+      sourceName: it.sourceName ?? null,
+    }));
+    await prisma.question.createMany({ data: batch, skipDuplicates: true });
   }
   return items.length;
 }
