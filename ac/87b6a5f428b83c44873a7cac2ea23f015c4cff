@@ -1,0 +1,33 @@
+package.json
+  s_31c894889f7331::t_f91f12b4624ebe 21-22
+src/app/(app)/practice/page.tsx
+  s_31c894889f7331::t_f563a0161aca16 8-9
+src/app/api/practice/route.ts
+  s_31c894889f7331::t_9243898c8b94f0 3,27
+src/lib/env.ts
+  s_31c894889f7331::t_9ea010e5df7890 14-15,69-76
+src/services/essay.service.ts
+  s_31c894889f7331::t_59314781136e50 2-3,81-96
+src/services/question.service.test.ts
+  s_31c894889f7331::t_bba2e3b2d97f37 45-46
+src/services/question.service.ts
+  s_31c894889f7331::t_7dc4ca75964cff 2-8,13,22,56,83-108,110-111
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.5",
+  "base_commit_sha": "ac87b6a5f428b83c44873a7cac2ea23f015c4cff",
+  "prompts": {},
+  "sessions": {
+    "s_31c894889f7331": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f3a7b-0864-7a80-a3ab-d4efe72c1433",
+        "model": "unknown"
+      },
+      "human_author": "Codex <codex@local>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
