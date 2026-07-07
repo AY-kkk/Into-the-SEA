@@ -361,6 +361,7 @@ Next.js 14 App Router · React 18 · TS 严格 · Tailwind · shadcn/ui · Frame
   dev 冒烟：/api/practice sequential=20、topic quant 过滤、wrong 按 id、非法 400；/api/essay 分页 items=10/total=500。
 
 ### [真实数据库接入] Prisma 读取路径 + 全网真实摄取 — 2026-07-07
+
 - 完成内容：
   - **真实数据摄取管线** `scripts/ingest.ts`（pnpm ingest）：
     - `--github`：解析 GitHub 公开题库 lawson2019/quizsim（言语/资料纯文本，图形推理跳过），得 161 道真题并入 seed（逐条 sourceUrl 溯源），题库 8000→8161。
@@ -372,3 +373,11 @@ Next.js 14 App Router · React 18 · TS 严格 · Tailwind · shadcn/ui · Frame
 - 环境说明：本沙箱无本地 Postgres/Docker，无法实跑 live `db:seed` 写入；已用 mock-Prisma 单测覆盖 DB 代码路径，并提供 docker-compose/云库一键流程供真实验证。
 - 验证方式：`pnpm typecheck`✅ `pnpm lint`✅ `pnpm test`(50)✅ `pnpm build`✅；
   seed-mode dev 冒烟：/api/practice 专项过滤、/api/essay 分页 total=508、GitHub 来源题 sourceUrl 正确回显。
+
+### [题库来源扩充] 接入 MIT 许可题库（2020 后） — 2026-07-07
+- 完成内容：
+  - ingest.ts 新增 `--gongkaowx`：接入 **ACCS-0521/GongKaoWX（MIT 许可，2026）** 360 道题（6 分类各 60：言语/数量/判断/资料/常识/政治，政治并入常识），含解析·知识点·sourceRefs；答案键校验、题干去重、逐条 sourceUrl（优先题目自带来源，107 题带真实外链）。
+  - 题库累计：程序化 8000 + quizsim 161 + GongKaoWX 360 = **8521 题**。
+  - docs/DATA-SOURCES.md 增来源许可对照表（MIT 优先、许可边界说明）；README 脚本表更新。
+  - 评估但未纳入：xingce-vault（Java/SQL 非结构化）、exam-prep（题目内嵌 213KB HTML）——保留在文档说明。
+- 验证方式：`pnpm typecheck`✅ `pnpm lint`✅ `pnpm test`(50)✅ `pnpm build`✅；ingest 冒烟 360/360 答案键有效。

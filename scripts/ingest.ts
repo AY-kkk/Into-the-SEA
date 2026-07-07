@@ -155,6 +155,79 @@ function parseBlock(text: string, type: QType): Question | null {
   };
 }
 
+// ── GitHub 源：ACCS-0521/GongKaoWX（MIT 许可，360 道原创/编写模拟题，2026）──
+const GONGKAOWX_REPO = 'https://github.com/ACCS-0521/GongKaoWX';
+const GONGKAOWX_BASE = 'https://raw.githubusercontent.com/ACCS-0521/GongKaoWX/main/questions';
+const GONGKAOWX_FILES = [
+  'verbal',
+  'quantitative',
+  'reasoning',
+  'data-analysis',
+  'common-sense',
+  'politics',
+] as const;
+// 该库分类 → 本项目五题型（政治理论并入常识判断）。
+const GONGKAOWX_TYPE: Record<string, QType> = {
+  verbal: 'verbal',
+  quantitative: 'quantitative',
+  reasoning: 'judgment',
+  'data-analysis': 'data-analysis',
+  'common-sense': 'common-sense',
+  politics: 'common-sense',
+};
+
+interface GkwSourceRef {
+  kind: string;
+  title: string;
+  url?: string;
+  publishedAt?: string;
+}
+interface GkwQuestion {
+  id: string;
+  category: string;
+  subtype: string;
+  difficulty: Difficulty;
+  stem: string;
+  options: Option[];
+  answer: string;
+  explanation: string;
+  knowledgePoints: string[];
+  sourceRefs: GkwSourceRef[];
+  status: string;
+}
+
+async function fetchGongKaoWX(): Promise<Question[]> {
+  const out: Question[] = [];
+  for (const file of GONGKAOWX_FILES) {
+    const raw = await fetchText(`${GONGKAOWX_BASE}/${file}.json`);
+    const data = JSON.parse(raw) as { questions?: GkwQuestion[] };
+    const type = GONGKAOWX_TYPE[file]!;
+    for (const q of data.questions ?? []) {
+      if (!q.stem || !q.options?.length || !q.answer) continue;
+      if (!q.options.some((o) => o.key === q.answer)) continue;
+      // 优先取题目自带来源；无 URL 时回退仓库地址（MIT 许可）。
+      const ref = q.sourceRefs?.find((r) => r.url);
+      out.push({
+        id: `q_gkw_${file}_${sid(q.id + q.stem)}`,
+        type,
+        difficulty: (['easy', 'medium', 'hard'] as string[]).includes(q.difficulty)
+          ? q.difficulty
+          : 'medium',
+        stem: q.stem.trim(),
+        options: q.options.map((o) => ({ key: o.key, text: o.text })),
+        answer: q.answer,
+        explanation: q.explanation?.trim() || '（来源题库未附解析）',
+        tags: ['GitHub 题库(MIT)', q.subtype, ...(q.knowledgePoints ?? [])].filter(Boolean),
+        sourceUrl: ref?.url ?? GONGKAOWX_REPO,
+        sourceName: ref
+          ? `${ref.title}（via GongKaoWX, MIT）`
+          : 'GitHub · ACCS-0521/GongKaoWX（MIT · 原创/编写模拟题）',
+      });
+    }
+  }
+  return out;
+}
+
 // ── 小红书 / 考公平台：web_search 联网检索（复用 arkcli）──
 function hasArkCli(): boolean {
   try {
@@ -308,6 +381,22 @@ async function main(): Promise<void> {
     if (merge) mergeSeed('questions.json', qs, (q) => (q as unknown as Question).stem);
   }
 
+  if (hasFlag('gongkaowx')) {
+    // eslint-disable-next-line no-console
+    console.log('[ingest] 下载 GitHub 题库 GongKaoWX（MIT）…');
+    const qs = await fetchGongKaoWX();
+    writeFileSync(
+      join(IMPORT_DIR, 'gongkaowx-questions.json'),
+      JSON.stringify(qs, null, 2) + '\n',
+      'utf-8',
+    );
+    // eslint-disable-next-line no-console
+    console.log(
+      `[ingest] 解析出 ${qs.length} 道题（MIT，含来源）→ data/import/gongkaowx-questions.json`,
+    );
+    if (merge) mergeSeed('questions.json', qs, (q) => (q as unknown as Question).stem);
+  }
+
   if (hasFlag('web-essays')) {
     if (!hasArkCli()) {
       // eslint-disable-next-line no-console
@@ -328,9 +417,9 @@ async function main(): Promise<void> {
     }
   }
 
-  if (!hasFlag('github') && !hasFlag('web-essays')) {
+  if (!hasFlag('github') && !hasFlag('gongkaowx') && !hasFlag('web-essays')) {
     // eslint-disable-next-line no-console
-    console.log('用法：pnpm ingest -- --github [--merge] | --web-essays --n 20 [--merge]');
+    console.log('用法：pnpm ingest -- --github | --gongkaowx | --web-essays --n 20  [--merge]');
   }
 }
 
