@@ -26,7 +26,7 @@ export function AuthCard({
           aria-hidden
           width={260}
           height={220}
-          className="h-32 w-auto"
+          className="h-40 w-auto rounded-2xl shadow-sm"
         />
         <div>
           <h2 className="text-xl font-semibold tracking-tight">{title}</h2>

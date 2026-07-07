@@ -16,7 +16,7 @@ export function LoadingState({ count = 6 }: { count?: number }) {
           aria-hidden
           width={200}
           height={145}
-          className="h-24 w-auto animate-pulse opacity-90"
+          className="h-24 w-auto animate-pulse rounded-xl opacity-90"
         />
       </div>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
@@ -55,7 +55,7 @@ export function EmptyState({
           aria-hidden
           width={220}
           height={160}
-          className="h-28 w-auto"
+          className="h-28 w-auto rounded-xl"
         />
         <p className="text-sm font-medium">{title}</p>
         <p className="max-w-md text-sm text-muted-foreground">{description}</p>
@@ -81,7 +81,7 @@ export function ErrorState({
           aria-hidden
           width={220}
           height={160}
-          className="h-28 w-auto"
+          className="h-28 w-auto rounded-xl"
         />
         <p className="text-sm font-medium text-destructive">出错了</p>
         <p className="max-w-md text-sm text-muted-foreground">{message}</p>
@@ -113,7 +113,7 @@ export function SuccessState({
         aria-hidden
         width={220}
         height={160}
-        className="h-28 w-auto"
+        className="h-28 w-auto rounded-xl"
       />
       <p className="text-lg font-semibold">{title}</p>
       {description ? <p className="max-w-md text-sm text-muted-foreground">{description}</p> : null}

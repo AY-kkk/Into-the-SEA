@@ -28,7 +28,7 @@ export function Mascot({
       aria-hidden={decorative || undefined}
       width={size}
       height={size}
-      className={cn('select-none', className)}
+      className={cn('select-none rounded-xl', className)}
       priority={false}
     />
   );

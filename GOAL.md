@@ -332,3 +332,14 @@ Next.js 14 App Router · React 18 · TS 严格 · Tailwind · shadcn/ui · Frame
   - 新增鉴权三页：路由分组 `(app)`（主壳）与 `(auth)`（品牌两栏壳）；`/login` `/register` `/forgot-password` 各引用对应品牌插画（`AuthCard`）；Topbar 增登录入口；真实鉴权 TODO 标注。
   - `scripts/gen-assets.ts` 更新为完整 16 项 prompt 清单 + STYLE_SUFFIX；`docs/DESIGN.md` 增「素材登记表」（文件·prompt·用途·引用组件路径）；素材 README 更新。
 - 验证方式：`pnpm typecheck`✅ `pnpm lint`✅ `pnpm test`(44)✅ `pnpm build`✅（新增 /login /register /forgot-password 路由构建通过）+ 16 SVG XML 合法。
+
+### [M8++] seeddream 素材真机生成替换 — 2026-07-07
+- 完成内容：
+  - 安装/确认 `arkcli`（@volcengine/ark-cli，二进制 `arkcli`，已 SSO 登录、API key active）。
+  - 用 `arkcli +gen --model doubao-seedream-4-0` 真实生成全部 16 张素材（吉祥物4/状态4/头图5/鉴权3），
+    `sips` 缩放 + JPEG q78 压缩为 web 友好 JPG（单张 ~28–87KB），替换此前手绘 SVG 降级方案。
+  - `index.ts` 改为引用 .jpg（brand-mark 保留 SVG）；`assets.d.ts` 增 jpg/png 模块声明；组件加 rounded 适配位图。
+  - `scripts/gen-assets.ts` 重写为可用生成器（execFileSync 调 arkcli，含全部 prompt + STYLE_SUFFIX + 后处理 NOTE）。
+  - `docs/DESIGN.md` 素材登记表更新为真实 seedream 说明（工具/模型/命令/后处理/文件名 .jpg）；素材 README 同步。
+- 验证方式：`pnpm typecheck`✅ `pnpm lint`✅ `pnpm test`(44)✅ `pnpm build`✅；
+  `pnpm start` 冒烟：/ /login /practice /exam-news 均 200，`/_next/image` 与 static/media/auth-login.*.jpg 返回 image/jpeg 200。
