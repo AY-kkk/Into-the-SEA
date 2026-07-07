@@ -10,6 +10,7 @@ export default function JobPrepPage() {
 
   return (
     <PageShell
+      heroKey="job-prep"
       title="岗位备考"
       description="选择目标岗位，获取能力模型、高频题型、面试问题、备考建议与练习路径；粘贴简历要点生成针对性追问，一键携带上下文进入模拟面试。"
     >

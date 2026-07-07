@@ -321,3 +321,14 @@ plaintext
 ## 技术栈
 Next.js 14 App Router · React 18 · TS 严格 · Tailwind · shadcn/ui · Framer Motion · Zustand · Prisma + PostgreS
 ````
+
+### [M8+] seeddream 素材整套接入 — 2026-07-07
+- 完成内容：
+  - 环境检测：`ark-cli` 不可用（command not found），按 §10 降级为**一套主题自适应手绘 SVG（16 张）**，全部实际引用进组件，无空占位。
+  - 素材（均含 `@media(prefers-color-scheme:dark)` 亮/暗双主题，配色对齐 tailwind token，圆角 12–16px、柔和轻投影）：
+    - 吉祥物 4 姿态（wave/cheer/success/think）；状态插画 4 张（empty/loading/success/error）；栏目头图 5 张；鉴权插画 3 张；沿用 brand-mark。
+  - 统一出口 `src/assets/generated/index.ts`（MASCOTS/STATE_ART/MODULE_HERO/AUTH_ART/brandMark）。
+  - 接入：`states.tsx`（Empty/Loading/Error + 新增 SuccessState）、`Mascot`/`ModuleHero` 组件、五栏目 `PageShell heroKey` 头图、Sidebar 页脚吉祥物、首页 Hero 欢迎吉祥物、答题结算吉祥物（合格 cheer / 未达标 think）。
+  - 新增鉴权三页：路由分组 `(app)`（主壳）与 `(auth)`（品牌两栏壳）；`/login` `/register` `/forgot-password` 各引用对应品牌插画（`AuthCard`）；Topbar 增登录入口；真实鉴权 TODO 标注。
+  - `scripts/gen-assets.ts` 更新为完整 16 项 prompt 清单 + STYLE_SUFFIX；`docs/DESIGN.md` 增「素材登记表」（文件·prompt·用途·引用组件路径）；素材 README 更新。
+- 验证方式：`pnpm typecheck`✅ `pnpm lint`✅ `pnpm test`(44)✅ `pnpm build`✅（新增 /login /register /forgot-password 路由构建通过）+ 16 SVG XML 合法。

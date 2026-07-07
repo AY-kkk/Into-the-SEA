@@ -1,8 +1,5 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import { Sidebar } from '@/components/layout/sidebar';
-import { Topbar } from '@/components/layout/topbar';
-import { MobileNav } from '@/components/layout/mobile-nav';
 
 export const metadata: Metadata = {
   title: {
@@ -16,16 +13,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="zh-CN" suppressHydrationWarning>
-      <body className="font-sans">
-        <div className="flex min-h-screen">
-          <Sidebar />
-          <div className="flex min-w-0 flex-1 flex-col">
-            <Topbar />
-            <main className="flex-1">{children}</main>
-            <MobileNav />
-          </div>
-        </div>
-      </body>
+      <body className="font-sans">{children}</body>
     </html>
   );
 }

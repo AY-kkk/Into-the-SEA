@@ -32,26 +32,60 @@
 
 ## seeddream 生图素材（GOAL.md §10）
 
-> 目标：品牌吉祥物（秋招角色多姿态/表情）、空态/成功/错误插画、五栏目头图、登录/注册品牌插画；
-> 风格与本设计系统统一（暖纸白 + 青绿/琥珀 + 0.75rem 圆角），导出 web 友好 SVG/PNG，落到 `src/assets/generated/`。
+> 目标（GOAL.md §10）：品牌吉祥物多姿态、状态插画（空/加载/成功/错误）、五栏目头图、鉴权品牌插画；
+> 风格与本设计系统统一（暖纸白 + 青绿/琥珀 + 12–16px 圆角、柔和轻投影），导出 web 友好格式，落到 `src/assets/generated/`。
 
-**当前环境 seeddream (ark-cli) 不可用 → 降级为矢量图标 + `.bg-grid` 纹理占位，保留生成脚本与 prompt（不阻塞交付）。**
-生成脚本：`scripts/gen-assets.ts`（`pnpm gen:assets`），在具备 ark-cli 环境时执行。
+**当前环境 seeddream（ark-cli）不可用 → 已按 §10 降级为一套「主题自适应手绘 SVG」并实际引用进组件（非空占位）。**
 
-### Prompt 清单（复用 / 再生）
+- 所有素材为 SVG，内置 `@media (prefers-color-scheme: dark)` 变体，**自动适配亮/暗双主题**，配色对齐 tailwind token。
+- 统一出口：`src/assets/generated/index.ts`（`MASCOTS` / `STATE_ART` / `MODULE_HERO` / `AUTH_ART` / `brandMark`）。
+- 生成脚本：`scripts/gen-assets.ts`（`pnpm gen:assets`）。具备 ark-cli 环境时执行，输出同名文件即可覆盖本套 SVG。
+- 通用风格后缀（脚本 `STYLE_SUFFIX`）：`扁平矢量插画，青绿#1b5e63 与暖橙#e07b29 双主色，暖纸白#f7f3ea 背景，圆角 12-16px，柔和轻投影，克制质感，无刺眼渐变，无 emoji，支持亮/暗双主题`。
 
-1. **品牌吉祥物「小锚」**（鼓励求职的角色）：
-   `一只友好的卡通海獭吉祥物，戴学士帽，抱着一支笔，扁平矢量风格，配色为青绿(#1b5e63)与暖橙(#e07b29)，暖纸白背景，圆润线条，鼓励、陪伴的表情，适合教育备考产品`
-   - 姿态：招手 / 竖大拇指 / 加油 / 思考 / 庆祝。
-2. **空状态插画**：`空文件夹与放大镜，扁平矢量，青绿主色，暖纸白背景，简洁友好，留白充足`
-3. **成功插画**：`一枚勋章与上升折线，扁平矢量，青绿与暖橙，庆祝但克制`
-4. **错误插画**：`断开的连接与提示图标，扁平矢量，柔和朱红，友好不焦虑`
-5. **五栏目头图**（统一构图，右侧留白放标题）：
-   - 招录情报：`公告栏与信息卡片`
-   - 岗位备考：`靶心与能力雷达图`
-   - 行测刷题：`题卡与勾选`
-   - 申论案例：`钢笔与文稿`
-   - 模拟面试：`对话气泡与麦克风`
-6. **登录/注册品牌插画**：`海獭吉祥物在灯塔旁眺望大海，寓意“上岸(Into the SEA)”，扁平矢量，青绿暖橙，晨光氛围`
+### 素材登记表（文件 · prompt · 用途 · 引用组件）
 
-导出规范：SVG 优先；位图导出 2x PNG 并压缩（tinypng/oxipng）。生成后在本文件登记文件名与用途。
+> prompt 为核心语义，实际生成时自动拼接上方 `STYLE_SUFFIX`。
+
+#### 1. 品牌吉祥物（学士帽小海獭，4 姿态）
+
+| 文件                 | prompt（核心）               | 用途 | 引用组件 / 路径                                                                                         |
+| -------------------- | ---------------------------- | ---- | ------------------------------------------------------------------------------------------------------- |
+| `mascot-wave.svg`    | 戴学士帽的海獭，微笑招手欢迎 | 欢迎 | 首页 Hero `src/app/(app)/page.tsx`；`src/components/shared/mascot.tsx`                                  |
+| `mascot-cheer.svg`   | 海獭双手举拳加油鼓励         | 加油 | 侧栏页脚 `src/components/layout/sidebar.tsx`；答题结算（合格）`src/components/practice/quiz-runner.tsx` |
+| `mascot-success.svg` | 海獭捧起金色星星庆祝         | 成功 | 成功态 `SuccessState`（`src/components/shared/states.tsx`，预留复用）                                   |
+| `mascot-think.svg`   | 海獭托腮思考，头顶问号       | 思考 | 答题结算（未达标）`src/components/practice/quiz-runner.tsx`                                             |
+
+#### 2. 状态插画
+
+| 文件                | prompt（核心）       | 用途       | 引用组件 / 路径                                    |
+| ------------------- | -------------------- | ---------- | -------------------------------------------------- |
+| `empty-state.svg`   | 空文件夹与放大镜     | Empty 态   | `EmptyState`（`src/components/shared/states.tsx`） |
+| `loading-state.svg` | 旋转加载环与渐隐圆点 | Loading 态 | `LoadingState`（同上，含 `animate-pulse`）         |
+| `success-state.svg` | 奖章与上升折线       | Success 态 | `SuccessState`（同上）                             |
+| `error-state.svg`   | 断开插头与提示图标   | Error 态   | `ErrorState`（同上）                               |
+
+#### 3. 栏目头图（宽幅 Banner，右侧留白）
+
+| 文件                 | prompt（核心）       | 用途          | 引用组件 / 路径                                                                                                    |
+| -------------------- | -------------------- | ------------- | ------------------------------------------------------------------------------------------------------------------ |
+| `hero-exam-news.svg` | 公告栏与信息卡片     | 招录情报 Hero | `ModuleHero`（`src/components/shared/module-hero.tsx`）→ `PageShell heroKey`（`src/app/(app)/exam-news/page.tsx`） |
+| `hero-job-prep.svg`  | 靶心与同心圆能力模型 | 岗位备考 Hero | 同上 → `src/app/(app)/job-prep/page.tsx`                                                                           |
+| `hero-practice.svg`  | 答题卡与勾选标记     | 行测刷题 Hero | 同上 → `src/app/(app)/practice/page.tsx`                                                                           |
+| `hero-essay.svg`     | 文稿纸与笔           | 申论案例 Hero | 同上 → `src/app/(app)/essay/page.tsx`                                                                              |
+| `hero-interview.svg` | 对话气泡与问答       | 模拟面试 Hero | 同上 → `src/app/(app)/interview/page.tsx`                                                                          |
+
+#### 4. 鉴权品牌插画
+
+| 文件                | prompt（核心）      | 用途     | 引用组件 / 路径                                                                    |
+| ------------------- | ------------------- | -------- | ---------------------------------------------------------------------------------- |
+| `auth-login.svg`    | 海獭在门与钥匙旁    | 登录     | `AuthCard`（`src/components/auth/auth-card.tsx`）→ `src/app/(auth)/login/page.tsx` |
+| `auth-register.svg` | 海獭挥手 + 加号徽章 | 注册     | 同上 → `src/app/(auth)/register/page.tsx`                                          |
+| `auth-forgot.svg`   | 海獭思考 + 钥匙与锁 | 找回密码 | 同上 → `src/app/(auth)/forgot-password/page.tsx`                                   |
+
+#### 品牌标记
+
+| 文件             | 用途 | 引用组件 / 路径                                                                |
+| ---------------- | ---- | ------------------------------------------------------------------------------ |
+| `brand-mark.svg` | Logo | 侧栏 `src/components/layout/sidebar.tsx`；鉴权外壳 `src/app/(auth)/layout.tsx` |
+
+导出规范：SVG 优先（本套已全部为 SVG）；如以 seeddream 生成位图，导出 2x PNG 并压缩（tinypng/oxipng），文件名保持与 `index.ts` 登记一致。

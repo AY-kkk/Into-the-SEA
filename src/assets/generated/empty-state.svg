@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 160" fill="none" role="img" aria-label="空状态 · 暂无数据"><style>.paper{fill:#f7f3ea}.card{fill:#fff}.teal{fill:#1b5e63}.teal2{fill:#2f7f85}.amber{fill:#e07b29}.amber2{fill:#f0a35a}.soft{fill:#dcebe9}.ink{fill:#204246}.white{fill:#fff}.muted{fill:#9fbcbd}.belly{fill:#f3e7d4}.ln{stroke:#1b5e63;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}.lnw{stroke:#fff;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}@media(prefers-color-scheme:dark){.paper{fill:#12212a}.card{fill:#17303a}.teal{fill:#3fa7af}.teal2{fill:#5fc0c6}.soft{fill:#1e3a44}.ink{fill:#e7efe9}.muted{fill:#5f868a}.belly{fill:#24424c}.ln{stroke:#5fc0c6}}</style><rect x="8" y="10" width="204" height="140" rx="16" class="paper"/>
+  <path class="soft" d="M56 66h34l8 10h66v42a8 8 0 0 1-8 8H56a8 8 0 0 1-8-8V74a8 8 0 0 1 8-8z"/>
+  <path class="teal2" d="M52 84h116l-8 40a8 8 0 0 1-8 6H60a8 8 0 0 1-8-6z" opacity=".85"/>
+  <circle class="ln" cx="150" cy="60" r="16" stroke-width="4"/>
+  <path class="ln" d="M162 72l14 14" stroke-width="5" stroke="#e07b29"/>
+  <circle class="amber2" cx="150" cy="60" r="8" opacity=".35"/>
+</svg>

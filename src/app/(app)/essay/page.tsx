@@ -12,6 +12,7 @@ export default function EssayPage() {
 
   return (
     <PageShell
+      heroKey="essay"
       title="申论案例"
       description="优秀案例库与历年原题库，含主题标签、可迁移表达、适用场景与来源链接，助力素材积累。"
     >

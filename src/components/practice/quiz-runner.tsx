@@ -9,6 +9,7 @@ import { SourceLink } from '@/components/shared/source-link';
 import { cn } from '@/lib/utils/cn';
 import { usePracticeStore } from '@/store/practice-store';
 import { DIFFICULTY_LABELS, QUESTION_TYPE_LABELS, type Question } from '@/types/question';
+import { Mascot } from '@/components/shared/mascot';
 
 interface QuizRunnerProps {
   questions: Question[];
@@ -48,6 +49,7 @@ export function QuizRunner({ questions, onExit, title }: QuizRunnerProps) {
     return (
       <Card className="animate-fade-in">
         <CardContent className="flex flex-col items-center gap-4 py-14 text-center">
+          <Mascot pose={accuracy >= 60 ? 'cheer' : 'think'} size={96} decorative />
           <div className="text-4xl font-semibold text-primary">{accuracy}%</div>
           <p className="text-sm text-muted-foreground">
             本次共 {total} 题，答对 {sessionCorrect} 题。

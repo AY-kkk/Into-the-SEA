@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { NAV_ITEMS } from '@/lib/nav';
 import { cn } from '@/lib/utils/cn';
 import brandMark from '@/assets/generated/brand-mark.svg';
+import { Mascot } from '@/components/shared/mascot';
 
 export function Sidebar() {
   const pathname = usePathname();
@@ -46,9 +47,12 @@ export function Sidebar() {
         })}
       </nav>
 
-      <div className="border-t p-4 text-xs text-muted-foreground">
-        <p className="font-medium text-foreground">备考不孤单</p>
-        <p className="mt-1">陪你从信息搜集到最终上岸。</p>
+      <div className="flex items-center gap-3 border-t p-4 text-xs text-muted-foreground">
+        <Mascot pose="cheer" size={44} decorative className="shrink-0" />
+        <div>
+          <p className="font-medium text-foreground">备考不孤单</p>
+          <p className="mt-1">陪你从信息搜集到最终上岸。</p>
+        </div>
       </div>
     </aside>
   );

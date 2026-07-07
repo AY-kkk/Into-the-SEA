@@ -13,6 +13,7 @@ import { listPositions } from '@/services/job-prep.service';
 import { EXAM_CATEGORY_LABELS, ENROLL_STATUS_LABELS } from '@/types/common';
 import { ESSAY_TOPIC_LABELS } from '@/types/essay';
 import { formatDate } from '@/lib/utils';
+import { Mascot } from '@/components/shared/mascot';
 
 export const dynamic = 'force-dynamic';
 
@@ -39,16 +40,19 @@ export default async function DashboardPage() {
     >
       {/* Hero */}
       <div className="bg-grid overflow-hidden rounded-lg border">
-        <div className="flex flex-col gap-4 bg-gradient-to-r from-card/95 to-card/60 p-8">
-          <Badge variant="accent" className="w-fit">
-            <Anchor className="mr-1 h-3.5 w-3.5" /> Into the SEA · 上岸工作台
-          </Badge>
-          <h3 className="max-w-xl text-balance text-2xl font-semibold tracking-tight">
-            从信息差到上岸，把备考流程装进一个工作台
-          </h3>
-          <p className="max-w-2xl text-sm text-muted-foreground">
-            聚合招录情报、岗位能力模型、行测题库、申论素材与 AI 模拟面试，随时掌握进度。
-          </p>
+        <div className="flex flex-col gap-4 bg-gradient-to-r from-card/95 to-card/60 p-8 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex flex-col gap-4">
+            <Badge variant="accent" className="w-fit">
+              <Anchor className="mr-1 h-3.5 w-3.5" /> Into the SEA · 上岸工作台
+            </Badge>
+            <h3 className="max-w-xl text-balance text-2xl font-semibold tracking-tight">
+              从信息差到上岸，把备考流程装进一个工作台
+            </h3>
+            <p className="max-w-2xl text-sm text-muted-foreground">
+              聚合招录情报、岗位能力模型、行测题库、申论素材与 AI 模拟面试，随时掌握进度。
+            </p>
+          </div>
+          <Mascot pose="wave" size={132} decorative className="hidden shrink-0 sm:block" />
         </div>
       </div>
 

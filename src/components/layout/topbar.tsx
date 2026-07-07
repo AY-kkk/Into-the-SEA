@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, Search } from 'lucide-react';
+import { Menu, Search, UserRound } from 'lucide-react';
 import { NAV_ITEMS } from '@/lib/nav';
 import { Button } from '@/components/ui/button';
 
@@ -29,6 +29,11 @@ export function Topbar() {
           <Search className="h-4 w-4" />
           <span>搜索岗位、题目、案例…</span>
         </div>
+        <Button asChild size="icon" variant="ghost" aria-label="登录">
+          <Link href="/login">
+            <UserRound className="h-5 w-5" />
+          </Link>
+        </Button>
         <Button asChild size="sm" variant="accent">
           <Link href="/interview">开始模拟面试</Link>
         </Button>

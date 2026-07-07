@@ -10,6 +10,7 @@ export default function InterviewPage() {
 
   return (
     <PageShell
+      heroKey="interview"
       title="模拟面试"
       description="结构化 AI 面试官逐题追问，支持结构化 / 行为 / 压力三种模式；会话本地持久化，结束后生成多维度面试报告。"
     >

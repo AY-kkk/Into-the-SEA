@@ -13,6 +13,7 @@ export default async function ExamNewsPage() {
 
   return (
     <PageShell
+      heroKey="exam-news"
       title="招录情报"
       description="汇总国考、省考、国企、事业单位、三支一扶招录信息，来源链接可溯源。"
     >

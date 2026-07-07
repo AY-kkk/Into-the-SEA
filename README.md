@@ -41,7 +41,7 @@ pnpm dev                      # 启动 http://localhost:3000
 src/
   app/          路由与页面（App Router，五大模块 + Dashboard）
   components/   ui/（基础组件）· layout/（侧栏顶栏）· shared/
-  lib/          ai/ search/ db/ validators/ utils/
+  lib/          db/ validators/ utils/ · env.ts · nav.ts · practice-stats.ts
   services/     业务逻辑（不写进组件）
   providers/    search/ llm/ exam-info/ question/（抽象 + mock + 真实骨架）
   types/        exam / question / essay / interview / user

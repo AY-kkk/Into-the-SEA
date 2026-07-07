@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" fill="none" role="img" aria-label="吉祥物 · 加油鼓励"><style>.paper{fill:#f7f3ea}.card{fill:#fff}.teal{fill:#1b5e63}.teal2{fill:#2f7f85}.amber{fill:#e07b29}.amber2{fill:#f0a35a}.soft{fill:#dcebe9}.ink{fill:#204246}.white{fill:#fff}.muted{fill:#9fbcbd}.belly{fill:#f3e7d4}.ln{stroke:#1b5e63;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}.lnw{stroke:#fff;stroke-width:3;fill:none;stroke-linecap:round;stroke-linejoin:round}@media(prefers-color-scheme:dark){.paper{fill:#12212a}.card{fill:#17303a}.teal{fill:#3fa7af}.teal2{fill:#5fc0c6}.soft{fill:#1e3a44}.ink{fill:#e7efe9}.muted{fill:#5f868a}.belly{fill:#24424c}.ln{stroke:#5fc0c6}}</style>
+    <ellipse class="teal" cx="90" cy="128" rx="42" ry="34"/>
+    <ellipse class="belly" cx="90" cy="132" rx="26" ry="24"/>
+    <ellipse class="teal" cx="50" cy="92" rx="9" ry="14" transform="rotate(25 50 92)"/><circle class="amber" cx="44" cy="80" r="7"/><ellipse class="teal" cx="130" cy="92" rx="9" ry="14" transform="rotate(-25 130 92)"/><circle class="amber" cx="136" cy="80" r="7"/>
+    <circle class="teal" cx="90" cy="72" r="38"/>
+    <ellipse class="belly" cx="90" cy="86" rx="20" ry="16"/>
+    <circle class="teal2" cx="72" cy="60" r="9"/>
+    <circle class="teal2" cx="108" cy="60" r="9"/>
+    <circle class="ink" cx="80" cy="74" r="4.5"/>
+    <circle class="ink" cx="100" cy="74" r="4.5"/>
+    <circle class="white" cx="81.5" cy="72.5" r="1.6"/>
+    <circle class="white" cx="101.5" cy="72.5" r="1.6"/>
+    <ellipse class="ink" cx="90" cy="84" rx="4" ry="3"/>
+    <path class="ln" d="M90 87v3m-6 3a8 8 0 0 0 12 0"/>
+    <circle class="amber2" cx="70" cy="86" r="4" opacity=".6"/>
+    <circle class="amber2" cx="110" cy="86" r="4" opacity=".6"/>
+    <!-- graduation cap -->
+    <path class="ink" d="M90 30 55 44l35 14 35-14z"/>
+    <path class="ink" d="M74 52v12c0 6 32 6 32 0V52" opacity=".85"/>
+    <path class="ln" d="M123 45v14" stroke="#e07b29"/>
+    <circle class="amber" cx="123" cy="61" r="3.5"/>
+    <path class="ln" d="M30 66l6-4m108 4l-6-4" stroke="#e07b29"/></svg>
