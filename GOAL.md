@@ -474,3 +474,11 @@ Next.js 14 App Router · React 18 · TS 严格 · Tailwind · shadcn/ui · Frame
   - **顶栏搜索**：改为可提交表单，回车跳转 `/exam-news?keyword=`；招录情报视图从 URL 初始化 keyword 过滤，形成可用搜索闭环。
   - **测试**：export 单测(3) + export-gating E2E（免费锁→升级→可导出）。单测 87→90、E2E 7→8。
 - 验证方式：`pnpm typecheck`✅ `pnpm lint`✅ `pnpm test`(90)✅ `pnpm build`✅ `pnpm test:e2e`(8)✅。
+
+### [M15] 错误追踪实接（Gate2 可观测性补强）— 2026-07-07
+
+- 完成内容：
+  - **Sentry 上报真实实现**（此前为占位日志）：`src/lib/observability/sentry.ts` 解析 DSN 并按 Sentry Envelope 协议 `fetch` POST 事件（无需 `@sentry/nextjs` SDK，兼容 Node/Edge）；`captureError` 配置 `SENTRY_DSN` 时 fire-and-forget 上报、失败降级本地日志、缺 DSN 仅本地记录。含 4s 超时。
+  - **测试**：sentry 单测(6：DSN 解析/非法 DSN/envelope 三段 NDJSON/缺 DSN 降级/POST 成功/传输异常降级)。单测 90→96。
+- 验证方式：`pnpm typecheck`✅ `pnpm lint`✅ `pnpm test`(96)✅ `pnpm build`✅。
+- 说明：Gate2「接入 Sentry 或等价错误追踪」由「日志兜底 + TODO」升级为「DSN 驱动的真实上报 + 降级」。实际上报需在生产配置 `SENTRY_DSN`。

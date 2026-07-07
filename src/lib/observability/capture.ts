@@ -1,17 +1,20 @@
 import { env } from '@/lib/env';
 import { logger } from './logger';
+import { sendToSentry } from './sentry';
 
 /**
- * 错误捕获上报。默认结构化日志；配置 SENTRY_DSN 时转发 Sentry。
- * TODO(real): 安装 @sentry/nextjs 后在此转发（当前以 fetch 上报 envelope 兜底/占位，
- * 不引入新依赖，缺 DSN 时仅本地记录）。
+ * 错误捕获上报：始终写结构化日志；配置 SENTRY_DSN 时按 Sentry Envelope 协议转发（无 SDK 依赖）。
+ * 上报为 fire-and-forget，失败不影响主流程。
  */
 export function captureError(error: unknown, context?: Record<string, unknown>): void {
   const err = error instanceof Error ? error : new Error(String(error));
   logger.error(err.message, { stack: err.stack, ...(context ?? {}) });
   if (env.SENTRY_DSN) {
-    // TODO(real): 接入 @sentry/nextjs：Sentry.captureException(err, { extra: context })
-    logger.debug('sentry_forward_pending', { dsnConfigured: true });
+    void sendToSentry(err.message, { stack: err.stack, extra: context, level: 'error' }).then(
+      (ok) => {
+        if (!ok) logger.warn('sentry_forward_failed', { message: err.message });
+      },
+    );
   }
 }
 

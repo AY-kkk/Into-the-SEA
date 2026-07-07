@@ -47,7 +47,7 @@
 
 - 单测：`pnpm test`（69）；类型 `pnpm typecheck`；`pnpm lint`。
 - E2E：`pnpm test:e2e:install`（首次装 Chromium）→ `pnpm test:e2e`（对生产构建启动服务，跑核心路径 6 条）。
-- 观测：`GET /api/health`；结构化日志 `logger`（`funnel` 事件即漏斗埋点，可导入数仓/PostHog）。
+- 观测：`GET /api/health`；结构化日志 `logger`（`funnel` 事件即漏斗埋点，可导入数仓/PostHog）；错误追踪 `captureError` 在配置 `SENTRY_DSN` 时按 Sentry Envelope 协议实时上报（无 SDK 依赖），缺 DSN 降级本地日志。
 
 ## 6. 成本与滥用应急
 
