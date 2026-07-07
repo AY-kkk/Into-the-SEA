@@ -1,0 +1,21 @@
+README.md
+  s_31c894889f7331::t_7afc71364c2da9 44
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.6.5",
+  "base_commit_sha": "79fd78e84de2197d493cf5bb07a322cb17df2743",
+  "prompts": {},
+  "sessions": {
+    "s_31c894889f7331": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "019f3a7b-0864-7a80-a3ab-d4efe72c1433",
+        "model": "unknown"
+      },
+      "human_author": "Codex <codex@local>"
+    }
+  },
+  "attestation_metadata": {},
+  "remote_transcripts": {}
+}
